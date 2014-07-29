@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6F7644E51985F16F009FEFE7 /* 011.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6F7644E41985F16F009FEFE7 /* 011.jpg */; };
+		6F7644EA1985F577009FEFE7 /* FTF_EditFaceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F7644E81985F577009FEFE7 /* FTF_EditFaceViewController.m */; };
+		6F7644EB1985F577009FEFE7 /* FTF_EditFaceViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6F7644E91985F577009FEFE7 /* FTF_EditFaceViewController.xib */; };
+		6F7644F119863007009FEFE7 /* UIBezierPath-Points.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F7644EE19863007009FEFE7 /* UIBezierPath-Points.m */; };
+		6F7644F219863007009FEFE7 /* MZCroppableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F7644F019863007009FEFE7 /* MZCroppableView.m */; };
+		6F7644F819864C35009FEFE7 /* ACMagnifyingGlass.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F7644F519864C35009FEFE7 /* ACMagnifyingGlass.m */; };
+		6F7644F919864C35009FEFE7 /* ACLoupe.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F7644F719864C35009FEFE7 /* ACLoupe.m */; };
+		6F7644FC19865681009FEFE7 /* ACMagnifyingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F7644FB19865681009FEFE7 /* ACMagnifyingView.m */; };
 		6FB175ED19838AF400F194A7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6FB175EC19838AF400F194A7 /* Foundation.framework */; };
 		6FB175EF19838AF400F194A7 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6FB175EE19838AF400F194A7 /* CoreGraphics.framework */; };
 		6FB175F119838AF400F194A7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6FB175F019838AF400F194A7 /* UIKit.framework */; };
@@ -19,6 +27,17 @@
 		6FB1760819838AF500F194A7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6FB175F019838AF400F194A7 /* UIKit.framework */; };
 		6FB1761019838AF500F194A7 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6FB1760E19838AF500F194A7 /* InfoPlist.strings */; };
 		6FB1761219838AF500F194A7 /* iOSChangeFaceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FB1761119838AF500F194A7 /* iOSChangeFaceTests.m */; };
+		6FB1761E19838B2500F194A7 /* FTF_RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FB1761C19838B2500F194A7 /* FTF_RootViewController.m */; };
+		6FB1761F19838B2500F194A7 /* FTF_RootViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6FB1761D19838B2500F194A7 /* FTF_RootViewController.xib */; };
+		6FB1762A19838D5F00F194A7 /* FTF_AdjustFaceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FB1762819838D5F00F194A7 /* FTF_AdjustFaceViewController.m */; };
+		6FB1762B19838D5F00F194A7 /* FTF_AdjustFaceViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6FB1762919838D5F00F194A7 /* FTF_AdjustFaceViewController.xib */; };
+		6FB1762F19838E1400F194A7 /* UIImage+Zoom.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FB1762E19838E1400F194A7 /* UIImage+Zoom.m */; };
+		6FB1763119838E4B00F194A7 /* 05.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6FB1763019838E4B00F194A7 /* 05.jpg */; };
+		6FB1763319838E5A00F194A7 /* 01.png in Resources */ = {isa = PBXBuildFile; fileRef = 6FB1763219838E5A00F194A7 /* 01.png */; };
+		6FB1763719838F7300F194A7 /* CMethods.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FB1763619838F7300F194A7 /* CMethods.m */; };
+		6FB1763C1983901900F194A7 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FB1763B1983901900F194A7 /* MBProgressHUD.m */; };
+		6FB1763F1983909400F194A7 /* focus.png in Resources */ = {isa = PBXBuildFile; fileRef = 6FB1763E1983909400F194A7 /* focus.png */; };
+		6FB17643198392B400F194A7 /* FTF_Global.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FB17642198392B400F194A7 /* FTF_Global.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -32,6 +51,21 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6F38022D198748FB00193528 /* FTF_Delegates.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FTF_Delegates.h; sourceTree = "<group>"; };
+		6F7644E41985F16F009FEFE7 /* 011.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 011.jpg; sourceTree = "<group>"; };
+		6F7644E71985F577009FEFE7 /* FTF_EditFaceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FTF_EditFaceViewController.h; sourceTree = "<group>"; };
+		6F7644E81985F577009FEFE7 /* FTF_EditFaceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FTF_EditFaceViewController.m; sourceTree = "<group>"; };
+		6F7644E91985F577009FEFE7 /* FTF_EditFaceViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FTF_EditFaceViewController.xib; sourceTree = "<group>"; };
+		6F7644ED19863007009FEFE7 /* UIBezierPath-Points.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBezierPath-Points.h"; sourceTree = "<group>"; };
+		6F7644EE19863007009FEFE7 /* UIBezierPath-Points.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBezierPath-Points.m"; sourceTree = "<group>"; };
+		6F7644EF19863007009FEFE7 /* MZCroppableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MZCroppableView.h; sourceTree = "<group>"; };
+		6F7644F019863007009FEFE7 /* MZCroppableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MZCroppableView.m; sourceTree = "<group>"; };
+		6F7644F419864C35009FEFE7 /* ACMagnifyingGlass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACMagnifyingGlass.h; sourceTree = "<group>"; };
+		6F7644F519864C35009FEFE7 /* ACMagnifyingGlass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACMagnifyingGlass.m; sourceTree = "<group>"; };
+		6F7644F619864C35009FEFE7 /* ACLoupe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACLoupe.h; sourceTree = "<group>"; };
+		6F7644F719864C35009FEFE7 /* ACLoupe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACLoupe.m; sourceTree = "<group>"; };
+		6F7644FA19865681009FEFE7 /* ACMagnifyingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACMagnifyingView.h; sourceTree = "<group>"; };
+		6F7644FB19865681009FEFE7 /* ACMagnifyingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACMagnifyingView.m; sourceTree = "<group>"; };
 		6FB175E919838AF400F194A7 /* iOSChangeFace.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOSChangeFace.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6FB175EC19838AF400F194A7 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		6FB175EE19838AF400F194A7 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -48,6 +82,23 @@
 		6FB1760D19838AF500F194A7 /* iOSChangeFaceTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "iOSChangeFaceTests-Info.plist"; sourceTree = "<group>"; };
 		6FB1760F19838AF500F194A7 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		6FB1761119838AF500F194A7 /* iOSChangeFaceTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = iOSChangeFaceTests.m; sourceTree = "<group>"; };
+		6FB1761B19838B2500F194A7 /* FTF_RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FTF_RootViewController.h; sourceTree = "<group>"; };
+		6FB1761C19838B2500F194A7 /* FTF_RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FTF_RootViewController.m; sourceTree = "<group>"; };
+		6FB1761D19838B2500F194A7 /* FTF_RootViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FTF_RootViewController.xib; sourceTree = "<group>"; };
+		6FB1762719838D5F00F194A7 /* FTF_AdjustFaceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FTF_AdjustFaceViewController.h; sourceTree = "<group>"; };
+		6FB1762819838D5F00F194A7 /* FTF_AdjustFaceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FTF_AdjustFaceViewController.m; sourceTree = "<group>"; };
+		6FB1762919838D5F00F194A7 /* FTF_AdjustFaceViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FTF_AdjustFaceViewController.xib; sourceTree = "<group>"; };
+		6FB1762D19838E1400F194A7 /* UIImage+Zoom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Zoom.h"; sourceTree = "<group>"; };
+		6FB1762E19838E1400F194A7 /* UIImage+Zoom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Zoom.m"; sourceTree = "<group>"; };
+		6FB1763019838E4B00F194A7 /* 05.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 05.jpg; sourceTree = "<group>"; };
+		6FB1763219838E5A00F194A7 /* 01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 01.png; sourceTree = "<group>"; };
+		6FB1763519838F7300F194A7 /* CMethods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMethods.h; sourceTree = "<group>"; };
+		6FB1763619838F7300F194A7 /* CMethods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMethods.m; sourceTree = "<group>"; };
+		6FB1763A1983901900F194A7 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
+		6FB1763B1983901900F194A7 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
+		6FB1763E1983909400F194A7 /* focus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = focus.png; sourceTree = "<group>"; };
+		6FB17641198392B400F194A7 /* FTF_Global.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FTF_Global.h; sourceTree = "<group>"; };
+		6FB17642198392B400F194A7 /* FTF_Global.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FTF_Global.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +125,47 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6F38022C198748D700193528 /* delegate */ = {
+			isa = PBXGroup;
+			children = (
+				6F38022D198748FB00193528 /* FTF_Delegates.h */,
+			);
+			name = delegate;
+			sourceTree = "<group>";
+		};
+		6F7644E61985F546009FEFE7 /* EditFace */ = {
+			isa = PBXGroup;
+			children = (
+				6F7644E71985F577009FEFE7 /* FTF_EditFaceViewController.h */,
+				6F7644E81985F577009FEFE7 /* FTF_EditFaceViewController.m */,
+			);
+			name = EditFace;
+			sourceTree = "<group>";
+		};
+		6F7644EC19862FCD009FEFE7 /* lines */ = {
+			isa = PBXGroup;
+			children = (
+				6F7644ED19863007009FEFE7 /* UIBezierPath-Points.h */,
+				6F7644EE19863007009FEFE7 /* UIBezierPath-Points.m */,
+				6F7644EF19863007009FEFE7 /* MZCroppableView.h */,
+				6F7644F019863007009FEFE7 /* MZCroppableView.m */,
+			);
+			name = lines;
+			sourceTree = "<group>";
+		};
+		6F7644F319864C12009FEFE7 /* BigShow */ = {
+			isa = PBXGroup;
+			children = (
+				6F7644F419864C35009FEFE7 /* ACMagnifyingGlass.h */,
+				6F7644F519864C35009FEFE7 /* ACMagnifyingGlass.m */,
+				6F7644F619864C35009FEFE7 /* ACLoupe.h */,
+				6F7644F719864C35009FEFE7 /* ACLoupe.m */,
+				6F7644FA19865681009FEFE7 /* ACMagnifyingView.h */,
+				6F7644FB19865681009FEFE7 /* ACMagnifyingView.m */,
+			);
+			name = BigShow;
+			sourceTree = "<group>";
+		};
 		6FB175E019838AF400F194A7 = {
 			isa = PBXGroup;
 			children = (
@@ -109,6 +201,13 @@
 			children = (
 				6FB175FB19838AF400F194A7 /* AppDelegate.h */,
 				6FB175FC19838AF400F194A7 /* AppDelegate.m */,
+				6FB1762219838B4600F194A7 /* Controllers */,
+				6FB1762119838B3D00F194A7 /* Views */,
+				6FB1762019838B2A00F194A7 /* Models */,
+				6FB1763419838F3E00F194A7 /* Shares */,
+				6FB1762C19838E0100F194A7 /* Categorys */,
+				6FB1762319838B5100F194A7 /* Images */,
+				6FB1762419838B5600F194A7 /* Resources */,
 				6FB175FE19838AF400F194A7 /* Images.xcassets */,
 				6FB175F319838AF400F194A7 /* Supporting Files */,
 			);
@@ -142,6 +241,126 @@
 				6FB1760E19838AF500F194A7 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		6FB1762019838B2A00F194A7 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				6FB176401983929800F194A7 /* Global */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		6FB1762119838B3D00F194A7 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				6F7644F319864C12009FEFE7 /* BigShow */,
+				6F7644EC19862FCD009FEFE7 /* lines */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		6FB1762219838B4600F194A7 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				6FB1762519838C1400F194A7 /* Root */,
+				6FB1762619838C2400F194A7 /* AdjustFace */,
+				6F7644E61985F546009FEFE7 /* EditFace */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		6FB1762319838B5100F194A7 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				6FB1763E1983909400F194A7 /* focus.png */,
+				6FB1763219838E5A00F194A7 /* 01.png */,
+				6F7644E41985F16F009FEFE7 /* 011.jpg */,
+				6FB1763019838E4B00F194A7 /* 05.jpg */,
+			);
+			name = Images;
+			sourceTree = "<group>";
+		};
+		6FB1762419838B5600F194A7 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				6FB1761D19838B2500F194A7 /* FTF_RootViewController.xib */,
+				6FB1762919838D5F00F194A7 /* FTF_AdjustFaceViewController.xib */,
+				6F7644E91985F577009FEFE7 /* FTF_EditFaceViewController.xib */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		6FB1762519838C1400F194A7 /* Root */ = {
+			isa = PBXGroup;
+			children = (
+				6FB1761B19838B2500F194A7 /* FTF_RootViewController.h */,
+				6FB1761C19838B2500F194A7 /* FTF_RootViewController.m */,
+			);
+			name = Root;
+			sourceTree = "<group>";
+		};
+		6FB1762619838C2400F194A7 /* AdjustFace */ = {
+			isa = PBXGroup;
+			children = (
+				6FB1762719838D5F00F194A7 /* FTF_AdjustFaceViewController.h */,
+				6FB1762819838D5F00F194A7 /* FTF_AdjustFaceViewController.m */,
+			);
+			name = AdjustFace;
+			sourceTree = "<group>";
+		};
+		6FB1762C19838E0100F194A7 /* Categorys */ = {
+			isa = PBXGroup;
+			children = (
+				6FB1762D19838E1400F194A7 /* UIImage+Zoom.h */,
+				6FB1762E19838E1400F194A7 /* UIImage+Zoom.m */,
+			);
+			name = Categorys;
+			sourceTree = "<group>";
+		};
+		6FB1763419838F3E00F194A7 /* Shares */ = {
+			isa = PBXGroup;
+			children = (
+				6F38022C198748D700193528 /* delegate */,
+				6FB1763D1983903D00F194A7 /* AFN */,
+				6FB176391983900C00F194A7 /* MBP */,
+				6FB1763819838FFD00F194A7 /* CMethod */,
+			);
+			name = Shares;
+			sourceTree = "<group>";
+		};
+		6FB1763819838FFD00F194A7 /* CMethod */ = {
+			isa = PBXGroup;
+			children = (
+				6FB1763519838F7300F194A7 /* CMethods.h */,
+				6FB1763619838F7300F194A7 /* CMethods.m */,
+			);
+			name = CMethod;
+			sourceTree = "<group>";
+		};
+		6FB176391983900C00F194A7 /* MBP */ = {
+			isa = PBXGroup;
+			children = (
+				6FB1763A1983901900F194A7 /* MBProgressHUD.h */,
+				6FB1763B1983901900F194A7 /* MBProgressHUD.m */,
+			);
+			name = MBP;
+			sourceTree = "<group>";
+		};
+		6FB1763D1983903D00F194A7 /* AFN */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = AFN;
+			sourceTree = "<group>";
+		};
+		6FB176401983929800F194A7 /* Global */ = {
+			isa = PBXGroup;
+			children = (
+				6FB17641198392B400F194A7 /* FTF_Global.h */,
+				6FB17642198392B400F194A7 /* FTF_Global.m */,
+			);
+			name = Global;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -219,7 +438,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6FB1763319838E5A00F194A7 /* 01.png in Resources */,
+				6FB1763119838E4B00F194A7 /* 05.jpg in Resources */,
+				6F7644EB1985F577009FEFE7 /* FTF_EditFaceViewController.xib in Resources */,
 				6FB175F719838AF400F194A7 /* InfoPlist.strings in Resources */,
+				6FB1761F19838B2500F194A7 /* FTF_RootViewController.xib in Resources */,
+				6FB1762B19838D5F00F194A7 /* FTF_AdjustFaceViewController.xib in Resources */,
+				6FB1763F1983909400F194A7 /* focus.png in Resources */,
+				6F7644E51985F16F009FEFE7 /* 011.jpg in Resources */,
 				6FB175FF19838AF400F194A7 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -239,8 +465,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6FB1761E19838B2500F194A7 /* FTF_RootViewController.m in Sources */,
+				6FB1762A19838D5F00F194A7 /* FTF_AdjustFaceViewController.m in Sources */,
+				6F7644F219863007009FEFE7 /* MZCroppableView.m in Sources */,
+				6FB1762F19838E1400F194A7 /* UIImage+Zoom.m in Sources */,
 				6FB175FD19838AF400F194A7 /* AppDelegate.m in Sources */,
+				6F7644F819864C35009FEFE7 /* ACMagnifyingGlass.m in Sources */,
+				6FB1763719838F7300F194A7 /* CMethods.m in Sources */,
+				6F7644F919864C35009FEFE7 /* ACLoupe.m in Sources */,
+				6F7644EA1985F577009FEFE7 /* FTF_EditFaceViewController.m in Sources */,
+				6F7644F119863007009FEFE7 /* UIBezierPath-Points.m in Sources */,
 				6FB175F919838AF400F194A7 /* main.m in Sources */,
+				6FB1763C1983901900F194A7 /* MBProgressHUD.m in Sources */,
+				6FB17643198392B400F194A7 /* FTF_Global.m in Sources */,
+				6F7644FC19865681009FEFE7 /* ACMagnifyingView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -357,10 +595,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer: 录扬 Gao (J224G47YTX)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "iOSChangeFace/iOSChangeFace-Prefix.pch";
 				INFOPLIST_FILE = "iOSChangeFace/iOSChangeFace-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "B6841E65-2329-4859-81FD-85C6CF13E333";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -370,10 +610,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer: 录扬 Gao (J224G47YTX)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "iOSChangeFace/iOSChangeFace-Prefix.pch";
 				INFOPLIST_FILE = "iOSChangeFace/iOSChangeFace-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "B6841E65-2329-4859-81FD-85C6CF13E333";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -437,6 +679,7 @@
 				6FB1761719838AF500F194A7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		6FB1761819838AF500F194A7 /* Build configuration list for PBXNativeTarget "iOSChangeFaceTests" */ = {
 			isa = XCConfigurationList;
@@ -445,6 +688,7 @@
 				6FB1761A19838AF500F194A7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

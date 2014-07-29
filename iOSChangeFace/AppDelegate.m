@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "FTF_RootViewController.h"
 
 @implementation AppDelegate
 
@@ -15,6 +16,11 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
+    
+    FTF_RootViewController *rootController = [[FTF_RootViewController alloc]initWithNibName:@"FTF_RootViewController" bundle:nil];
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:rootController];
+    self.window.rootViewController = nav;
+    
     [self.window makeKeyAndVisible];
     return YES;
 }
