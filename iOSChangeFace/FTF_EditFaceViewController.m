@@ -19,9 +19,11 @@ enum DirectionType
 #import "FTF_EditFaceViewController.h"
 #import "UIImage+Zoom.h"
 #import "CMethods.h"
+#import "FTF_Global.h"
 #import "MZCroppableView.h"
 #import "ACMagnifyingView.h"
 #import "ACMagnifyingGlass.h"
+#import "FTF_MaterialViewController.h"
 
 @interface FTF_EditFaceViewController ()
 {
@@ -31,6 +33,8 @@ enum DirectionType
     CAGradientLayer *maskLayer;
     UIImageView *libaryImageView;
     ACMagnifyingView *backView;
+    ACMagnifyingGlass *mag;
+    UIImageView *backImageView;
 }
 @property (weak, nonatomic) IBOutlet UISlider *positionSlider;
 @property (weak, nonatomic) IBOutlet UISlider *fuzzySlider;
@@ -58,12 +62,17 @@ enum DirectionType
     _libaryImage = nil;
     libaryImageView = nil;
     backView = nil;
+    mag = nil;
+    backImageView = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithTitle:@"素材" style:UIBarButtonItemStylePlain target:self action:@selector(rightItemClick:)];
+    self.navigationItem.rightBarButtonItem = rightItem;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(endCropImage) name:@"EndCropImage" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(beginCropImage) name:@"BeginCropImage" object:nil];
@@ -87,35 +96,39 @@ enum DirectionType
     bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, 100, 320, 320)];
     [self.view addSubview:bottomView];
     
-    [self adjustViews:_libaryImage withFrame:_imageRect];
-}
-
-- (void)adjustViews:(UIImage *)image withFrame:(CGRect)rect
-{
     //默认底图
-    UIImageView *backImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 320)];
-    backImageView.image = [UIImage zoomImageWithImage:[UIImage imageNamed:@"011.jpg"]];
+    backImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 320)];
+    backImageView.image = [UIImage zoomImageWithImage:[UIImage imageNamed:@"crossBones01.jpg"]];
     [bottomView addSubview:backImageView];
     
-    //放大镜View
-    [backView removeFromSuperview];
-    backView = nil;
+    //放大镜
     backView = [[ACMagnifyingView alloc] initWithFrame:CGRectMake(0, 0, 320, 320)];
     //放大操作显示框
-    ACMagnifyingGlass *mag = [[ACMagnifyingGlass alloc] initWithFrame:CGRectMake(0, 0, 90, 90)];
+    mag = [[ACMagnifyingGlass alloc] initWithFrame:CGRectMake(0, 0, 90, 90)];
     mag.scale = 1.5;
     backView.magnifyingGlass = mag;
     backView.layer.masksToBounds = YES;
     [bottomView addSubview:backView];
-
+    
     //从相册中选取的图片
-    [libaryImageView removeFromSuperview];
-    libaryImageView = nil;
     libaryImageView = [[UIImageView alloc]initWithFrame:_imageRect];
     libaryImageView.layer.shouldRasterize = YES;
     libaryImageView.transform = CGAffineTransformMakeRotation(self.rorationDegree);
     libaryImageView.userInteractionEnabled = YES;
-    [backView addSubview:libaryImageView];
+    
+    [self adjustViews:_libaryImage withFrame:_imageRect];
+}
+
+- (void)rightItemClick:(UIBarButtonItem *)item
+{
+    FTF_MaterialViewController *materialController = [[FTF_MaterialViewController alloc] initWithNibName:@"FTF_MaterialViewController" bundle:nil];
+    materialController.delegate = self;
+    [self.navigationController pushViewController:materialController animated:YES];
+}
+
+- (void)adjustViews:(UIImage *)image withFrame:(CGRect)rect
+{
+
     libaryImageView.image = [UIImage zoomImageWithImage:_libaryImage];
     [backView loadCropImageView:libaryImageView];
     
@@ -152,7 +165,6 @@ enum DirectionType
     }
     
     maskLayer.colors = colorArray;
-    
     [backView.layer setMask:maskLayer];
 }
 
@@ -191,10 +203,7 @@ enum DirectionType
                 }
             }
         }
-        for (UIView *subview in [bottomView subviews])
-        {
-            [subview removeFromSuperview];
-        }
+
         [self adjustViews:_libaryImage withFrame:_imageRect];
     }
     else if (btn.tag == 4)
@@ -271,6 +280,21 @@ enum DirectionType
         default:
             break;
     }
+}
+
+#pragma mark -
+#pragma mark ChangeModelDelegate
+- (void)changeModelImage
+{
+    if ([FTF_Global shareGlobal].isFromLibary)
+    {
+        backImageView.image = [FTF_Global shareGlobal].modelImage;
+    }
+    else
+    {
+        backImageView.image = [UIImage zoomImageWithImage:jpgImagePath([FTF_Global shareGlobal].modelImageName)];
+    }
+    backImageView.center = CGPointMake(160, 160);
 }
 
 @end

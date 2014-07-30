@@ -13,3 +13,9 @@
 - (void)changeMZViewFrame:(CGPoint)point;
 
 @end
+
+@protocol ChangeModelDelegate <NSObject>
+
+- (void)changeModelImage;
+
+@end

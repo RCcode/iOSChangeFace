@@ -1,0 +1,260 @@
+//
+//  Pic_MenuViewController.m
+//  BeautySelfie
+//
+//  Created by MAXToooNG on 14-6-4.
+//  Copyright (c) 2014年 Chen.Liu. All rights reserved.
+//
+
+#import "Pic_MenuViewController.h"
+#import "Pic_RootTableViewCellObject.h"
+#import "SliderViewController.h"
+#import "MobClick.h"
+#import "CMethods.h"
+#import "FTF_Global.h"
+
+#define FEEDBACK_EMAIL @"rcplatform.help@gmail.com"
+#define FOLLOW_US_URL @"http://instagram.com/mirrorgrid"
+
+@interface Pic_MenuViewController ()
+{
+    UITableView *_tableView;
+    NSMutableArray *_dataArray;
+    BOOL _doAnimation;
+}
+@end
+
+@implementation Pic_MenuViewController
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        // Custom initialization
+    }
+    return self;
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    self.view.backgroundColor = colorWithHexString(@"#232323",1.0f);
+    
+    [self initTableView];
+    
+    [SliderViewController sharedSliderController].target = self;
+//    [SliderViewController sharedSliderController].action = @selector(doAnimationWithTableView);
+//    [SliderViewController sharedSliderController].closeAction = @selector(removeTableViewCellAnimation);
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [FTF_Global event:@"home" label:@"home_more"];
+}
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+- (void)initTableView
+{
+     _dataArray = [[NSMutableArray alloc] init];
+    [self initViewsWith1136];
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, 320, 400)];
+    _tableView.dataSource = self;
+    _tableView.delegate = self;
+    [self.view addSubview:_tableView];
+    _tableView.backgroundColor = [UIColor clearColor];
+    _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+//    _tableView.hidden = YES;
+
+}
+- (void)initViewsWith1136
+{
+    
+    NSArray *titleArray = [[NSArray alloc] initWithObjects:LocalizedString(@"Update", nil),LocalizedString(@"Rate this app", nil),LocalizedString(@"Feedback", nil), LocalizedString(@"Share", nil),LocalizedString(@"Follow us", nil),nil];
+    NSArray *imageNameArray = [[NSArray alloc] initWithObjects:@"icon_update_normal",@"icon_grade_norma",@"icon_Feedback_normal",@"icon_share_normal",@"icon_Follow us_norma", nil];
+    NSArray *imageHLNameArray = [[NSArray alloc] initWithObjects:@"icon_update_pressed",@"icon_grade_pressed",@"icon_Feedback_pressed",@"icon_share_pressed",@"icon_Follow us_pressed", nil];
+    for (int i = 0; i < titleArray.count; i++)
+    {
+        Pic_RootTableViewCellObject *model = [[Pic_RootTableViewCellObject alloc] init];
+        model.title = [titleArray objectAtIndex:i];
+        model.imageName = [imageNameArray objectAtIndex:i];
+        model.imageHLName = [imageHLNameArray objectAtIndex:i];
+        [_dataArray addObject:model];
+    }
+}
+
+
+#pragma mark -
+#pragma mark - UITableViewDelegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    switch (indexPath.row) {
+        case 0:
+        {
+            //更新
+            [FTF_Global event:@"home" label:@"more_update"];
+            [self jumpToAppStore];
+        }
+            break;
+        case 1:
+        {
+            //评分
+            [FTF_Global event:@"home" label:@"more_rate"];
+            [self jumpToAppStore];
+        }
+            break;
+        case 2:
+            //反馈
+        {
+            [FTF_Global event:@"home" label:@"more_feedback"];
+            
+            // app名称 版本
+            NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+        
+            NSString *app_Name = [infoDictionary objectForKey:@"CFBundleDisplayName"];
+            NSString *app_Version = [infoDictionary objectForKey:@"CFBundleVersion"];
+            
+            //设备型号 系统版本
+            NSString *deviceName = doDevicePlatform();
+            NSString *deviceSystemName = [[UIDevice currentDevice] systemName];
+            NSString *deviceSystemVer = [[UIDevice currentDevice] systemVersion];
+            
+            //设备分辨率
+            CGFloat scale = [UIScreen mainScreen].scale;
+            CGFloat resolutionW = [UIScreen mainScreen].bounds.size.width * scale;
+            CGFloat resolutionH = [UIScreen mainScreen].bounds.size.height * scale;
+            NSString *resolution = [NSString stringWithFormat:@"%.f * %.f", resolutionW, resolutionH];
+            
+            //本地语言
+            NSString *language = [[NSLocale preferredLanguages] firstObject];
+            
+            //NSString *diveceInfo = @"app版本号 手机型号 手机系统版本 分辨率 语言";
+            NSString *diveceInfo = [NSString stringWithFormat:@"%@ %@, %@, %@ %@, %@, %@", app_Name, app_Version, deviceName, deviceSystemName, deviceSystemVer,  resolution, language];
+            
+            //直接发邮件
+            MFMailComposeViewController *picker = [[MFMailComposeViewController alloc] init];
+            if(!picker) break;
+            picker.mailComposeDelegate =self;
+            NSString *subject = [NSString stringWithFormat:@"Mirror Grid %@ (iOS)", LocalizedString(@"Feedback", nil)];
+            [picker setSubject:subject];
+            [picker setToRecipients:@[FEEDBACK_EMAIL]];
+            [picker setMessageBody:diveceInfo isHTML:NO];
+            picker.delegate = self;
+            [self presentViewController:picker animated:YES completion:nil];
+    }
+            break;
+        case 3:
+        {
+            //分享
+            [FTF_Global event:@"home" label:@"more_share"];
+            //需要分享的内容
+            
+            NSString *shareContent = LocalizedString(@"shareContent", nil);
+            NSArray *activityItems = @[shareContent];
+            
+            UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:activityItems applicationActivities:nil];
+            __weak UIActivityViewController *blockActivityVC = activityVC;
+            
+            activityVC.completionHandler = ^(NSString *activityType,BOOL completed){
+                if(completed){
+
+                }
+                [blockActivityVC dismissViewControllerAnimated:YES completion:nil];
+                
+                [[UIApplication sharedApplication].keyWindow addSubview:[FTF_Global shareGlobal].bannerView];
+                [FTF_Global shareGlobal].bannerView.hidden = NO;
+            };
+            [self presentViewController:activityVC animated:YES completion:nil];
+        }
+            break;
+        case 4:
+        {
+            //关注我们
+            [FTF_Global event:@"home" label:@"more_care"];
+            NSURL *instagramURL = [NSURL URLWithString:@"instagram://user?username=mirrorgrid"];
+            if ([[UIApplication sharedApplication] canOpenURL:instagramURL]) {
+                [[UIApplication sharedApplication] openURL:instagramURL];
+            }else {
+                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:FOLLOW_US_URL]];
+            }
+
+        }
+            break;
+        default:
+            break;
+    }
+}
+
+#pragma mark -
+#pragma mark - UITableViewDataSource
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 51;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return _dataArray.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *cellIde = @"cellIde";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIde];
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIde];
+    }
+    Pic_RootTableViewCellObject *model = [_dataArray objectAtIndex:indexPath.row];
+    UIImageView *iconImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 13, 25 , 25)];
+    iconImageView.image = [UIImage imageNamed:model.imageName];
+    iconImageView.highlightedImage = [UIImage imageNamed:model.imageHLName];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(46, 0, 200, 52)];
+    label.textAlignment = NSTextAlignmentLeft;
+    label.backgroundColor = [UIColor clearColor];
+    label.textColor = [UIColor whiteColor];
+    label.font = [UIFont systemFontOfSize:18];
+    label.text = model.title;
+    label.highlightedTextColor = colorWithHexString(@"#f85e5e",1.f);
+    
+    UIView *view = [[UIView alloc] initWithFrame:cell.frame];
+    view.backgroundColor = colorWithHexString(@"#1e1e1e",1.f);
+    cell.selectedBackgroundView = view;
+    [cell.contentView addSubview:iconImageView];
+    [cell.contentView addSubview:label];
+    [cell setTintColor:colorWithHexString(@"#f85e5e",1.f)];
+    cell.backgroundColor = [UIColor clearColor];
+    return cell;
+}
+
+#pragma mark 打开appStore (评分及手动更新)
+- (void)jumpToAppStore{
+    NSString *evaluateString = [NSString stringWithFormat:@"itms-apps://itunes.apple.com/app/id%@", appleID];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:evaluateString]];
+}
+
+- (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error
+{
+    [controller dismissViewControllerAnimated:YES completion:nil];
+}
+
+
+/*
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
+
+@end

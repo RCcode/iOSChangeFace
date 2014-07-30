@@ -26,7 +26,8 @@ static CGFloat const kACMagnifyingViewDefaultShowDelay = 0.5;
 @synthesize touchTimer;
 
 
-- (id)initWithFrame:(CGRect)frame {
+- (id)initWithFrame:(CGRect)frame
+{
 	if (self = [super initWithFrame:frame]) {
 		self.magnifyingGlassShowDelay = kACMagnifyingViewDefaultShowDelay;
     }
@@ -134,9 +135,11 @@ static CGFloat const kACMagnifyingViewDefaultShowDelay = 0.5;
 
 - (void)rotateView:(UIRotationGestureRecognizer *)recognizer
 {
-    float rotation = recordedRotation - recognizer.rotation;//recordedRotation自己定义的double类型变量
-    _imageView.transform = CGAffineTransformMakeRotation(-rotation); //self 是view
-    if (recognizer.state == UIGestureRecognizerStateEnded) {
+    float rotation = recordedRotation - recognizer.rotation;
+    _imageView.transform = CGAffineTransformMakeRotation(-rotation);
+    cropView.transform = CGAffineTransformMakeRotation(-rotation);
+    if (recognizer.state == UIGestureRecognizerStateEnded)
+    {
         recordedRotation = rotation; //获取了 当前旋转的弧度值
     }
 }

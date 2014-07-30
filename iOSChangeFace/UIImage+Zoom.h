@@ -13,5 +13,6 @@
 //压缩图片
 + (UIImage *)zoomImageWithImage:(UIImage *)image;
 - (UIImage *)imageByScalingToSize:(CGSize)targetSize;
++ (UIImage *)zoomImage:(UIImage *)image toSize:(CGSize)size;
 
 @end

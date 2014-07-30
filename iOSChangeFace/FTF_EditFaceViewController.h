@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "FTF_Delegates.h"
 
-@interface FTF_EditFaceViewController : UIViewController
+@interface FTF_EditFaceViewController : UIViewController <ChangeModelDelegate>
 {
     UIImage *_libaryImage;
     CGRect _imageRect;

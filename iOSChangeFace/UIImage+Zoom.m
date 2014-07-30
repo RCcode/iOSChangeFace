@@ -48,6 +48,43 @@
     return newImage;
 }
 
++ (UIImage *)zoomImage:(UIImage *)image toSize:(CGSize)size
+{
+    static UIImage *newImage;
+    if (image.size.width > size.width || image.size.height > size.height)
+    {
+        if (image.size.width >=  image.size.height)
+        {
+            float scale = image.size.width/size.width;
+            float height = image.size.height/scale;
+            newImage = [image imageByScalingToSize:CGSizeMake(size.width, height)];
+        }
+        else
+        {
+            float scale = image.size.height/size.height;
+            float width = image.size.width/scale;
+            newImage = [image imageByScalingToSize:CGSizeMake(width, size.height)];
+        }
+    }
+    else
+    {
+        if (image.size.width >=  image.size.height)
+        {
+            float scale = size.width/image.size.width;
+            float height = image.size.height*scale;
+            newImage = [image imageByScalingToSize:CGSizeMake(size.width, height)];
+        }
+        else
+        {
+            float scale = size.height/image.size.height;
+            float width = image.size.width*scale;
+            newImage = [image imageByScalingToSize:CGSizeMake(width, size.height)];
+        }
+    }
+    
+    return newImage;
+}
+
 - (UIImage *)imageByScalingToSize:(CGSize)targetSize{
     
     UIImage *sourceImage = self;

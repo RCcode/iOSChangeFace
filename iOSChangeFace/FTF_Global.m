@@ -7,6 +7,8 @@
 //
 
 #import "FTF_Global.h"
+#import "MobClick.h"
+#import "Flurry.h"
 
 @implementation FTF_Global
 
@@ -14,6 +16,9 @@
 {
     self.compressionImage = nil;
     self.originalImage = nil;
+    self.modelImageName = nil;
+    self.modelImage = nil;
+    self.bannerView = nil;
 }
 
 + (instancetype)shareGlobal
@@ -25,6 +30,15 @@
     });
     
     return _public_Global;
+}
+
++ (void)event:(NSString *)eventID label:(NSString *)label;
+{
+    //友盟
+    [MobClick event:eventID label:label];
+    
+    //Flurry
+    [Flurry logEvent:eventID];
 }
 
 @end

@@ -7,7 +7,20 @@
 //
 
 #import "AppDelegate.h"
+#import "MobClick.h"
+#import "Flurry.h"
+#import "GADBannerView.h"
 #import "FTF_RootViewController.h"
+#import "SliderViewController.h"
+#import "Pic_MenuViewController.h"
+#import "LRNavigationController.h"
+#import "FTF_Global.h"
+@import AdSupport;
+#import <arpa/inet.h>
+
+#define AdMobID @"ca-app-pub-3747943735238482/7117549852"
+#define UMengKey @"53d607ff56240b5d11055ecd"
+#define FlurryAppKey @"Q85WBVSCNNNC284VSQ8K"
 
 @implementation AppDelegate
 
@@ -17,12 +30,59 @@
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
     
-    FTF_RootViewController *rootController = [[FTF_RootViewController alloc]initWithNibName:@"FTF_RootViewController" bundle:nil];
-    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:rootController];
+    [SliderViewController sharedSliderController].LeftVC=[[Pic_MenuViewController alloc] init];
+    
+    //向右滑动的距离
+    [SliderViewController sharedSliderController].LeftSContentOffset=180;
+    //控制器缩放的比例
+    [SliderViewController sharedSliderController].LeftSContentScale=0.8;
+    
+    LRNavigationController *nav=[[LRNavigationController alloc] initWithRootViewController:[SliderViewController sharedSliderController]];
+    
     self.window.rootViewController = nav;
     
     [self.window makeKeyAndVisible];
+    
+//    if (iPhone5())
+//    {
+//        //广告
+//        [self adMobSetting];
+//    }
+    
+    //友盟
+    [self umengSetting];
+    
     return YES;
+}
+
+#pragma mark -
+#pragma mark umeng
+- (void)umengSetting
+{
+    [MobClick startWithAppkey:UMengKey reportPolicy:SEND_ON_EXIT channelId:@"App Store"];
+    [MobClick updateOnlineConfig];
+    
+    [Flurry startSession:FlurryAppKey];
+    [Flurry setSessionReportsOnCloseEnabled:YES];
+}
+
+#pragma mark -
+#pragma mark 配置广告条
+- (void)adMobSetting
+{
+    /** AdMob相关 **/
+    CGPoint origin = CGPointMake(0, [UIScreen mainScreen].bounds.size.height - kGADAdSizeBanner.size.height);
+    GADBannerView *bannerView = [[GADBannerView alloc] initWithAdSize:kGADAdSizeBanner origin:origin];
+    bannerView.backgroundColor = [UIColor blackColor];
+    [[UIApplication sharedApplication].keyWindow addSubview:bannerView];
+    bannerView.adUnitID = AdMobID;
+    bannerView.rootViewController = self.window.rootViewController;
+    GADRequest *request = [GADRequest request];
+    NSString *deviesID = [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];
+    request.testDevices = @[deviesID];
+    [bannerView loadRequest:request];
+    //赋值
+    [FTF_Global shareGlobal].bannerView = bannerView;
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
