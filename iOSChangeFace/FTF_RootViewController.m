@@ -11,6 +11,7 @@
 #import "CMethods.h"
 #import "FTF_Global.h"
 #import "FTF_AdjustFaceViewController.h"
+#import "LRNavigationController.h"
 
 @interface FTF_RootViewController ()
 
@@ -56,7 +57,7 @@
                                               otherButtonTitles:nil];
         [alert show];
     }
-    
+    [FTF_Global shareGlobal].bannerView.hidden = YES;
     [self selectCamenaType:UIImagePickerControllerSourceTypePhotoLibrary];
     
 }
@@ -90,7 +91,7 @@
 #pragma mark UIImagePickerControllerDelegate
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
-    
+    [FTF_Global shareGlobal].bannerView.hidden = NO;
     __block UIImage *headImage = [info objectForKey:UIImagePickerControllerOriginalImage];
     
     if (headImage != nil)
@@ -113,11 +114,11 @@
     [FTF_Global shareGlobal].compressionImage = [UIImage zoomImageWithImage:headImage];
     
     [picker dismissViewControllerAnimated:YES completion:^{
-        
         FTF_AdjustFaceViewController *adjustFaceController = [[FTF_AdjustFaceViewController alloc]initWithNibName:@"FTF_AdjustFaceViewController" bundle:nil];
         [adjustFaceController loadAdjustViews:[FTF_Global shareGlobal].compressionImage];
-        [self.navigationController pushViewController:adjustFaceController animated:YES];
-        
+        //[self.navigationController pushViewController:adjustFaceController animated:YES];
+        [FTF_Global shareGlobal].nav.navigationBarHidden = NO;
+        [[FTF_Global shareGlobal].nav pushViewControllerWithLRAnimated:adjustFaceController];
     }];
     
 }
@@ -126,6 +127,7 @@
 {
     [picker dismissViewControllerAnimated:YES completion:^{
         picker.delegate = nil;
+        [FTF_Global shareGlobal].bannerView.hidden = NO;
     }];
 }
 

@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+@class LRNavigationController;
 
 @interface FTF_Global : NSObject
 
@@ -15,6 +16,7 @@
 @property (nonatomic ,strong) NSString *modelImageName;//模板
 @property (nonatomic ,strong) UIImage *modelImage;
 @property (nonatomic ,assign) BOOL isFromLibary;
+@property (nonatomic ,weak) LRNavigationController *nav;
 //广告条
 @property (nonatomic, strong) UIView *bannerView;
 

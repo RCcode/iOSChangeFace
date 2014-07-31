@@ -15,8 +15,8 @@
 #import "Pic_MenuViewController.h"
 #import "LRNavigationController.h"
 #import "FTF_Global.h"
+#import "CMethods.h"
 @import AdSupport;
-#import <arpa/inet.h>
 
 #define AdMobID @"ca-app-pub-3747943735238482/7117549852"
 #define UMengKey @"53d607ff56240b5d11055ecd"
@@ -38,16 +38,16 @@
     [SliderViewController sharedSliderController].LeftSContentScale=0.8;
     
     LRNavigationController *nav=[[LRNavigationController alloc] initWithRootViewController:[SliderViewController sharedSliderController]];
-    
+    [FTF_Global shareGlobal].nav = nav;
     self.window.rootViewController = nav;
     
     [self.window makeKeyAndVisible];
     
-//    if (iPhone5())
-//    {
-//        //广告
-//        [self adMobSetting];
-//    }
+    if (iPhone5())
+    {
+        //广告
+        [self adMobSetting];
+    }
     
     //友盟
     [self umengSetting];
