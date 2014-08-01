@@ -31,7 +31,7 @@
                     </connections>
                 </segmentedControl>
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Uz3-7v-wro">
-                    <rect key="frame" x="0.0" y="93" width="320" height="475"/>
+                    <rect key="frame" x="0.0" y="93" width="320" height="425"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                 </scrollView>
             </subviews>

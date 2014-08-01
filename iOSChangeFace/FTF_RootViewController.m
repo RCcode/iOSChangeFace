@@ -83,8 +83,6 @@
 - (IBAction)openCamanaClick:(id)sender
 {
     
-    
-    
 }
 
 #pragma mark -
@@ -116,7 +114,6 @@
     [picker dismissViewControllerAnimated:YES completion:^{
         FTF_AdjustFaceViewController *adjustFaceController = [[FTF_AdjustFaceViewController alloc]initWithNibName:@"FTF_AdjustFaceViewController" bundle:nil];
         [adjustFaceController loadAdjustViews:[FTF_Global shareGlobal].compressionImage];
-        //[self.navigationController pushViewController:adjustFaceController animated:YES];
         [FTF_Global shareGlobal].nav.navigationBarHidden = NO;
         [[FTF_Global shareGlobal].nav pushViewControllerWithLRAnimated:adjustFaceController];
     }];

@@ -44,8 +44,6 @@
     [self initTableView];
     
     [SliderViewController sharedSliderController].target = self;
-//    [SliderViewController sharedSliderController].action = @selector(doAnimationWithTableView);
-//    [SliderViewController sharedSliderController].closeAction = @selector(removeTableViewCellAnimation);
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -70,7 +68,6 @@
     [self.view addSubview:_tableView];
     _tableView.backgroundColor = [UIColor clearColor];
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-//    _tableView.hidden = YES;
 
 }
 - (void)initViewsWith1136
@@ -244,17 +241,5 @@
 {
     [controller dismissViewControllerAnimated:YES completion:nil];
 }
-
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end
