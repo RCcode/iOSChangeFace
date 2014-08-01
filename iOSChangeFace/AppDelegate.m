@@ -27,17 +27,11 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
     
     [SliderViewController sharedSliderController].LeftVC=[[Pic_MenuViewController alloc] init];
-    
-    //向右滑动的距离
-    [SliderViewController sharedSliderController].LeftSContentOffset=180;
-    //控制器缩放的比例
-    [SliderViewController sharedSliderController].LeftSContentScale=0.8;
-    
     LRNavigationController *nav=[[LRNavigationController alloc] initWithRootViewController:[SliderViewController sharedSliderController]];
+    nav.canDragBack = NO;
     [FTF_Global shareGlobal].nav = nav;
     self.window.rootViewController = nav;
     

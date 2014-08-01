@@ -16,7 +16,6 @@
 }
 @property (strong, nonatomic) UIImage *libaryImage;
 @property (assign, nonatomic) CGRect imageRect;
-@property (assign, nonatomic) double rorationDegree;
 
 - (IBAction)btnClick:(id)sender;
 

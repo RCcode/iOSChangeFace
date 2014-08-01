@@ -113,7 +113,6 @@ enum DirectionType
     //从相册中选取的图片
     libaryImageView = [[UIImageView alloc]initWithFrame:_imageRect];
     libaryImageView.layer.shouldRasterize = YES;
-    libaryImageView.transform = CGAffineTransformMakeRotation(self.rorationDegree);
     libaryImageView.userInteractionEnabled = YES;
     
     [self adjustViews:_libaryImage withFrame:_imageRect];

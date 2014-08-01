@@ -9,6 +9,7 @@
 #import "ACMagnifyingView.h"
 #import "ACMagnifyingGlass.h"
 #import "MZCroppableView.h"
+#import "FTF_Global.h"
 
 static CGFloat const kACMagnifyingViewDefaultShowDelay = 0.5;
 
@@ -41,11 +42,15 @@ static CGFloat const kACMagnifyingViewDefaultShowDelay = 0.5;
     {
         [view removeFromSuperview];
     }
-    
+    //选取的图片
     self.imageView = imgView;
     [self addGestureRecognizerToView:self.imageView];
     self.image = imgView.image;
     [self addSubview:self.imageView];
+    CGAffineTransform currentTransform = self.imageView.transform;
+    CGAffineTransform newTransform = CGAffineTransformRotate(currentTransform, [FTF_Global shareGlobal].rorationDegree);
+    [self.imageView setTransform:newTransform];
+    //抠图操作视图
     cropView = [[MZCroppableView alloc]initWithImageView:self.imageView];
     cropView.userInteractionEnabled = NO;
     self.magnifyingGlass.hidden = YES;
@@ -135,12 +140,19 @@ static CGFloat const kACMagnifyingViewDefaultShowDelay = 0.5;
 
 - (void)rotateView:(UIRotationGestureRecognizer *)recognizer
 {
-    float rotation = recordedRotation - recognizer.rotation;
-    _imageView.transform = CGAffineTransformMakeRotation(-rotation);
-    cropView.transform = CGAffineTransformMakeRotation(-rotation);
-    if (recognizer.state == UIGestureRecognizerStateEnded)
-    {
-        recordedRotation = rotation; //获取了 当前旋转的弧度值
+    UIView *imageView = recognizer.view;
+    CGFloat rotation = 0.0 - (recordedRotation - [recognizer rotation]);
+    
+    CGAffineTransform currentTransform = imageView.transform;
+    CGAffineTransform newTransform = CGAffineTransformRotate(currentTransform,rotation);
+    
+    [imageView setTransform:newTransform];
+    recordedRotation = [recognizer rotation];
+    
+    if([recognizer state] == UIGestureRecognizerStateEnded) {
+        
+        recordedRotation = recordedRotation - [recognizer rotation];
+        
     }
 }
 

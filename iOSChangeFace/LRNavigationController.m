@@ -84,7 +84,7 @@
         UIPanGestureRecognizer *recognizer = [[UIPanGestureRecognizer alloc]initWithTarget:self
                                                                                     action:@selector(paningGestureReceive:)];
         [recognizer delaysTouchesBegan];
-        [viewController.view addGestureRecognizer:recognizer];
+        //[viewController.view addGestureRecognizer:recognizer];
 #if __has_feature(objc_arc)
 #else
         [recognizer release];
@@ -246,7 +246,9 @@
 
 - (void)paningGestureReceive:(UIPanGestureRecognizer *)recoginzer
 {
-    if (self.viewControllers.count <= 1 || !self.canDragBack) return;
+    if (self.viewControllers.count <= 1 || !self.canDragBack)
+        
+        return;
     
     CGPoint touchPoint = [recoginzer locationInView:[UIApplication sharedApplication].keyWindow];
     

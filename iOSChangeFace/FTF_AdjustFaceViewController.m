@@ -9,12 +9,14 @@
 #import "FTF_AdjustFaceViewController.h"
 #import "UIImage+Zoom.h"
 #import "CMethods.h"
+#import "FTF_Global.h"
 #import "FTF_EditFaceViewController.h"
 
 
 @interface FTF_AdjustFaceViewController ()
 {
     float lastScale;
+    
     double recordedRotation;
     UIImageView *libaryImageView;
 }
@@ -27,6 +29,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+        
     }
     return self;
 }
@@ -43,7 +46,6 @@
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithTitle:@"Next" style:UIBarButtonItemStylePlain target:self action:@selector(rightItemClick:)];
     self.navigationItem.rightBarButtonItem = rightItem;
     
-    // Do any additional setup after loading the view from its nib.
 }
 
 - (void)loadAdjustViews:(UIImage *)image
@@ -115,21 +117,26 @@
 
 - (void)rotateView:(UIRotationGestureRecognizer *)recognizer
 {
-    float rotation = recordedRotation - recognizer.rotation;
-    libaryImageView.transform = CGAffineTransformMakeRotation(-rotation);
-    if (recognizer.state == UIGestureRecognizerStateEnded) {
-        recordedRotation = rotation;
+
+    UIView *imageView = recognizer.view;
+    CGFloat rotation = 0.0 - (recordedRotation - [recognizer rotation]);
+    CGAffineTransform currentTransform = imageView.transform;
+    CGAffineTransform newTransform = CGAffineTransformRotate(currentTransform,rotation);
+    
+    [imageView setTransform:newTransform];
+    recordedRotation = [recognizer rotation];
+    
+    if([recognizer state] == UIGestureRecognizerStateEnded) {
+        recordedRotation = recordedRotation - [recognizer rotation];
     }
+    
 }
 
 - (void)rightItemClick:(UIBarButtonItem *)item
 {
     FTF_EditFaceViewController *editFace = [[FTF_EditFaceViewController alloc] initWithNibName:@"FTF_EditFaceViewController" bundle:nil];
     editFace.libaryImage = libaryImageView.image;
-    libaryImageView.transform = CGAffineTransformMakeRotation(0);
     editFace.imageRect = libaryImageView.frame;
-    libaryImageView.transform = CGAffineTransformMakeRotation(-recordedRotation);
-    editFace.rorationDegree = -recordedRotation;
     [self.navigationController pushViewController:editFace animated:YES];
 }
 
