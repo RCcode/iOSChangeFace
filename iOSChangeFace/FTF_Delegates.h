@@ -19,3 +19,9 @@
 - (void)changeModelImage;
 
 @end
+
+@protocol DirectionDelegate <NSObject>
+
+- (void)directionBtnClick:(NSUInteger)tag;
+
+@end

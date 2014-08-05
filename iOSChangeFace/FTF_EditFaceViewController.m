@@ -15,11 +15,14 @@ enum DirectionType
 };
 
 #define UIColorFromHexAlpha(hexValue, a) [UIColor colorWithRed:((float)((hexValue & 0xFF0000) >> 16))/255.0 green:((float)((hexValue & 0xFF00) >> 8))/255.0 blue:((float)(hexValue & 0xFF))/255.0 alpha:a]
+#define BtnWidth 64.f
+#define BtnHeight 50.f
 
 #import "FTF_EditFaceViewController.h"
 #import "UIImage+Zoom.h"
 #import "CMethods.h"
 #import "FTF_Global.h"
+#import "FTF_Button.h"
 #import "MZCroppableView.h"
 #import "ACMagnifyingView.h"
 #import "ACMagnifyingGlass.h"
@@ -35,6 +38,7 @@ enum DirectionType
     ACMagnifyingView *backView;
     ACMagnifyingGlass *mag;
     UIImageView *backImageView;
+    NSArray *dataArray;
 }
 @property (weak, nonatomic) IBOutlet UISlider *positionSlider;
 @property (weak, nonatomic) IBOutlet UISlider *fuzzySlider;
@@ -64,6 +68,7 @@ enum DirectionType
     backView = nil;
     mag = nil;
     backImageView = nil;
+    dataArray = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
@@ -77,10 +82,33 @@ enum DirectionType
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(endCropImage) name:@"EndCropImage" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(beginCropImage) name:@"BeginCropImage" object:nil];
     
+    UIView *toolBarView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height - 100, 320, BtnHeight)];
+    toolBarView.backgroundColor = [UIColor grayColor];
+    [self.view addSubview:toolBarView];
+    
+    
+    dataArray = @[@[@"switch_nor",@"fodder_nor",@"beautify_nor",@"adjust_nor",@"filter_nor"],
+                  @[@"switch_sel",@"fodder_sel",@"beautify_sel",@"adjust_sel",@"filter_sel"]];
+    
+    int i = 0;
+    while (i < 5)
+    {
+        FTF_Button *btn = [[FTF_Button alloc] initWithFrame:CGRectMake(BtnWidth * i, 0, BtnWidth, BtnHeight)];
+        btn.toolImageView.frame = CGRectMake((BtnWidth - 30)/2, 10, 30, 30);
+        btn.toolImageView.image = pngImagePath([dataArray[0] objectAtIndex:i]);
+        btn.normelName = [dataArray[0] objectAtIndex:i];
+        btn.selectName = [dataArray[1] objectAtIndex:i];
+        btn.tag = i;
+        [btn addTarget:self action:@selector(toolBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+        [toolBarView addSubview:btn];
+        i++;
+    }
+    
     colorArray = [NSMutableArray arrayWithCapacity:0];
     for (int i = 0; i < 24; i++)
     {
-        if (i < 11) {
+        if (i < 11)
+        {
             [colorArray addObject:(id)[UIColorFromHexAlpha(0xffffff, 1) CGColor]];
         }
         else
@@ -88,7 +116,7 @@ enum DirectionType
             [colorArray addObject:(id)[UIColorFromHexAlpha(0xffffff, 0) CGColor]];
         }
     }
-    
+
     directionStyle = leftToRight;
     //模糊图层
     maskLayer = [CAGradientLayer layer];
@@ -118,6 +146,14 @@ enum DirectionType
     [self adjustViews:_libaryImage withFrame:_imageRect];
 }
 
+#pragma mark -
+#pragma mark 工具栏
+- (void)toolBtnClick:(FTF_Button *)btn
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"changeImage" object:nil];
+    [btn changeBtnImage];
+}
+
 - (void)rightItemClick:(UIBarButtonItem *)item
 {
     FTF_MaterialViewController *materialController = [[FTF_MaterialViewController alloc] initWithNibName:@"FTF_MaterialViewController" bundle:nil];
@@ -125,6 +161,8 @@ enum DirectionType
     [self.navigationController pushViewController:materialController animated:YES];
 }
 
+#pragma mark -
+#pragma mark 初始化视图
 - (void)adjustViews:(UIImage *)image withFrame:(CGRect)rect
 {
 
@@ -183,7 +221,8 @@ enum DirectionType
         {
             if (directionStyle == leftToRight || directionStyle == topToBottom)
             {
-                if (i < 11) {
+                if (i < 11)
+                {
                     [colorArray addObject:(id)[UIColorFromHexAlpha(0xffffff, 1) CGColor]];
                 }
                 else
@@ -217,11 +256,15 @@ enum DirectionType
 
 }
 
+#pragma mark -
+#pragma mark 剪切
 - (void)endCropImage
 {
     [backView endCropImage];
 }
 
+#pragma mark -
+#pragma mark 开始划线
 - (void)beginCropImage
 {
     [backView beginCropImage];
@@ -231,6 +274,7 @@ enum DirectionType
 {
     [super didReceiveMemoryWarning];
 }
+
 
 - (IBAction)sliderValueChanged:(id)sender
 {
