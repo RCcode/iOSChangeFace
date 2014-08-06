@@ -23,5 +23,13 @@
 @protocol DirectionDelegate <NSObject>
 
 - (void)directionBtnClick:(NSUInteger)tag;
+@optional
+- (void)sliderValueHaveChanged:(NSUInteger)tag;
+
+@end
+
+@protocol SliderVolumeSlideDelegate <NSObject>
+
+- (void)slideChange:(CGFloat)value;
 
 @end

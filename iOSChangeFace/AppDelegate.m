@@ -26,12 +26,20 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
     
     [SliderViewController sharedSliderController].LeftVC=[[Pic_MenuViewController alloc] init];
     LRNavigationController *nav=[[LRNavigationController alloc] initWithRootViewController:[SliderViewController sharedSliderController]];
+    
+    nav.navigationBar.translucent = NO;
+    //navBar背景图
+    UIEdgeInsets ed = {0.0f, 10.0f, 0.0f, 10.0f};
+    UIImage *image = [pngImagePath(@"bg") resizableImageWithCapInsets:ed resizingMode:UIImageResizingModeTile];
+    [nav.navigationBar setBackgroundImage:image forBarMetrics:UIBarMetricsDefault];
     nav.canDragBack = NO;
+    
     [FTF_Global shareGlobal].nav = nav;
     self.window.rootViewController = nav;
     

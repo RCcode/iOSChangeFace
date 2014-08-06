@@ -9,8 +9,13 @@
 #import <UIKit/UIKit.h>
 #import "FTF_Delegates.h"
 
-@interface FTF_DirectionView : UIView
+@interface FTF_DirectionView : UIView <SliderVolumeSlideDelegate>
 
 @property (nonatomic ,assign) id <DirectionDelegate> delegate;
+
+- (void)loadDirectionItools;
+- (void)loadModelStyleItools;
+- (void)loadCropItools;
+- (void)loadFilerItools;
 
 @end

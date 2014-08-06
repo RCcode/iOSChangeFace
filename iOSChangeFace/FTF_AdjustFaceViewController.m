@@ -13,6 +13,7 @@
 #import "FTF_Button.h"
 #import "FTF_DirectionView.h"
 #import "FTF_EditFaceViewController.h"
+#import "LRNavigationController.h"
 #define ToolBarHeight 104.f
 #define BtnWidth 320.f/6.f
 
@@ -46,12 +47,34 @@
 {
     [super viewDidLoad];
     
-    lastScale = 1.f;
+    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
     
-    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithTitle:@"Next" style:UIBarButtonItemStylePlain target:self action:@selector(rightItemClick:)];
+    lastScale = 1.f;
+
+    //返回按钮
+    UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    backBtn.frame = CGRectMake(0, 0, 129, 44);
+    [backBtn setImage:pngImagePath(@"btn_back_normal") forState:UIControlStateNormal];
+    [backBtn setImage:pngImagePath(@"btn_back_pressed") forState:UIControlStateHighlighted];
+    backBtn.imageView.contentMode = UIViewContentModeCenter;
+    backBtn.imageEdgeInsets = UIEdgeInsetsMake(0, -32, 0, 0);
+    [backBtn addTarget:self action:@selector(backItemClick:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithCustomView:backBtn];
+    self.navigationItem.leftBarButtonItem = leftItem;
+    
+    //下一级
+    UIButton *nextBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    nextBtn.frame = CGRectMake(0, 0, 44, 44);
+    [nextBtn setImage:pngImagePath(@"btn_ok_normal") forState:UIControlStateNormal];
+    [nextBtn setImage:pngImagePath(@"btn_ok_pressed") forState:UIControlStateHighlighted];
+    nextBtn.imageView.contentMode = UIViewContentModeCenter;
+    nextBtn.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, -32);
+    [nextBtn addTarget:self action:@selector(rightItemClick:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithCustomView:nextBtn];
     self.navigationItem.rightBarButtonItem = rightItem;
     
-    FTF_DirectionView *toolBarView = [[FTF_DirectionView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height - 154, 320, ToolBarHeight)];
+    FTF_DirectionView *toolBarView = [[FTF_DirectionView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height - 218, 320, ToolBarHeight)];
+    [toolBarView loadDirectionItools];
     toolBarView.delegate = self;
     [self.view addSubview:toolBarView];
     
@@ -61,7 +84,7 @@
 #pragma mark 初始化视图
 - (void)loadAdjustViews:(UIImage *)image
 {
-    UIView *backView = [[UIView alloc] initWithFrame:CGRectMake(0, 80, 320, 320)];
+    UIView *backView = [[UIView alloc] initWithFrame:CGRectMake(0, 16, 320, 320)];
     backView.layer.masksToBounds = YES;
     [self.view addSubview:backView];
     
@@ -185,6 +208,11 @@
     editFace.libaryImage = libaryImageView.image;
     editFace.imageRect = libaryImageView.frame;
     [self.navigationController pushViewController:editFace animated:YES];
+}
+
+- (void)backItemClick:(UIBarButtonItem *)item
+{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark - 

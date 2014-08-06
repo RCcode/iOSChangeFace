@@ -60,9 +60,18 @@
 
 - (void)initTableView
 {
+    
+    UIImageView *logoImage = [[UIImageView alloc] initWithFrame:CGRectMake(40, 56, 109, 17)];
+    logoImage.image = pngImagePath(@"listlogo");
+    [self.view addSubview:logoImage];
+    
+    UIImageView *lineImage = [[UIImageView alloc] initWithFrame:CGRectMake(14, 86, 162, 6)];
+    lineImage.image = pngImagePath(@"listlogo_line");
+    [self.view addSubview:lineImage];
+    
      _dataArray = [[NSMutableArray alloc] init];
     [self initViewsWith1136];
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, 320, 400)];
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 90, 320, 400)];
     _tableView.dataSource = self;
     _tableView.delegate = self;
     [self.view addSubview:_tableView];
@@ -194,7 +203,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 51;
+    return 44;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -209,11 +218,12 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIde];
     }
+    
     Pic_RootTableViewCellObject *model = [_dataArray objectAtIndex:indexPath.row];
-    UIImageView *iconImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 13, 25 , 25)];
+    UIImageView *iconImageView = [[UIImageView alloc] initWithFrame:CGRectMake(31, 13, 25 , 25)];
     iconImageView.image = [UIImage imageNamed:model.imageName];
     iconImageView.highlightedImage = [UIImage imageNamed:model.imageHLName];
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(46, 0, 200, 52)];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(70, 0, 120, 52)];
     label.textAlignment = NSTextAlignmentLeft;
     label.backgroundColor = [UIColor clearColor];
     label.textColor = [UIColor whiteColor];
@@ -221,11 +231,15 @@
     label.text = model.title;
     label.highlightedTextColor = colorWithHexString(@"#f85e5e",1.f);
     
+    UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(26, 43, 140, 1)];
+    lineView.backgroundColor = colorWithHexString(@"#666666", 1.0f);
+    
     UIView *view = [[UIView alloc] initWithFrame:cell.frame];
     view.backgroundColor = colorWithHexString(@"#1e1e1e",1.f);
     cell.selectedBackgroundView = view;
     [cell.contentView addSubview:iconImageView];
     [cell.contentView addSubview:label];
+    [cell.contentView addSubview:lineView];
     [cell setTintColor:colorWithHexString(@"#f85e5e",1.f)];
     cell.backgroundColor = [UIColor clearColor];
     return cell;

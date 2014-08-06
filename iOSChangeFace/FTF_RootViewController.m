@@ -12,11 +12,15 @@
 #import "FTF_Global.h"
 #import "FTF_AdjustFaceViewController.h"
 #import "LRNavigationController.h"
+#import "SliderViewController.h"
 
 @interface FTF_RootViewController ()
 
+@property (weak, nonatomic) IBOutlet UIImageView *bg_ImageView;
 - (IBAction)openLibaryClick:(id)sender;
 - (IBAction)openCamanaClick:(id)sender;
+- (IBAction)moreApp:(id)sender;
+- (IBAction)more:(id)sender;
 
 @end
 
@@ -83,6 +87,16 @@
 - (IBAction)openCamanaClick:(id)sender
 {
     
+}
+
+- (IBAction)moreApp:(id)sender
+{
+    
+}
+
+- (IBAction)more:(id)sender
+{
+    [[SliderViewController sharedSliderController] showLeftViewController];
 }
 
 #pragma mark -

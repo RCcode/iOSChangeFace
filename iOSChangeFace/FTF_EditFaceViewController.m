@@ -17,6 +17,7 @@ enum DirectionType
 #define UIColorFromHexAlpha(hexValue, a) [UIColor colorWithRed:((float)((hexValue & 0xFF0000) >> 16))/255.0 green:((float)((hexValue & 0xFF00) >> 8))/255.0 blue:((float)(hexValue & 0xFF))/255.0 alpha:a]
 #define BtnWidth 64.f
 #define BtnHeight 50.f
+#define ItoolsBackHeight 104.f
 
 #import "FTF_EditFaceViewController.h"
 #import "UIImage+Zoom.h"
@@ -30,15 +31,16 @@ enum DirectionType
 
 @interface FTF_EditFaceViewController ()
 {
-    UIView *bottomView;
+    UIView *bottomView;//底图
     enum DirectionType directionStyle;
     NSMutableArray *colorArray;
-    CAGradientLayer *maskLayer;
+    CAGradientLayer *maskLayer;//模糊层
     UIImageView *libaryImageView;
-    ACMagnifyingView *backView;
-    ACMagnifyingGlass *mag;
+    ACMagnifyingView *backView;//放大镜操作图
+    ACMagnifyingGlass *mag;//放大镜显示框
     UIImageView *backImageView;
     NSArray *dataArray;
+    
 }
 @property (weak, nonatomic) IBOutlet UISlider *positionSlider;
 @property (weak, nonatomic) IBOutlet UISlider *fuzzySlider;
@@ -76,19 +78,52 @@ enum DirectionType
 {
     [super viewDidLoad];
     
-    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithTitle:@"素材" style:UIBarButtonItemStylePlain target:self action:@selector(rightItemClick:)];
-    self.navigationItem.rightBarButtonItem = rightItem;
+    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
+    
+    //返回按钮
+    UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    backBtn.frame = CGRectMake(0, 0, 129, 44);
+    [backBtn setImage:pngImagePath(@"btn_back_normal") forState:UIControlStateNormal];
+    [backBtn setImage:pngImagePath(@"btn_back_pressed") forState:UIControlStateHighlighted];
+    backBtn.imageView.contentMode = UIViewContentModeCenter;
+    backBtn.imageEdgeInsets = UIEdgeInsetsMake(0, -32, 0, 0);
+    [backBtn addTarget:self action:@selector(backItemClick:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithCustomView:backBtn];
+    self.navigationItem.leftBarButtonItem = leftItem;
+    
+    UIButton *homeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    homeBtn.frame = CGRectMake(0, 0, 44, 44);
+    [homeBtn setImage:pngImagePath(@"btn_home_normal") forState:UIControlStateNormal];
+    [homeBtn setImage:pngImagePath(@"btn_home_pressed") forState:UIControlStateHighlighted];
+    [homeBtn addTarget:self action:@selector(homeItemClick:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *homeItem = [[UIBarButtonItem alloc] initWithCustomView:homeBtn];
+    
+    UIButton *cameraBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    cameraBtn.frame = CGRectMake(0, 0, 44, 44);
+    [cameraBtn setImage:pngImagePath(@"btn_ig_normal") forState:UIControlStateNormal];
+    [cameraBtn setImage:pngImagePath(@"btn_ig_pressed") forState:UIControlStateHighlighted];
+    [cameraBtn addTarget:self action:@selector(cameraItemClick:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *cameraItem = [[UIBarButtonItem alloc] initWithCustomView:cameraBtn];
+    
+    UIButton *shareBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    shareBtn.frame = CGRectMake(0, 0, 44, 44);
+    [shareBtn setImage:pngImagePath(@"btn_share_normal") forState:UIControlStateNormal];
+    [shareBtn setImage:pngImagePath(@"btn_share_pressed") forState:UIControlStateHighlighted];
+    [shareBtn addTarget:self action:@selector(shareItemClick:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *shareItem = [[UIBarButtonItem alloc] initWithCustomView:shareBtn];
+    
+    NSArray *actionButtonItems = @[shareItem,cameraItem,homeItem];
+    self.navigationItem.rightBarButtonItems = actionButtonItems;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(endCropImage) name:@"EndCropImage" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(beginCropImage) name:@"BeginCropImage" object:nil];
     
-    UIView *toolBarView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height - 100, 320, BtnHeight)];
+    UIView *toolBarView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height - 164, 320, BtnHeight)];
     toolBarView.backgroundColor = [UIColor grayColor];
     [self.view addSubview:toolBarView];
     
-    
-    dataArray = @[@[@"switch_nor",@"fodder_nor",@"beautify_nor",@"adjust_nor",@"filter_nor"],
-                  @[@"switch_sel",@"fodder_sel",@"beautify_sel",@"adjust_sel",@"filter_sel"]];
+    dataArray = @[@[@"icon_fodder_normal",@"icon_switch_normal",@"icon_beautify_normal",@"icon_adjust_normal",@"icon_filter_normal"],
+                  @[@"icon_fodder_pressed",@"icon_switch_pressed",@"icon_beautify_pressed",@"icon_adjust_pressed",@"icon_filter_pressed"]];
     
     int i = 0;
     while (i < 5)
@@ -103,7 +138,7 @@ enum DirectionType
         [toolBarView addSubview:btn];
         i++;
     }
-    
+
     colorArray = [NSMutableArray arrayWithCapacity:0];
     for (int i = 0; i < 24; i++)
     {
@@ -121,7 +156,7 @@ enum DirectionType
     //模糊图层
     maskLayer = [CAGradientLayer layer];
     //背景view
-    bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, 100, 320, 320)];
+    bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, 16, 320, 320)];
     [self.view addSubview:bottomView];
     
     //默认底图
@@ -144,6 +179,27 @@ enum DirectionType
     libaryImageView.userInteractionEnabled = YES;
     
     [self adjustViews:_libaryImage withFrame:_imageRect];
+    
+}
+
+- (void)backItemClick:(UIBarButtonItem *)item
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)homeItemClick:(UIBarButtonItem *)item
+{
+    [self.navigationController popToRootViewControllerAnimated:YES];
+}
+
+- (void)cameraItemClick:(UIBarButtonItem *)item
+{
+    
+}
+
+- (void)shareItemClick:(UIBarButtonItem *)item
+{
+    
 }
 
 #pragma mark -
