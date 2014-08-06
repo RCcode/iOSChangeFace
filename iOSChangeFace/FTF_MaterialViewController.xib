@@ -7,7 +7,6 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FTF_MaterialViewController">
             <connections>
                 <outlet property="modelScrollerView" destination="Uz3-7v-wro" id="84R-Bt-UJ3"/>
-                <outlet property="modelSegment" destination="a3D-iN-cme" id="yF1-yx-dBV"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -16,22 +15,8 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="a3D-iN-cme">
-                    <rect key="frame" x="0.0" y="64" width="320" height="29"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <segments>
-                        <segment title="动物"/>
-                        <segment title="骷髅"/>
-                        <segment title="美女"/>
-                        <segment title="面具"/>
-                        <segment title="其他"/>
-                    </segments>
-                    <connections>
-                        <action selector="modelSegmentValueChanged:" destination="-1" eventType="valueChanged" id="znB-Cb-vrv"/>
-                    </connections>
-                </segmentedControl>
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Uz3-7v-wro">
-                    <rect key="frame" x="0.0" y="93" width="320" height="425"/>
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="452"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                 </scrollView>
             </subviews>

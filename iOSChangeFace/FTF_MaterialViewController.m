@@ -11,6 +11,8 @@
 #import "CMethods.h"
 #import "UIImage+Zoom.h"
 #import "FTF_Global.h"
+#import "AMBlurView.h"
+#import "FTF_Button.h"
 
 @interface FTF_MaterialViewController ()
 
@@ -47,17 +49,38 @@
     self.modelScrollerView.pagingEnabled = YES;
     self.modelScrollerView.delegate = self;
     
-    int i = 0;
+    AMBlurView *amb = [[AMBlurView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height - 164, 320, 50)];
+    amb.blurTintColor = colorWithHexString(@"#202225", 0.9f);
+    [self.view addSubview:amb];
     
+    NSArray *dataArray = @[@[@"icon_skull_normal",@"icon_mask_normal",@"icon_animal_normal",@"icon_women_normal",@"icon_other_normal"],
+                           @[@"icon_skull_pressed",@"icon_mask_pressed",@"icon_animal_pressed",@"icon_women_pressed",@"icon_other_pressed"]];
+    
+    int i = 0;
     while (i < 5) {
         FTF_MaterialView *materialView = [[FTF_MaterialView alloc] initWithFrame:CGRectMake(i * 320, 0, 320, self.modelScrollerView.bounds.size.height)];
         [materialView loadMaterialModels:i];
         [self.modelScrollerView addSubview:materialView];
+        
+        FTF_Button *btn = [[FTF_Button alloc]initWithFrame:CGRectMake(30 + 57 * i, 10, 30, 30)];
+        btn.toolImageView.frame = CGRectMake(0, 0, 30, 30);
+        btn.toolImageView.image = pngImagePath([dataArray[0] objectAtIndex:i]);
+        [btn setNormelName:[dataArray[0] objectAtIndex:i]];
+        [btn setSelectName:[dataArray[1] objectAtIndex:i]];
+        btn.tag = i + 10;
+        [btn addTarget:self action:@selector(modelBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+        [amb addSubview:btn];
+        
         i++;
     }
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeMaterialImage) name:@"changeMaterialImage" object:nil];
     // Do any additional setup after loading the view from its nib.
+}
+
+- (void)modelBtnClick:(FTF_Button *)btn
+{
+    [self.modelScrollerView setContentOffset:CGPointMake(320 * btn.tag, 0) animated:YES];
 }
 
 - (void)rightItemClick:(UIBarButtonItem *)item

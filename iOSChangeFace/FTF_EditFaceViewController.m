@@ -182,21 +182,29 @@ enum DirectionType
     
 }
 
+#pragma mark -
+#pragma mark 返回
 - (void)backItemClick:(UIBarButtonItem *)item
 {
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+#pragma mark -
+#pragma mark 跳回主页
 - (void)homeItemClick:(UIBarButtonItem *)item
 {
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
+#pragma mark -
+#pragma mark 打开相册
 - (void)cameraItemClick:(UIBarButtonItem *)item
 {
     
 }
 
+#pragma mark -
+#pragma mark 分享
 - (void)shareItemClick:(UIBarButtonItem *)item
 {
     
@@ -208,13 +216,31 @@ enum DirectionType
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:@"changeImage" object:nil];
     [btn changeBtnImage];
-}
+    switch (btn.tag) {
+        case 0:
+        {
+            FTF_MaterialViewController *materialController = [[FTF_MaterialViewController alloc] initWithNibName:@"FTF_MaterialViewController" bundle:nil];
+            materialController.delegate = self;
+            [self.navigationController pushViewController:materialController animated:YES];
+            [btn performSelector:@selector(btnHaveClicked) withObject:nil afterDelay:.15f];
 
-- (void)rightItemClick:(UIBarButtonItem *)item
-{
-    FTF_MaterialViewController *materialController = [[FTF_MaterialViewController alloc] initWithNibName:@"FTF_MaterialViewController" bundle:nil];
-    materialController.delegate = self;
-    [self.navigationController pushViewController:materialController animated:YES];
+        }
+            break;
+        case 1:
+            
+            break;
+        case 2:
+            
+            break;
+        case 3:
+            
+            break;
+        case 4:
+            
+            break;
+        default:
+            break;
+    }
 }
 
 #pragma mark -
@@ -260,6 +286,7 @@ enum DirectionType
     maskLayer.colors = colorArray;
     [backView.layer setMask:maskLayer];
 }
+
 
 - (IBAction)btnClick:(id)sender
 {
