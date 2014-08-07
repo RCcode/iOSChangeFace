@@ -16,6 +16,7 @@
     MZCroppableView *cropView;
     float lastScale;
     double recordedRotation;
+    BOOL isTiny;
 }
 @property (nonatomic, strong) ACMagnifyingGlass *magnifyingGlass;
 @property (nonatomic, assign) CGFloat magnifyingGlassShowDelay;
@@ -30,5 +31,6 @@
 - (void)setMZViewUserInteractionEnabled;
 - (void)setMZViewNotUserInteractionEnabled;
 - (void)setMZImageView;
+- (void)moveBtnClick:(NSInteger)tag;
 
 @end

@@ -16,11 +16,16 @@
 #import "LRNavigationController.h"
 #import "FTF_Global.h"
 #import "CMethods.h"
+#import "RC_AppInfo.h"
+#import "ME_SQLMassager.h"
+#import "FTF_DataRequest.h"
+#import "UIDevice+DeviceInfo.h"
 @import AdSupport;
 
 #define AdMobID @"ca-app-pub-3747943735238482/7117549852"
 #define UMengKey @"53d607ff56240b5d11055ecd"
 #define FlurryAppKey @"Q85WBVSCNNNC284VSQ8K"
+#define UDKEY_ShareCount @"shareCount"
 
 @implementation AppDelegate
 
@@ -45,6 +50,9 @@
     
     [self.window makeKeyAndVisible];
     
+    //注册通知
+    [self registNotification];
+    
     if (iPhone5())
     {
         //广告
@@ -53,6 +61,36 @@
     
     //友盟
     [self umengSetting];
+    
+    //AFNetWorking
+    [self netWorkingSetting];
+    
+    //检测更新
+    [self checkVersion];
+    
+    //下载应用列表
+    [self downLoadAppsInfo];
+    
+    //三次分享，即弹框
+    NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
+    int shareCount = [[userDefault objectForKey:UDKEY_ShareCount] intValue];
+    
+    if(shareCount != -1)
+    {
+        shareCount++;
+        if((shareCount >= 4) && !(shareCount % 2)){
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@""
+                                                            message:LocalizedString(@"comment_us", nil)
+                                                           delegate:self
+                                                  cancelButtonTitle:LocalizedString(@"never_attention", nil)
+                                                  otherButtonTitles:LocalizedString(@"rate_now", nil), LocalizedString(@"comment_later", nil), nil];
+            alert.tag = 11;
+            [alert show];
+        }
+        
+        [userDefault setObject:@(shareCount) forKey:UDKEY_ShareCount];
+        [userDefault synchronize];
+    }
     
     return YES;
 }
@@ -66,6 +104,32 @@
     
     [Flurry startSession:FlurryAppKey];
     [Flurry setSessionReportsOnCloseEnabled:YES];
+}
+
+#pragma mark -
+#pragma mark 版本检测
+- (void)checkVersion
+{
+    NSString *urlStr = [NSString stringWithFormat:@"http://itunes.apple.com/lookup?id=%@",appleID];
+    FTF_DataRequest *request = [[FTF_DataRequest alloc] initWithDelegate:self];
+    [request updateVersion:urlStr withTag:10];
+}
+
+- (void)downLoadAppsInfo
+{
+    //Bundle Id
+    NSString *bundleIdentifier = [[NSBundle mainBundle] bundleIdentifier];
+    NSDictionary *infoDict = [[NSBundle mainBundle] infoDictionary];
+    NSString *currentVersion = [infoDict objectForKey:@"CFBundleVersion"];
+    NSString *language = [[NSLocale preferredLanguages] firstObject];
+    if ([language isEqualToString:@"zh-Hans"])
+    {
+        language = @"zh";
+    }
+    
+    NSDictionary *dic = @{@"appId":[NSNumber numberWithInt:moreAppID],@"packageName":bundleIdentifier,@"language":language,@"version":currentVersion,@"platform":[NSNumber numberWithInt:0]};
+    FTF_DataRequest *request = [[FTF_DataRequest alloc] initWithDelegate:self];
+    [request moreApp:dic withTag:11];
 }
 
 #pragma mark -
@@ -87,6 +151,254 @@
     [FTF_Global shareGlobal].bannerView = bannerView;
 }
 
+- (void)registNotification{
+    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
+}
+
+- (void)cancelNotification{
+    [[UIApplication sharedApplication] cancelAllLocalNotifications];
+    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
+}
+
+#pragma mark -
+#pragma mark 处理远程通知事件
+- (void)doNotificationWithInfo:(NSDictionary *)userInfo{
+    [self cancelNotification];
+    
+    if(userInfo == nil) return;
+    
+    NSDictionary *dictionary = [userInfo objectForKey:@"aps"];
+    NSString *alert = [dictionary objectForKey:@"alert"];
+    NSString *type = [userInfo objectForKey:@"type"];
+    NSString *urlStr = [userInfo objectForKey:@"url"];
+    
+    switch (type.intValue) {
+        case 0:
+        {
+            //Ad
+            self.updateUrlStr = urlStr;
+            
+            UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@""
+                                                               message:alert
+                                                              delegate:self
+                                                     cancelButtonTitle:LocalizedString(@"cancel", @"")
+                                                     otherButtonTitles:LocalizedString(@"Done", @""), nil];
+            alertView.tag = 12;
+            [alertView show];
+            
+        }
+            break;
+        case 1:
+        {
+            //Update
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@""
+                                                           message:LocalizedString(@"newVersion", @"")
+                                                          delegate:self
+                                                 cancelButtonTitle:LocalizedString(@"remindLater", @"")
+                                                 otherButtonTitles:LocalizedString(@"updateNow", @""), nil];
+            alert.tag = 13;
+            [alert show];
+        }
+            break;
+        default:
+            break;
+    }
+    
+}
+
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
+{
+    NSRange range = NSMakeRange(1,[[deviceToken description] length]-2);
+    NSString *deviceTokenStr = [[deviceToken description] substringWithRange:range];
+    NSLog(@"deviceTokenStr==%@",deviceTokenStr);
+    
+    NSString *token = [[NSUserDefaults standardUserDefaults] objectForKey:@"deviceToken"];
+    if (token == nil || [token isKindOfClass:[NSNull class]] || ![token isEqualToString:deviceTokenStr]) {
+        
+        [[NSUserDefaults standardUserDefaults] setObject:deviceTokenStr forKey:@"deviceToken"];
+        //注册token
+        [self postData:[NSString stringWithFormat:@"%@",deviceTokenStr]];
+    }
+    
+}
+
+- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
+{
+    NSLog(@"Fail to Register For Remote Notificaions With Error :error = %@",error.description);
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
+{
+    [self doNotificationWithInfo:userInfo];
+}
+
+#pragma mark -
+#pragma mark 提交设备信息
+- (void)postData:(NSString *)token{
+    NSDictionary *infoDic = [self deviceInfomation:token];
+    FTF_DataRequest *request = [[FTF_DataRequest alloc] initWithDelegate:self];
+    [request registerToken:infoDic withTag:11];
+}
+
+#pragma mark -
+#pragma mark 配置AFN
+- (void)netWorkingSetting
+{
+    self.manager = [AFHTTPRequestOperationManager manager];
+    self.manager.responseSerializer = [[AFHTTPResponseSerializer alloc] init];
+}
+
+#pragma mark -
+#pragma mark 获取设备信息
+- (NSDictionary *)deviceInfomation:(NSString *)token
+{
+    
+    @autoreleasepool {
+        //Bundle Id
+        NSString *bundleIdentifier = [[NSBundle mainBundle] bundleIdentifier];
+        NSString *idfv = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
+        //NSString *macAddress = [UIDevice getMacAddressWithUIDevice];
+        NSString *systemVersion = [UIDevice currentVersion];
+        NSString *model = [UIDevice currentModel];
+        NSString *modelVersion = [UIDevice currentModelVersion];
+        
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateFormat:@"Z"];
+        NSTimeZone *timeZone = [NSTimeZone systemTimeZone];
+        [dateFormatter setTimeZone:timeZone];
+        NSDate *date = [NSDate date];
+        //+0800
+        NSString *timeZoneZ = [dateFormatter stringFromDate:date];
+        NSRange range = NSMakeRange(0, 3);
+        //+08
+        NSString *timeZoneInt = [timeZoneZ substringWithRange:range];
+        
+        //en
+        NSArray *languageArray = [NSLocale preferredLanguages];
+        NSString *language = [languageArray objectAtIndex:0];
+        
+        //US
+        NSLocale *locale = [NSLocale currentLocale];
+        NSString *country = [[[locale localeIdentifier] componentsSeparatedByString:@"_"] lastObject];
+        
+        NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
+        [params setValue:token forKeyPath:@"token"];
+        [params setValue:timeZoneInt forKeyPath:@"timeZone"];
+        [params setValue:language forKey:@"language"];
+        [params setValue:bundleIdentifier forKeyPath:@"bundleid"];
+        [params setValue:idfv forKeyPath:@"mac"];
+        [params setValue:bundleIdentifier forKeyPath:@"pagename"];
+        [params setValue:model forKeyPath:@"model"];
+        [params setValue:modelVersion forKeyPath:@"model_ver"];
+        [params setValue:systemVersion forKeyPath:@"sysver"];
+        [params setValue:country forKeyPath:@"country"];
+        
+        return params;
+    }
+    
+}
+
+#pragma mark -
+#pragma mark WebDataRequestDelegate
+- (void)didReceivedData:(NSDictionary *)dic withTag:(NSInteger)tag
+{
+    switch (tag) {
+        case 10:
+        {
+            //解析数据
+            NSArray *results = [dic objectForKey:@"results"];
+            if ([results count] == 0 || results == nil || [results isKindOfClass:[NSNull class]])
+            {
+                return ;
+            }
+            
+            NSDictionary *dictionary = [results objectAtIndex:0];
+            NSString *version = [dictionary objectForKey:@"version"];
+            NSString *trackViewUrl = [dictionary objectForKey:@"trackViewUrl"];//地址trackViewUrl
+            self.trackURL = trackViewUrl;
+            
+            NSDictionary *infoDict = [[NSBundle mainBundle] infoDictionary];
+            NSString *currentVersion = [infoDict objectForKey:@"CFBundleVersion"];
+            
+            if ([currentVersion compare:version options:NSNumericSearch] == NSOrderedAscending)
+            {
+                
+                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:LocalizedString(@"tips", @"")
+                                                               message:LocalizedString(@"application_update", @"")
+                                                              delegate:self
+                                                     cancelButtonTitle:LocalizedString(@"cancel", @"")
+                                                     otherButtonTitles:LocalizedString(@"go", @""), nil];
+                alert.tag = 14;
+                [alert show];
+                
+            }
+        }
+            break;
+        case 11:
+        {
+            NSLog(@"dic.......%@",dic);
+            NSArray *infoArray = [dic objectForKey:@"list"];
+            NSMutableArray *isDownArray = [NSMutableArray arrayWithCapacity:0];
+            NSMutableArray *noDownArray = [NSMutableArray arrayWithCapacity:0];
+            for (NSDictionary *infoDic in infoArray)
+            {
+                RC_AppInfo *appInfo = [[RC_AppInfo alloc]initWithDictionary:infoDic];
+                if (appInfo.isHave)
+                {
+                    [isDownArray addObject:appInfo];
+                }
+                else
+                {
+                    [noDownArray addObject:appInfo];
+                }
+            }
+            NSMutableArray *dataArray = [NSMutableArray arrayWithCapacity:0];
+            [dataArray addObjectsFromArray:noDownArray];
+            [dataArray addObjectsFromArray:isDownArray];
+            [FTF_Global shareGlobal].appsArray = dataArray;
+            
+            //判断是否有新应用
+            if ([FTF_Global shareGlobal].appsArray.count > 0) {
+                NSMutableArray *dataArray = [[ME_SQLMassager shareStance] getAllData];
+                NSMutableArray *array = [NSMutableArray arrayWithCapacity:0];
+                
+                for (RC_AppInfo *app in [FTF_Global shareGlobal].appsArray)
+                {
+                    BOOL isHave = NO;
+                    for (RC_AppInfo *appInfo in dataArray)
+                    {
+                        if (app.appId == appInfo.appId)
+                        {
+                            isHave = YES;
+                        }
+                    }
+                    if (!isHave) {
+                        [array addObject:app];
+                    }
+                }
+                
+                //插入新数据
+                if (array.count > 0)
+                {
+                    [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey:@"MoreAPP"];
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"addMoreImage" object:nil];
+                    [[ME_SQLMassager shareStance] insertAppInfo:array];
+                }
+            }
+        }
+            break;
+        default:
+            break;
+    }
+    
+    hideMBProgressHUD();
+}
+
+- (void)requestFailed:(NSInteger)tag
+{
+    
+}
+
 - (void)applicationWillResignActive:(UIApplication *)application
 {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -101,6 +413,25 @@
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
+    NSLog(@"即将进入前台");
+    
+    //优先取全局变量中的数据，取不到 再取数据库中的
+    NSMutableArray *appInfoArr = nil;
+    if([FTF_Global shareGlobal].appsArray != nil){
+        appInfoArr = [FTF_Global shareGlobal].appsArray;
+    }else{
+        appInfoArr = [[ME_SQLMassager shareStance] getAllData];
+    }
+    
+    if(appInfoArr == nil)
+        return;
+    
+    for (RC_AppInfo *appInfo in appInfoArr) {
+        appInfo.isHave = [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:appInfo.openUrl]];
+        [[ME_SQLMassager shareStance] updagteAppInfo:appInfo.appId withIsHaveDownLoad:appInfo.isHave];
+    }
+    
+    [FTF_Global shareGlobal].appsArray = appInfoArr;
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
 }
 

@@ -27,6 +27,7 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         _public_Global = [[[self class] alloc] init];
+        _public_Global.appsArray = [[NSMutableArray alloc]init];
     });
     
     return _public_Global;

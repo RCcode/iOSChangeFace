@@ -18,6 +18,7 @@
 @property (nonatomic ,assign) BOOL isFromLibary;
 @property (nonatomic ,weak) LRNavigationController *nav;
 @property (assign, nonatomic) double rorationDegree;
+@property (nonatomic ,strong) NSMutableArray *appsArray;
 
 //广告条
 @property (nonatomic, strong) UIView *bannerView;

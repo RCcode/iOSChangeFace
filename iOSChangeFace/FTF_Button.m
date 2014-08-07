@@ -9,8 +9,6 @@
 #import "FTF_Button.h"
 #import "CMethods.h"
 
-static NSString *IMAGE_CHANGED = @"changeImage";
-
 @implementation FTF_Button
 
 - (id)initWithFrame:(CGRect)frame
@@ -23,7 +21,13 @@ static NSString *IMAGE_CHANGED = @"changeImage";
         self.toolImageView = [[UIImageView alloc]init];
         [self addSubview:self.toolImageView];
         
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(btnHaveClicked) name:IMAGE_CHANGED object:nil];
+        self.contentLabel = [[UILabel alloc] init];
+        self.contentLabel.backgroundColor = [UIColor clearColor];
+        self.contentLabel.textAlignment = NSTextAlignmentCenter;
+        self.contentLabel.font = [UIFont systemFontOfSize:12.f];
+        self.contentLabel.textColor = [UIColor whiteColor];
+        [self addSubview:self.contentLabel];
+        
     }
     return self;
 }
@@ -47,9 +51,5 @@ static NSString *IMAGE_CHANGED = @"changeImage";
     self.backgroundColor = [UIColor clearColor];
 }
 
-- (void)dealloc
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
 
 @end

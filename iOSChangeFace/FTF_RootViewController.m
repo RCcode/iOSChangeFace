@@ -13,6 +13,7 @@
 #import "FTF_AdjustFaceViewController.h"
 #import "LRNavigationController.h"
 #import "SliderViewController.h"
+#import "ME_MoreAppViewController.h"
 
 @interface FTF_RootViewController ()
 
@@ -60,6 +61,7 @@
                                               cancelButtonTitle:LocalizedString(@"ok", @"")
                                               otherButtonTitles:nil];
         [alert show];
+        return;
     }
     [FTF_Global shareGlobal].bannerView.hidden = YES;
     [self selectCamenaType:UIImagePickerControllerSourceTypePhotoLibrary];
@@ -68,6 +70,7 @@
 
 - (void)selectCamenaType:(NSInteger)sourceType
 {
+    [FTF_Global shareGlobal].bannerView.hidden = YES;
     UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
     imagePickerController.allowsEditing = NO;
     imagePickerController.modalPresentationStyle = UIModalPresentationCurrentContext;
@@ -77,6 +80,7 @@
     if (sourceType == UIImagePickerControllerSourceTypeCamera)
     {
         imagePickerController.cameraCaptureMode = UIImagePickerControllerCameraCaptureModePhoto;
+        imagePickerController.cameraDevice = UIImagePickerControllerCameraDeviceFront;
         //设置相机支持的类型，拍照和录像
         imagePickerController.mediaTypes = @[(NSString *)kUTTypeImage];
     }
@@ -86,12 +90,26 @@
 
 - (IBAction)openCamanaClick:(id)sender
 {
-    
+    AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
+    if (authStatus == AVAuthorizationStatusRestricted || authStatus == AVAuthorizationStatusDenied)
+    {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:LocalizedString(@"camena_not_availabel", @"")
+                                                        message:LocalizedString(@"user_camera_step", @"")
+                                                       delegate:nil
+                                              cancelButtonTitle:LocalizedString(@"ok", @"")
+                                              otherButtonTitles:nil];
+        [alert show];
+        return;
+    }
+    [self selectCamenaType:UIImagePickerControllerSourceTypeCamera];
+
 }
 
 - (IBAction)moreApp:(id)sender
 {
-    
+    ME_MoreAppViewController *moreApp = [[ME_MoreAppViewController alloc]initWithNibName:@"ME_MoreAppViewController" bundle:nil];
+    UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:moreApp];
+    [self presentViewController:nav animated:YES completion:nil];
 }
 
 - (IBAction)more:(id)sender

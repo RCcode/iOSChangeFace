@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 @import AssetsLibrary;
+@import AVFoundation;
 @import MobileCoreServices;
 
 @interface FTF_RootViewController : UIViewController <UIImagePickerControllerDelegate,UINavigationControllerDelegate>

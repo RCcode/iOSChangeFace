@@ -33,7 +33,8 @@
         [self addSubview:_processView];
         
         _slideView = [[UISlider alloc]initWithFrame:self.bounds];
-        _slideView.value = 0.8;
+        _slideView.tag = 1;
+        _slideView.value = 0;
         [_slideView setThumbImage:pngImagePath(@"slider") forState:UIControlStateNormal];
         _slideView.maximumValue = 1.0;
         _slideView.minimumValue = 0.0;
@@ -57,7 +58,7 @@
 {
     CGFloat value = _slideView.value;
     _processView.frame = CGRectMake(0, 10, width * value, 10);
-    [_delegate slideChange:_slideView.value];
+    [_delegate slideChange:_slideView];
 }
 
 @end

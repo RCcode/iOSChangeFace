@@ -24,12 +24,26 @@
 
 - (void)directionBtnClick:(NSUInteger)tag;
 @optional
-- (void)sliderValueHaveChanged:(NSUInteger)tag;
+- (void)directionSlider:(UISlider *)slider;
 
 @end
 
 @protocol SliderVolumeSlideDelegate <NSObject>
 
-- (void)slideChange:(CGFloat)value;
+- (void)slideChange:(UISlider *)slider;
+
+@end
+
+@protocol WebRequestDelegate <NSObject>
+
+- (void)didReceivedData:(NSDictionary *)dic withTag:(NSInteger)tag;
+@optional
+- (void)requestFailed:(NSInteger)tag;
+
+@end
+
+@protocol MoreAppDelegate <NSObject>
+
+- (void)jumpAppStore:(NSString *)appid;
 
 @end

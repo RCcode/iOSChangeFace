@@ -99,31 +99,122 @@ static CGFloat const kACMagnifyingViewDefaultShowDelay = 0.5;
 - (void)addGestureRecognizerToView:(UIView *)view
 {
     UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] init];
-    [pan addTarget:self action:@selector(panView:)];
+    [pan addTarget:self action:@selector(panView:changePoint:)];
     [view addGestureRecognizer:pan];
     
     UIPinchGestureRecognizer *pin = [[UIPinchGestureRecognizer alloc] init];
-    [pin addTarget:self action:@selector(pinView:)];
+    [pin addTarget:self action:@selector(pinView:changeScale:)];
     [view addGestureRecognizer:pin];
     
-    UIRotationGestureRecognizer *rotationGesture = [[UIRotationGestureRecognizer alloc] initWithTarget:self action:@selector(rotateView:)];
+    UIRotationGestureRecognizer *rotationGesture = [[UIRotationGestureRecognizer alloc] initWithTarget:self action:@selector(rotateView:changeRotate:)];
     [view addGestureRecognizer:rotationGesture];
 }
 
-- (void)panView:(UIPanGestureRecognizer *)recognizer
+- (void)moveBtnClick:(NSInteger)tag
+{
+    if (tag == 0)
+    {
+        self.imageView.transform = CGAffineTransformMakeRotation(0);
+        if ([FTF_Global shareGlobal].compressionImage.size.width > [FTF_Global shareGlobal].compressionImage.size.height)
+        {
+            self.imageView.frame = CGRectMake(0, 0, 320, [FTF_Global shareGlobal].compressionImage.size.height * (320.f/1080.f));
+        }
+        else
+        {
+            self.imageView.frame = CGRectMake(0, 0, [FTF_Global shareGlobal].compressionImage.size.width * (320.f/1080.f), 320);
+        }
+        self.imageView.center = CGPointMake(160, 160);
+        self.imageView.image = [FTF_Global shareGlobal].compressionImage;
+    }
+    else if (tag == 5 || tag == 6)
+    {
+        for (UIPinchGestureRecognizer *recognizer in self.imageView.gestureRecognizers)
+        {
+            if ([recognizer isKindOfClass:[UIPinchGestureRecognizer class]])
+            {
+                UIPinchGestureRecognizer *pin = (UIPinchGestureRecognizer *)recognizer;
+                float scale = 1 + (tag == 5 ? 0.06 : -0.06);
+                isTiny = YES;
+                [self pinView:pin changeScale:scale];
+            }
+        }
+    }
+    else if (tag == 7 || tag == 8)
+    {
+        for (UIRotationGestureRecognizer *recognizer in self.imageView.gestureRecognizers)
+        {
+            if ([recognizer isKindOfClass:[UIRotationGestureRecognizer class]])
+            {
+                UIRotationGestureRecognizer *rotation = (UIRotationGestureRecognizer *)recognizer;
+                float scale = tag == 7 ? -0.01 : 0.01;
+                isTiny = YES;
+                [self rotateView:rotation changeRotate:scale];
+            }
+        }
+    }
+    else
+    {
+        for (UIGestureRecognizer *recognizer in self.imageView.gestureRecognizers)
+        {
+            if ([recognizer isKindOfClass:[UIPanGestureRecognizer class]])
+            {
+                UIPanGestureRecognizer *pan = (UIPanGestureRecognizer *)recognizer;
+                
+                CGPoint point;
+                if (tag == 2 || tag == 4)
+                {
+                    point = CGPointMake(0, tag == 2 ? -5 : 5);
+                }
+                else
+                {
+                    point = CGPointMake(tag == 1 ? -5 : 5, 0);
+                }
+                isTiny = YES;
+                [self panView:pan changePoint:point];
+            }
+        }
+    }
+}
+
+#pragma mark -
+#pragma mark 移动
+- (void)panView:(UIPanGestureRecognizer *)recognizer changePoint:(CGPoint)point
 {
     UIView *panView = recognizer.view;
+    
     CGPoint translation;
-    translation = [recognizer translationInView:self];
+    if (isTiny)
+    {
+        translation = point;
+        isTiny = NO;
+    }
+    else
+    {
+        translation = [recognizer translationInView:self];
+    }
+    
     panView.center = CGPointMake(panView.center.x + translation.x, panView.center.y + translation.y);
     cropView.center = CGPointMake(cropView.center.x + translation.x, cropView.center.y + translation.y);
+    
     [recognizer setTranslation:CGPointMake(0, 0) inView:self];
 }
 
-- (void)pinView:(UIPinchGestureRecognizer *)recognizer
+#pragma mark -
+#pragma mark 缩放
+- (void)pinView:(UIPinchGestureRecognizer *)recognizer changeScale:(float)tinyScale
 {
     UIView *imageView = recognizer.view;
-    CGFloat scale = 1.0 - (lastScale - [recognizer scale]);
+    
+    CGFloat scale;
+    if (isTiny)
+    {
+        scale = 1.0 - (lastScale - tinyScale);
+        isTiny = NO;
+    }
+    else
+    {
+        scale = 1.0 - (lastScale - [recognizer scale]);
+    }
     
     if ([recognizer state] == UIGestureRecognizerStateEnded)
     {
@@ -131,28 +222,38 @@ static CGFloat const kACMagnifyingViewDefaultShowDelay = 0.5;
         return;
     }
     
-    CGAffineTransform imageViewTransform = CGAffineTransformScale(imageView.transform, scale, scale);
-    [imageView setTransform:imageViewTransform];
+    CGAffineTransform newTransform = CGAffineTransformScale(imageView.transform, scale, scale);
+    [imageView setTransform:newTransform];
     cropView.frame = imageView.frame;
     
     lastScale = [recognizer scale];
 }
 
-- (void)rotateView:(UIRotationGestureRecognizer *)recognizer
+#pragma mark -
+#pragma mark 旋转
+- (void)rotateView:(UIRotationGestureRecognizer *)recognizer changeRotate:(float)tinyScale
 {
+    
     UIView *imageView = recognizer.view;
-    CGFloat rotation = 0.0 - (recordedRotation - [recognizer rotation]);
+    CGFloat rotation;
+    
+    if (isTiny)
+    {
+        rotation = tinyScale;
+        isTiny = NO;
+    }
+    else
+    {
+        rotation = 0.0 - (recordedRotation - [recognizer rotation]);
+    }
     
     CGAffineTransform currentTransform = imageView.transform;
     CGAffineTransform newTransform = CGAffineTransformRotate(currentTransform,rotation);
-    
     [imageView setTransform:newTransform];
-    recordedRotation = [recognizer rotation];
     
+    recordedRotation = [recognizer rotation];
     if([recognizer state] == UIGestureRecognizerStateEnded) {
-        
         recordedRotation = recordedRotation - [recognizer rotation];
-        
     }
 }
 

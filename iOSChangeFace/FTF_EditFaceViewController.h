@@ -8,15 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #import "FTF_Delegates.h"
+#import "NCVideoCamera.h"
 
-@interface FTF_EditFaceViewController : UIViewController <ChangeModelDelegate>
+@interface FTF_EditFaceViewController : UIViewController <ChangeModelDelegate,DirectionDelegate,NCVideoCameraDelegate>
 {
     UIImage *_libaryImage;
     CGRect _imageRect;
 }
 @property (strong, nonatomic) UIImage *libaryImage;
 @property (assign, nonatomic) CGRect imageRect;
-
-- (IBAction)btnClick:(id)sender;
 
 @end

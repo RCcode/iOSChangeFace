@@ -10,9 +10,13 @@
 #warning "This project uses features only available in iOS SDK 3.0 and later."
 #endif
 
+#define HTTP_BASEURL @"http://moreapp.rcplatformhk.net/pbweb/app/"
+#define kPushURL @"http://iospush.rcplatformhk.net/IOSPushWeb/userinfo/regiUserInfo.do"
+
 #ifdef __OBJC__
     #import <UIKit/UIKit.h>
     #import <Foundation/Foundation.h>
 #endif
 
 #define appleID @"904923023"
+static int moreAppID = 20063;

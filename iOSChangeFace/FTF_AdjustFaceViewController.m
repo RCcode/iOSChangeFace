@@ -84,7 +84,7 @@
 #pragma mark 初始化视图
 - (void)loadAdjustViews:(UIImage *)image
 {
-    UIView *backView = [[UIView alloc] initWithFrame:CGRectMake(0, 16, 320, 320)];
+    UIView *backView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 320)];
     backView.layer.masksToBounds = YES;
     [self.view addSubview:backView];
     
@@ -97,10 +97,11 @@
     {
         libaryImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, image.size.width * (320.f/1080.f), 320)];
     }
+    
     libaryImageView.backgroundColor =  [UIColor redColor];
     libaryImageView.center = CGPointMake(160, 160);
     libaryImageView.userInteractionEnabled = YES;
-    libaryImageView.image = [UIImage zoomImageWithImage:image];
+    libaryImageView.image = image;
     [self addGestureRecognizerToView:libaryImageView];
     [backView addSubview:libaryImageView];
     
@@ -121,6 +122,7 @@
     [view addGestureRecognizer:pin];
     
     UIRotationGestureRecognizer *rotationGesture = [[UIRotationGestureRecognizer alloc] initWithTarget:self action:@selector(rotateView:changeRotate:)];
+    
     [view addGestureRecognizer:rotationGesture];
 }
 

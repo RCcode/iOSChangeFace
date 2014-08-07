@@ -85,27 +85,27 @@
 {
     NSMutableArray *points = [self.croppingPath points];
     //插入默认的四个点
-    //默认起点
-    [points insertObject:[NSValue valueWithCGPoint:CGPointMake(-self.frame.origin.x, -self.frame.origin.y)] atIndex:0];
-    if (points.count >= 2)
-    {
-        CGPoint point = [(NSValue *)[points objectAtIndex:1] CGPointValue];
-        point.x = point.x;
-        point.y = -self.frame.origin.y;
-        [points insertObject:[NSValue valueWithCGPoint:point] atIndex:1];
-    }
-    
-    CGPoint point = [(NSValue *)[points objectAtIndex:points.count - 1] CGPointValue];
-    point.x = point.x;
-    point.y = -self.frame.origin.y + 320;
-    [points addObject:[NSValue valueWithCGPoint:point]];
-    //默认终点
-    [points addObject:[NSValue valueWithCGPoint:CGPointMake(-self.frame.origin.x, -self.frame.origin.y + 320)]];
-    
-    if (points.count <= 5)
-    {
-        return nil;
-    }
+//    //默认起点
+//    [points insertObject:[NSValue valueWithCGPoint:CGPointMake(-self.frame.origin.x, -self.frame.origin.y)] atIndex:0];
+//    if (points.count >= 2)
+//    {
+//        CGPoint point = [(NSValue *)[points objectAtIndex:1] CGPointValue];
+//        point.x = point.x;
+//        point.y = -self.frame.origin.y;
+//        [points insertObject:[NSValue valueWithCGPoint:point] atIndex:1];
+//    }
+//    
+//    CGPoint point = [(NSValue *)[points objectAtIndex:points.count - 1] CGPointValue];
+//    point.x = point.x;
+//    point.y = -self.frame.origin.y + 320;
+//    [points addObject:[NSValue valueWithCGPoint:point]];
+//    //默认终点
+//    [points addObject:[NSValue valueWithCGPoint:CGPointMake(-self.frame.origin.x, -self.frame.origin.y + 320)]];
+//    
+//    if (points.count <= 5)
+//    {
+//        return nil;
+//    }
     
     CGRect rect = CGRectZero;
     rect.size = imageView.image.size;
@@ -114,9 +114,9 @@
 
     UIGraphicsBeginImageContextWithOptions(rect.size, YES, 0.0);
     {
-        [[UIColor whiteColor] setFill];
-        UIRectFill(rect);
         [[UIColor blackColor] setFill];
+        UIRectFill(rect);
+        [[UIColor whiteColor] setFill];
         
         aPath = [UIBezierPath bezierPath];
         

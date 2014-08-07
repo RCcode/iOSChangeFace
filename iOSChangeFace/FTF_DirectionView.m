@@ -183,7 +183,7 @@
         btn.toolImageView.image = pngImagePath([array[0] objectAtIndex:i]);
         [btn setNormelName:[array[0] objectAtIndex:i]];
         [btn setSelectName:[array[1] objectAtIndex:i]];
-        btn.tag = i + 10;
+        btn.tag = i + 20;
         [btn addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
         [blur addSubview:btn];
         
@@ -198,7 +198,7 @@
     //ZVolumeSlide 自定义Slide控件
     FTF_VolumeSlide *volumeSlide = [[FTF_VolumeSlide alloc]initWithFrame:CGRectMake(17.5, 64, 285, 30)];
     volumeSlide.delegate = self;
-    [volumeSlide setSlideValue:0.5];
+    [volumeSlide setSlideValue:0];
     [blur addSubview:volumeSlide];
     
     [self addSubview:blur];
@@ -224,13 +224,17 @@
     filterScroller.backgroundColor = [UIColor clearColor];
     [blur addSubview:filterScroller];
     
+    NSArray *array = @[@"Normal",@"Emily",@"Madison",@"Isabella",@"Ava",@"Sophia",@"Kaitlyn",@"Hannah",@"Hailey",@"Olivia",@"Sarah",@"Abigail",@"Madeline",@"Lily",@"Kaylee",@"Ella",@"Riley",@"Brianna",@"Alyssa",@"Samantha",@"Lauren",@"Mia",@"Alexis",@"Chloe",@"Ashley",@"Grace",@"Jessica",@"Elizabeth",@"Taylor",@"Makayla",];
+    
     for (int i = 0; i < 30; i++)
     {
         FTF_Button *btn = [[FTF_Button alloc]initWithFrame:CGRectMake(80 * i, 0, 80, 104)];
-        btn.toolImageView.frame = CGRectMake(10, 15, 70, 70);
+        btn.toolImageView.frame = CGRectMake(10, 6, 70, 70);
         btn.toolImageView.image = pngImagePath([NSString stringWithFormat:@"IMG_%d",i]);
         [btn setNormelName:[NSString stringWithFormat:@"IMG_%d",i]];
         [btn setSelectName:[NSString stringWithFormat:@"IMG_%d",i]];
+        btn.contentLabel.frame = CGRectMake(0, 82, btn.bounds.size.width, 16);
+        btn.contentLabel.text = array[i];
         btn.tag = i + 100;
         [btn addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
         [filterScroller addSubview:btn];
@@ -241,24 +245,35 @@
 
 - (void)btnClick:(FTF_Button *)btn
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"changeImage" object:nil];
+    for (UIView *subView in [btn.superview subviews])
+    {
+        if ([subView isKindOfClass:[FTF_Button class]])
+        {
+            FTF_Button *button = (FTF_Button *)subView;
+            [button btnHaveClicked];
+            button.contentLabel.textColor = [UIColor whiteColor];
+        }
+    }
+    
     [btn changeBtnImage];
-    [btn performSelector:@selector(btnHaveClicked) withObject:nil afterDelay:.15f];
+    btn.contentLabel.textColor = colorWithHexString(@"#D9AF20", 1.0);
+    if (btn.tag < 10 || btn.tag == 20)
+    {
+        [btn performSelector:@selector(btnHaveClicked) withObject:nil afterDelay:.15f];
+    }
     [self.delegate directionBtnClick:btn.tag];
 }
 
 - (void)sliderValueChanged:(UISlider *)slider
 {
-    [self.delegate sliderValueHaveChanged:slider.tag];
+    [self.delegate directionSlider:slider];
 }
 
 #pragma mark -
-#pragma mark ZVolumeSlideDelegate
-- (void)slideChange:(CGFloat)value
+#pragma mark SliderVolumeSlideDelegate
+- (void)slideChange:(UISlider *)slider
 {
-    
+    [self.delegate directionSlider:slider];
 }
-
-
 
 @end

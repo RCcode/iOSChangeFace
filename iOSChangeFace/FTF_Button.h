@@ -13,6 +13,7 @@
 @property (nonatomic ,strong) NSString *normelName;
 @property (nonatomic ,strong) NSString *selectName;
 @property (nonatomic ,assign) NSInteger btnType;
+@property (nonatomic ,strong) UILabel *contentLabel;
 
 - (void)changeBtnImage;
 - (void)btnHaveClicked;

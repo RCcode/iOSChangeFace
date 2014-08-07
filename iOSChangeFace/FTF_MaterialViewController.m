@@ -15,7 +15,9 @@
 #import "FTF_Button.h"
 
 @interface FTF_MaterialViewController ()
-
+{
+    AMBlurView *amb;
+}
 @end
 
 @implementation FTF_MaterialViewController
@@ -31,6 +33,7 @@
 
 - (void)dealloc
 {
+    amb = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
@@ -52,8 +55,8 @@
     
     UIButton *librayBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     librayBtn.frame = CGRectMake(0, 0, 44, 44);
-    [librayBtn setImage:pngImagePath(@"btn_home_normal") forState:UIControlStateNormal];
-    [librayBtn setImage:pngImagePath(@"btn_home_pressed") forState:UIControlStateHighlighted];
+    [librayBtn setImage:pngImagePath(@"icon_pic_normal") forState:UIControlStateNormal];
+    [librayBtn setImage:pngImagePath(@"icon_pic_pressed") forState:UIControlStateHighlighted];
     librayBtn.tag = 1;
     [librayBtn addTarget:self action:@selector(navItemClick:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *homeItem = [[UIBarButtonItem alloc] initWithCustomView:librayBtn];
@@ -77,7 +80,7 @@
     self.modelScrollerView.pagingEnabled = YES;
     self.modelScrollerView.delegate = self;
     
-    AMBlurView *amb = [[AMBlurView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height - 164, 320, 50)];
+    amb = [[AMBlurView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height - 164, 320, 50)];
     amb.blurTintColor = colorWithHexString(@"#202225", 0.9f);
     [self.view addSubview:amb];
     
@@ -108,9 +111,11 @@
     }
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeMaterialImage) name:@"changeMaterialImage" object:nil];
-    // Do any additional setup after loading the view from its nib.
+    
 }
 
+#pragma mark -
+#pragma mark 导航按钮点击事件
 - (void)navItemClick:(FTF_Button *)btn
 {
     switch (btn.tag) {
@@ -118,10 +123,37 @@
             [self.navigationController popViewControllerAnimated:YES];
             break;
         case 1:
+        {
+            //判断相册功能是否被人为禁止
+            ALAuthorizationStatus author = [ALAssetsLibrary authorizationStatus];
+            if (author == ALAuthorizationStatusRestricted || author == ALAuthorizationStatusDenied)
+            {
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:LocalizedString(@"library_not_availabel", @"")
+                                                                message:LocalizedString(@"user_library_step", @"")
+                                                               delegate:nil
+                                                      cancelButtonTitle:LocalizedString(@"ok", @"")
+                                                      otherButtonTitles:nil];
+                [alert show];
+                return;
+            }
             
+            [self selectCamenaType:UIImagePickerControllerSourceTypePhotoLibrary];
+        }
             break;
         case 2:
-            
+        {
+            AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
+            if (authStatus == AVAuthorizationStatusRestricted || authStatus == AVAuthorizationStatusDenied)
+            {
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:LocalizedString(@"camena_not_availabel", @"")
+                                                                message:LocalizedString(@"user_camera_step", @"")
+                                                               delegate:nil
+                                                      cancelButtonTitle:LocalizedString(@"ok", @"")
+                                                      otherButtonTitles:nil];
+                [alert show];
+            }
+            [self selectCamenaType:UIImagePickerControllerSourceTypeCamera];
+        }
             break;
         default:
             break;
@@ -132,34 +164,25 @@
 #pragma mark 切换图形类型
 - (void)modelBtnClick:(FTF_Button *)btn
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"changeImage" object:nil];
+    for (UIView *subView in [btn.superview subviews])
+    {
+        if ([subView isKindOfClass:[FTF_Button class]])
+        {
+            FTF_Button *button = (FTF_Button *)subView;
+            [button btnHaveClicked];
+        }
+    }
     [btn changeBtnImage];
     [self.modelScrollerView setContentOffset:CGPointMake(320 * btn.tag, 0) animated:YES];
 }
 
 #pragma mark -
-#pragma makr 相册选取
-- (void)rightItemClick:(UIBarButtonItem *)item
-{
-    //判断相册功能是否被人为禁止
-    ALAuthorizationStatus author = [ALAssetsLibrary authorizationStatus];
-    if (author == ALAuthorizationStatusRestricted || author == ALAuthorizationStatusDenied)
-    {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:LocalizedString(@"library_not_availabel", @"")
-                                                        message:LocalizedString(@"user_library_step", @"")
-                                                       delegate:nil
-                                              cancelButtonTitle:LocalizedString(@"ok", @"")
-                                              otherButtonTitles:nil];
-        [alert show];
-    }
-    
-    [self selectCamenaType:UIImagePickerControllerSourceTypePhotoLibrary];
-}
-
+#pragma makr 相册选取,相机拍照
 - (void)selectCamenaType:(NSInteger)sourceType
 {
+    [FTF_Global shareGlobal].bannerView.hidden = YES;
     UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
-    imagePickerController.allowsEditing = NO;
+    imagePickerController.allowsEditing = YES;
     imagePickerController.modalPresentationStyle = UIModalPresentationCurrentContext;
     imagePickerController.delegate = self;
     imagePickerController.sourceType = sourceType;
@@ -167,6 +190,7 @@
     if (sourceType == UIImagePickerControllerSourceTypeCamera)
     {
         imagePickerController.cameraCaptureMode = UIImagePickerControllerCameraCaptureModePhoto;
+        imagePickerController.cameraDevice = UIImagePickerControllerCameraDeviceFront;
         //设置相机支持的类型，拍照和录像
         imagePickerController.mediaTypes = @[(NSString *)kUTTypeImage];
     }
@@ -179,14 +203,16 @@
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     
-    __block UIImage *headImage = [info objectForKey:UIImagePickerControllerOriginalImage];
+    [FTF_Global shareGlobal].bannerView.hidden = NO;
+    __block UIImage *headImage = [info objectForKey:UIImagePickerControllerEditedImage];
     
     if (headImage != nil)
     {
-        headImage = [info objectForKey:UIImagePickerControllerOriginalImage];
+        headImage = [info objectForKey:UIImagePickerControllerEditedImage];
     }
     else
     {
+#warning 测试iPad效果
         NSURL *path = [info objectForKey:UIImagePickerControllerReferenceURL];
         
         [self loadImageFromAssertByUrl:path completion:^(UIImage * img)
@@ -209,6 +235,7 @@
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {
     [picker dismissViewControllerAnimated:YES completion:^{
+        [FTF_Global shareGlobal].bannerView.hidden = NO;
         picker.delegate = nil;
     }];
 }
@@ -257,14 +284,20 @@
     CGFloat pageWidth = scrollView.frame.size.width;
     // 根据当前的x坐标和页宽度计算出当前页数
     int page = floor((scrollView.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
-    
-    self.modelSegment.selectedSegmentIndex = page;
-}
-
-- (IBAction)modelSegmentValueChanged:(id)sender
-{
-    UISegmentedControl *segment = (UISegmentedControl *)sender;
-    [self.modelScrollerView setContentOffset:CGPointMake(320 * segment.selectedSegmentIndex, 0) animated:YES];
+    for (UIView *subView in [amb subviews])
+    {
+        if ([subView isKindOfClass:[FTF_Button class]]) {
+            FTF_Button *btn = (FTF_Button *)subView;
+            if (btn.tag == page)
+            {
+                [btn changeBtnImage];
+            }
+            else
+            {
+                [btn btnHaveClicked];
+            }
+        }
+    }
 }
 
 @end

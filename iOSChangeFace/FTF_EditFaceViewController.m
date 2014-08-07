@@ -27,6 +27,7 @@ enum DirectionType
 #import "MZCroppableView.h"
 #import "ACMagnifyingView.h"
 #import "ACMagnifyingGlass.h"
+#import "FTF_DirectionView.h"
 #import "FTF_MaterialViewController.h"
 
 @interface FTF_EditFaceViewController ()
@@ -40,12 +41,14 @@ enum DirectionType
     ACMagnifyingGlass *mag;//放大镜显示框
     UIImageView *backImageView;
     NSArray *dataArray;
+    FTF_DirectionView *detailView;//辅工具栏
+    UIImageView *fuzzyImage;//模糊图片
+    NCVideoCamera *_videoCamera;
     
 }
-@property (weak, nonatomic) IBOutlet UISlider *positionSlider;
-@property (weak, nonatomic) IBOutlet UISlider *fuzzySlider;
+@property (nonatomic ,strong) UISlider *modelSlider;
+@property (nonatomic ,strong) UISlider *cropSlider;
 
-- (IBAction)sliderValueChanged:(id)sender;
 @end
 
 @implementation FTF_EditFaceViewController
@@ -71,6 +74,11 @@ enum DirectionType
     mag = nil;
     backImageView = nil;
     dataArray = nil;
+    detailView = nil;
+    _cropSlider = nil;
+    _modelSlider = nil;
+    fuzzyImage = nil;
+    _videoCamera = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
@@ -79,7 +87,23 @@ enum DirectionType
     [super viewDidLoad];
     
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(endCropImage) name:@"EndCropImage" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(beginCropImage) name:@"BeginCropImage" object:nil];
     
+    _videoCamera = [NCVideoCamera videoCamera];
+    _videoCamera.delegate = self;
+    
+    [self addNavItem];
+    [self layoutSubViews];
+    [self addDetailItools];
+    
+
+}
+
+#pragma mark -
+#pragma mark 初始化导航按钮
+- (void)addNavItem
+{
     //返回按钮
     UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     backBtn.frame = CGRectMake(0, 0, 129, 44);
@@ -98,12 +122,12 @@ enum DirectionType
     [homeBtn addTarget:self action:@selector(homeItemClick:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *homeItem = [[UIBarButtonItem alloc] initWithCustomView:homeBtn];
     
-    UIButton *cameraBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    cameraBtn.frame = CGRectMake(0, 0, 44, 44);
-    [cameraBtn setImage:pngImagePath(@"btn_ig_normal") forState:UIControlStateNormal];
-    [cameraBtn setImage:pngImagePath(@"btn_ig_pressed") forState:UIControlStateHighlighted];
-    [cameraBtn addTarget:self action:@selector(cameraItemClick:) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *cameraItem = [[UIBarButtonItem alloc] initWithCustomView:cameraBtn];
+//    UIButton *cameraBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+//    cameraBtn.frame = CGRectMake(0, 0, 44, 44);
+//    [cameraBtn setImage:pngImagePath(@"btn_ig_normal") forState:UIControlStateNormal];
+//    [cameraBtn setImage:pngImagePath(@"btn_ig_pressed") forState:UIControlStateHighlighted];
+//    [cameraBtn addTarget:self action:@selector(cameraItemClick:) forControlEvents:UIControlEventTouchUpInside];
+//    UIBarButtonItem *cameraItem = [[UIBarButtonItem alloc] initWithCustomView:cameraBtn];
     
     UIButton *shareBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     shareBtn.frame = CGRectMake(0, 0, 44, 44);
@@ -112,12 +136,14 @@ enum DirectionType
     [shareBtn addTarget:self action:@selector(shareItemClick:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *shareItem = [[UIBarButtonItem alloc] initWithCustomView:shareBtn];
     
-    NSArray *actionButtonItems = @[shareItem,cameraItem,homeItem];
+    NSArray *actionButtonItems = @[shareItem,homeItem];
     self.navigationItem.rightBarButtonItems = actionButtonItems;
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(endCropImage) name:@"EndCropImage" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(beginCropImage) name:@"BeginCropImage" object:nil];
-    
+}
+
+#pragma mark -
+#pragma mark 初始化工具栏
+- (void)addDetailItools
+{
     UIView *toolBarView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height - 164, 320, BtnHeight)];
     toolBarView.backgroundColor = [UIColor grayColor];
     [self.view addSubview:toolBarView];
@@ -138,7 +164,16 @@ enum DirectionType
         [toolBarView addSubview:btn];
         i++;
     }
+    
+    detailView = [[FTF_DirectionView alloc]initWithFrame:CGRectMake(0, self.view.bounds.size.height - 204, 320, 0)];
+    detailView.delegate = self;
+    [self.view addSubview:detailView];
+}
 
+#pragma mark -
+#pragma mark 初始化视图
+- (void)layoutSubViews
+{
     colorArray = [NSMutableArray arrayWithCapacity:0];
     for (int i = 0; i < 24; i++)
     {
@@ -151,12 +186,12 @@ enum DirectionType
             [colorArray addObject:(id)[UIColorFromHexAlpha(0xffffff, 0) CGColor]];
         }
     }
-
+    
     directionStyle = leftToRight;
     //模糊图层
     maskLayer = [CAGradientLayer layer];
     //背景view
-    bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, 16, 320, 320)];
+    bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 320)];
     [self.view addSubview:bottomView];
     
     //默认底图
@@ -179,43 +214,44 @@ enum DirectionType
     libaryImageView.userInteractionEnabled = YES;
     
     [self adjustViews:_libaryImage withFrame:_imageRect];
-    
 }
 
-#pragma mark -
-#pragma mark 返回
 - (void)backItemClick:(UIBarButtonItem *)item
 {
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-#pragma mark -
-#pragma mark 跳回主页
 - (void)homeItemClick:(UIBarButtonItem *)item
 {
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
-#pragma mark -
-#pragma mark 打开相册
 - (void)cameraItemClick:(UIBarButtonItem *)item
 {
     
 }
 
-#pragma mark -
-#pragma mark 分享
 - (void)shareItemClick:(UIBarButtonItem *)item
 {
-    
+
 }
 
 #pragma mark -
-#pragma mark 工具栏
+#pragma mark 工具栏点击事件
 - (void)toolBtnClick:(FTF_Button *)btn
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"changeImage" object:nil];
+
+    for (UIView *subView in [btn.superview subviews])
+    {
+        if ([subView isKindOfClass:[FTF_Button class]])
+        {
+            FTF_Button *button = (FTF_Button *)subView;
+            [button btnHaveClicked];
+        }
+    }
     [btn changeBtnImage];
+    libaryImageView.userInteractionEnabled = YES;
+    [backView setMZViewNotUserInteractionEnabled];
     switch (btn.tag) {
         case 0:
         {
@@ -223,20 +259,28 @@ enum DirectionType
             materialController.delegate = self;
             [self.navigationController pushViewController:materialController animated:YES];
             [btn performSelector:@selector(btnHaveClicked) withObject:nil afterDelay:.15f];
-
         }
             break;
         case 1:
-            
+        {
+            detailView.frame = CGRectMake(0, self.view.bounds.size.height - 204, 320, 104);
+            [detailView loadModelStyleItools];
+        }
             break;
         case 2:
-            
+            libaryImageView.userInteractionEnabled = NO;
+            detailView.frame = CGRectMake(0, self.view.bounds.size.height - 204, 320, 104);
+            [detailView loadCropItools];
+            [backView setMZViewUserInteractionEnabled];
+            [backView setMZImageView];
             break;
         case 3:
-            
+            detailView.frame = CGRectMake(0, self.view.bounds.size.height - 204, 320, 104);
+            [detailView loadDirectionItools];
             break;
         case 4:
-            
+            detailView.frame = CGRectMake(0, self.view.bounds.size.height - 204, 320, 104);
+            [detailView loadFilerItools];
             break;
         default:
             break;
@@ -287,62 +331,87 @@ enum DirectionType
     [backView.layer setMask:maskLayer];
 }
 
-
-- (IBAction)btnClick:(id)sender
+#pragma mark -
+#pragma mark 切换显示方式
+- (void)changeModelBtnClick:(NSInteger)tag
 {
-
-    UIButton *btn = (UIButton *)sender;
-    if (btn.tag == 0 || btn.tag == 1 || btn.tag == 2 || btn.tag == 3)
+    
+    directionStyle = (enum DirectionType)tag;
+    
+    self.modelSlider.value = 0;
+    self.modelSlider.value = 0.5f;
+    
+    [colorArray removeAllObjects];
+    for (int i = 0; i < 24; i++)
     {
-        directionStyle = (enum DirectionType)btn.tag;
-        
-        self.fuzzySlider.value = 0;
-        self.positionSlider.value = 0.5f;
-        
-        [colorArray removeAllObjects];
-        for (int i = 0; i < 24; i++)
+        if (directionStyle == leftToRight || directionStyle == topToBottom)
         {
-            if (directionStyle == leftToRight || directionStyle == topToBottom)
+            if (i < 11)
             {
-                if (i < 11)
-                {
-                    [colorArray addObject:(id)[UIColorFromHexAlpha(0xffffff, 1) CGColor]];
-                }
-                else
-                {
-                    [colorArray addObject:(id)[UIColorFromHexAlpha(0xffffff, 0) CGColor]];
-                }
+                [colorArray addObject:(id)[UIColorFromHexAlpha(0xffffff, 1) CGColor]];
             }
-            else if (directionStyle == rightToLeft || directionStyle == bottomToTop)
+            else
             {
-                if (i < 11) {
-                    [colorArray addObject:(id)[UIColorFromHexAlpha(0xffffff, 1) CGColor]];
-                }
-                else
-                {
-                    [colorArray addObject:(id)[UIColorFromHexAlpha(0xffffff, 0) CGColor]];
-                }
+                [colorArray addObject:(id)[UIColorFromHexAlpha(0xffffff, 0) CGColor]];
             }
         }
-
-        [self adjustViews:_libaryImage withFrame:_imageRect];
+        else if (directionStyle == rightToLeft || directionStyle == bottomToTop)
+        {
+            if (i < 11) {
+                [colorArray addObject:(id)[UIColorFromHexAlpha(0xffffff, 1) CGColor]];
+            }
+            else
+            {
+                [colorArray addObject:(id)[UIColorFromHexAlpha(0xffffff, 0) CGColor]];
+            }
+        }
+        
     }
-    else if (btn.tag == 4)
+    
+    [self adjustViews:_libaryImage withFrame:_imageRect];
+
+}
+
+#pragma mark -
+#pragma mark 添加模糊图层
+- (void)addFuzzyView:(NSInteger)tag
+{
+    if (tag == 0)
     {
         [backView setMZViewUserInteractionEnabled];
         [backView setMZImageView];
+        [fuzzyImage removeFromSuperview];
+        fuzzyImage = nil;
     }
-    else if (btn.tag == 5)
+    else
     {
-        [backView setMZViewNotUserInteractionEnabled];
+        if (fuzzyImage == nil)
+        {
+            fuzzyImage = [[UIImageView alloc] initWithFrame:bottomView.bounds];
+            [bottomView addSubview:fuzzyImage];
+        }
+        fuzzyImage.image = pngImagePath([NSString stringWithFormat:@"shadow%ld",(long)tag]);
     }
+}
 
+#pragma mark -
+#pragma mark 滤镜
+- (void)filterImage:(NSInteger)tag
+{
+    dispatch_queue_t myQueue = dispatch_queue_create("my_filter_queue", nil);
+    [NSThread sleepForTimeInterval:0.3];
+    MBProgressHUD *mb = showMBProgressHUD(nil, YES);
+    mb.userInteractionEnabled = YES;
+    dispatch_async(myQueue, ^{
+        [_videoCamera setImage:[FTF_Global shareGlobal].compressionImage WithFilterType:(NCFilterType)tag];
+    });
 }
 
 #pragma mark -
 #pragma mark 剪切
 - (void)endCropImage
 {
+    detailView.hidden = NO;
     [backView endCropImage];
 }
 
@@ -350,6 +419,7 @@ enum DirectionType
 #pragma mark 开始划线
 - (void)beginCropImage
 {
+    detailView.hidden = YES;
     [backView beginCropImage];
 }
 
@@ -358,10 +428,8 @@ enum DirectionType
     [super didReceiveMemoryWarning];
 }
 
-
-- (IBAction)sliderValueChanged:(id)sender
+- (void)sliderValueChanged:(UISlider *)slider
 {
-    UISlider *slider = (UISlider *)sender;
     NSString *str = [NSString stringWithFormat:@"%f",slider.value];
     int number;
     if ([str floatValue] == 1.f)
@@ -421,6 +489,53 @@ enum DirectionType
         backImageView.image = [UIImage zoomImageWithImage:jpgImagePath([FTF_Global shareGlobal].modelImageName)];
     }
     backImageView.center = CGPointMake(160, 160);
+}
+
+#pragma mark -
+#pragma mark DirectionDelegate
+- (void)directionBtnClick:(NSUInteger)tag
+{
+    if (tag < 9)
+    {
+        [backView moveBtnClick:tag];
+    }
+    else if (tag == 10 || tag == 11 || tag == 12 || tag == 13)
+    {
+        [self changeModelBtnClick:tag - 10];
+    }
+    else if (tag == 20 || tag == 21 || tag == 22 || tag == 23)
+    {
+        [self addFuzzyView:tag - 20];
+    }
+    else if (tag >= 100)
+    {
+        [self filterImage:tag - 100];
+    }
+    
+}
+
+- (void)directionSlider:(UISlider *)slider
+{
+    if (slider.tag == 0)
+    {
+        self.modelSlider = slider;
+    }
+    else if (slider.tag == 1)
+    {
+        self.cropSlider = slider;
+    }
+    [self sliderValueChanged:slider];
+}
+
+#pragma mark - NCVideoCameraDelegate
+- (void)videoCameraDidFinishFilter:(UIImage *)image Index:(NSUInteger)index
+{
+    self.libaryImage = nil;
+    self.libaryImage = image;
+    backView.image = nil;
+    backView.image = image;
+    libaryImageView.image = image;
+    hideMBProgressHUD();
 }
 
 @end
