@@ -20,10 +20,10 @@
     if (self) {
         
         NSDictionary *dic =@{
-    @"0":@[@"animal01",@"animal02",@"animal03",@"animal04",@"animal05",@"animal06",@"animal07",@"animal08"],
-    @"1":@[@"crossBones01",@"crossBones02",@"crossBones03",@"crossBones04",@"crossBones05",@"crossBones06",@"crossBones07",@"crossBones08"],
-    @"2":@[@"girl01",@"girl02",@"girl03",@"girl04",@"girl05",@"girl06",@"girl07",@"girl08"],
-    @"3":@[@"mask01",@"mask02",@"mask03",@"mask04",@"mask05",@"mask06",@"mask07",@"mask08",@"mask09"],
+    @"2":@[@"animal01",@"animal02",@"animal03",@"animal04",@"animal05",@"animal06",@"animal07",@"animal08"],
+    @"0":@[@"crossBones01",@"crossBones02",@"crossBones03",@"crossBones04",@"crossBones05",@"crossBones06",@"crossBones07",@"crossBones08"],
+    @"3":@[@"girl01",@"girl02",@"girl03",@"girl04",@"girl05",@"girl06",@"girl07",@"girl08"],
+    @"1":@[@"mask01",@"mask02",@"mask03",@"mask04",@"mask05",@"mask06",@"mask07",@"mask08",@"mask09"],
     @"4":@[@"other01",@"other02",@"other03",@"other04",@"other05",@"other06",@"other07",@"other08",@"other09",@"other10",@"other11"]
             };
         
