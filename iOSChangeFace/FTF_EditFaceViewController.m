@@ -81,6 +81,7 @@ enum DirectionType
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(endCropImage) name:@"EndCropImage" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(beginCropImage) name:@"BeginCropImage" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(scaleEditImage) name:@"scaleImage" object:nil];
     
     _videoCamera = [NCVideoCamera videoCamera];
     _videoCamera.delegate = self;
@@ -113,13 +114,6 @@ enum DirectionType
     [homeBtn setImage:pngImagePath(@"btn_home_pressed") forState:UIControlStateHighlighted];
     [homeBtn addTarget:self action:@selector(homeItemClick:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *homeItem = [[UIBarButtonItem alloc] initWithCustomView:homeBtn];
-    
-//    UIButton *cameraBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-//    cameraBtn.frame = CGRectMake(0, 0, 44, 44);
-//    [cameraBtn setImage:pngImagePath(@"btn_ig_normal") forState:UIControlStateNormal];
-//    [cameraBtn setImage:pngImagePath(@"btn_ig_pressed") forState:UIControlStateHighlighted];
-//    [cameraBtn addTarget:self action:@selector(cameraItemClick:) forControlEvents:UIControlEventTouchUpInside];
-//    UIBarButtonItem *cameraItem = [[UIBarButtonItem alloc] initWithCustomView:cameraBtn];
     
     UIButton *shareBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     shareBtn.frame = CGRectMake(0, 0, 44, 44);
@@ -184,6 +178,7 @@ enum DirectionType
     maskLayer = [CAGradientLayer layer];
     //背景view
     bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 320)];
+    bottomView.layer.masksToBounds = YES;
     [self.view addSubview:bottomView];
     
     //默认底图
@@ -193,8 +188,10 @@ enum DirectionType
     
     //放大镜
     backView = [[ACMagnifyingView alloc] initWithFrame:CGRectMake(0, 0, 320, 320)];
+    //backView.transform = CGAffineTransformMakeRotation([FTF_Global shareGlobal].rorationDegree);
     //放大操作显示框
     mag = [[ACMagnifyingGlass alloc] initWithFrame:CGRectMake(0, 0, 90, 90)];
+    
     mag.scale = 1.5;
     backView.magnifyingGlass = mag;
     backView.layer.masksToBounds = YES;
@@ -382,6 +379,30 @@ enum DirectionType
         }
         fuzzyImage.image = pngImagePath([NSString stringWithFormat:@"shadow%ld",(long)tag]);
     }
+}
+
+#pragma mark -
+#pragma mark 合成图片
+- (void)scaleEditImage
+{
+    
+    CGSize size = bottomView.frame.size;
+    CGFloat scale = 3.375f;
+    size = CGSizeApplyAffineTransform(size, CGAffineTransformMakeScale(scale, scale));
+
+    UIGraphicsBeginImageContext(size);
+    
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextScaleCTM(context, scale, scale);
+    
+    [bottomView.layer renderInContext:context];
+
+    UIImage *viewImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    //保存
+    [FTF_Global shareGlobal].bigImage = viewImage;
+    
 }
 
 #pragma mark -

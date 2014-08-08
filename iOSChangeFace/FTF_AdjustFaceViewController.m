@@ -106,6 +106,7 @@
     libaryImageView.center = CGPointMake(160, 160);
     libaryImageView.userInteractionEnabled = YES;
     libaryImageView.image = image;
+    libaryImageView.layer.shouldRasterize = YES;
     [self addGestureRecognizerToView:libaryImageView];
     [backView addSubview:libaryImageView];
     
@@ -208,15 +209,30 @@
     CGAffineTransform currentTransform = imageView.transform;
     CGAffineTransform newTransform = CGAffineTransformRotate(currentTransform,rotation);
     [imageView setTransform:newTransform];
-    
+
     recordedRotation = [recognizer rotation];
-    if([recognizer state] == UIGestureRecognizerStateEnded) {
+    if([recognizer state] == UIGestureRecognizerStateEnded)
+    {
         recordedRotation = recordedRotation - [recognizer rotation];
     }
 }
 
+- (void)computeRotationNumber
+{
+    CGAffineTransform transform = libaryImageView.transform;
+    CGAffineTransform newTransForm = CGAffineTransformRotate(transform, 0);
+    CGFloat newRotate = acosf(newTransForm.a);
+    if (newTransForm.b < 0) {
+        newRotate *= -1;
+    }
+    [FTF_Global shareGlobal].rorationDegree = newRotate;
+    //CGFloat newDegree = newRotate/M_PI * 180;
+    NSLog(@"newRotate.......%f",newRotate);
+}
+
 - (void)rightItemClick:(UIBarButtonItem *)item
 {
+    [self computeRotationNumber];
     FTF_EditFaceViewController *editFace = [[FTF_EditFaceViewController alloc] initWithNibName:@"FTF_EditFaceViewController" bundle:nil];
     editFace.libaryImage = libaryImageView.image;
     editFace.imageRect = libaryImageView.frame;
@@ -266,10 +282,10 @@
         {
             if ([recognizer isKindOfClass:[UIRotationGestureRecognizer class]])
             {
-                UIRotationGestureRecognizer *rotation = (UIRotationGestureRecognizer *)recognizer;
+                UIRotationGestureRecognizer *rotationNumber = (UIRotationGestureRecognizer *)recognizer;
                 float scale = tag == 7 ? -0.01 : 0.01;
                 isTiny = YES;
-                [self rotateView:rotation changeRotate:scale];
+                [self rotateView:rotationNumber changeRotate:scale];
             }
         }
     }

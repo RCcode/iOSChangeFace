@@ -6,8 +6,38 @@
   Copyright (c) 2014年 rcplatform. All rights reserved.
 */
 
+"New Version available" = "New Version available";
+"Upgrade now" = "Upgrade now";
+"Remind later" = "Remind later";
 "Update" = "Update";
 "Rate this app" = "Rate this app";
 "Feedback" = "Feedback";
 "Share" = "Share";
 "Follow us" = "Follow us";
+"Thanks for using Face2Face, please take some time to rate us, thanks for your support!" = "Thanks for using Face2Face, please take some time to rate us, thanks for your support!";
+"Rate now" = "Rate now";
+"Remind later" = "Remind later";
+"No thanks" = "No thanks";
+"library_not_availabel" = "Unable to start the album";
+"camena_not_availabel" = "Unable to start the camera";
+"user_camera_step" = "Please open the camera for the Face2Face permissions: Phone Settings -> Privacy -> Camera -> Face2Face (open)";
+"user_library_step" = "Please open the camera for the Face2Face permissions: Phone Settings -> Privacy -> Photos -> Face2Face (open)";
+"save" = "Save";
+"share" = "Share";
+"more" = "More";
+"saved_in_album" = "Photo saved to gallery";
+"instagram_notinstall" = "Instagram is not installed.";
+"dialog_sure" = "Yes";
+"saved_in_album_Fail" = "Failed to save photo";
+"saveOrBack" = "You haven't saved your changes, are you sure?";
+"cancel" = "Cancel";
+"comment_us" = "Thanks for using Face2Face, what do you think of this app?";
+"rate_now" = "Rate now";
+"comment_later" = "Remind later";
+"never_attention" = "No thanks";
+"shareContent" = "I'm using Face2Face, it makes amazing photos that blend faces together, I recommend you use it. The download address is:http://bit.ly/1osEVGU";
+"free" = "FREE";
+"open" = "OPEN";
+"showWaterMark" = "Add app watermark";
+"application_update" = "A new version of the application, whether to upgrade?";
+"go" = "go";

@@ -6,8 +6,38 @@
   Copyright (c) 2014年 rcplatform. All rights reserved.
 */
 
+"New Version available" = "有新版本";
+"Upgrade now" = "马上升级";
+"Remind later" = "稍后再说";
 "Update" = "更新";
 "Rate this app" = "评分";
 "Feedback" = "反馈";
 "Share" = "分享";
 "Follow us" = "关注我们";
+"Thanks for using Face2Face, please take some time to rate us, thanks for your support!" = "感谢使用，请花点时间给予五星评分，感谢你对我们的支持！";
+"Rate now" = "马上评价";
+"Remind later" = "稍后再说";
+"No thanks" = "不再提醒";
+"library_not_availabel" = "无法启动相册";
+"camena_not_availabel" = "无法启动相机";
+"user_camera_step" = "请为变脸开放相机权限：手机设置->隐私->相机->变脸（打开）";
+"user_library_step" = "请为变脸开放相机权限：手机设置->隐私->照片->变脸（打开）";
+"save" = "保存";
+"share" = "分享";
+"more" = "更多";
+"saved_in_album"="照片已保存到系统相册";
+"instagram_notinstall"="你没有安装Instagram";
+"dialog_sure"="确定";
+"saved_in_album_Fail" = "图片保存失败";
+"saveOrBack" = "图片未保存，放弃编辑？";
+"cancel" = "取消";
+"comment_us"="感谢使用变脸，您认为这款APP怎么样？";
+"rate_now"="马上评价";
+"comment_later"="稍后再说";
+"never_attention"="不再提醒";
+"shareContent" = "我正在用的变脸,可以制作令人惊讶的脸部融合图片，推荐你也用用。下载地址：http://bit.ly/1osEVGU";
+"free" = "免费";
+"open" = "打开";
+"showWaterMark" = "显示应用水印";
+"application_update" = "有新版本，是否升级？";
+"go" = "前往";

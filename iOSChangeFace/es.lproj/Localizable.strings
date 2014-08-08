@@ -6,8 +6,38 @@
   Copyright (c) 2014年 rcplatform. All rights reserved.
 */
 
+"New Version available" = "Nueva versión disponible";
+"Upgrade now" = "Actualizar ahora";
+"Remind later" = "Recordar más tarde";
 "Update" = "Actualizar";
 "Rate this app" = "Valorar esta aplicación";
 "Feedback" = "Comentarios";
 "Share" = "Compartir";
 "Follow us" = "Síguenos";
+"Thanks for using Face2Face, please take some time to rate us, thanks for your support!" = "Gracias por usar Face2Face, por favor toma un tiempo para valorarnos,¡ gracias por tu apoyo!";
+"Rate now" = "Puntuar ahora";
+"Remind later" = "Más tarde";
+"No thanks" = "No volver a recordar";
+"library_not_availabel" = "No se puede iniciar el álbum";
+"camena_not_availabel" = "No se puede iniciar la cámara";
+"user_camera_step" = "Por favor, abra la cámara de los permisos Face2Face: Configuración del teléfono -> Privacidad -> Cámara -> Face2Face (abierto)";
+"user_library_step" = "Por favor, abra la cámara de los permisos Face2Face: Configuración del teléfono -> Privacidad -> Fotos -> Face2Face (abierto)";
+"save" = "Guardar";
+"share" = "Compartir";
+"more" = "Más";
+"saved_in_album"="Foto guardada en la galería";
+"instagram_notinstall"="No has instalado Instagram";
+"dialog_sure"="Sí";
+"saved_in_album_Fail" = "Fallo al guardar la foto";
+"saveOrBack" = "No has guardado cambios, ¿deseas eliminar la edición?";
+"cancel" = "No";
+"comment_us"="Gracias por usar Face2Face, ¿Qué piensas de esta app?";
+"rate_now"="Puntuar ahora";
+"comment_later"="Más tarde";
+"never_attention"="No volver a recordar";
+"shareContent" = "Estoy usando Face2Face, haz increibles fotos para mezclar caras juntas, recomiendo que lo uses, La dirección de descarga es :http://bit.ly/1osEVGU";
+"free" = "libre";
+"open" = "encender";
+"showWaterMark" = "Add app watermark";
+"application_update" = "Una nueva versión de la aplicación, ya sea para actualizar?";
+"go" = "ir";

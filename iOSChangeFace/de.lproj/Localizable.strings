@@ -6,8 +6,38 @@
   Copyright (c) 2014年 rcplatform. All rights reserved.
 */
 
+"New Version available" = "neues Update";
+"Upgrade now" = "jetzt upgraden";
+"Remind later" = "später erinnern";
 "Update" = "Update";
 "Rate this app" = "Bewerte diese App";
 "Feedback" = "Feedback";
 "Share" = "Teilen";
 "Follow us" = "Folge uns";
+"Thanks for using Face2Face, please take some time to rate us, thanks for your support!" = "Dank für dein Vertrauen in Face2Face, bitte nimm dir die Zeit und bewerte uns, vielen Dank für deine Unterstützung";
+"Rate now" = "Jetzt bewerten";
+"Remind later" = "Später erinnern";
+"No thanks" = "Nicht mehr erinnern";
+"library_not_availabel" = "Kann das Album zu beginnen";
+"camena_not_availabel" = "Kann die Kamera zu starten";
+"user_camera_step" = "Bitte öffnen Sie die Kamera für die Face2Face Berechtigungen: Telefon-Einstellungen -> Datenschutz -> Kamera -> Face2Face (offen)";
+"user_library_step" = "Bitte öffnen Sie die Kamera für die Face2Face Berechtigungen: Telefon-Einstellungen -> Datenschutz -> Fotos -> Face2Face (offen)";
+"save" = "Sichern";
+"share" = "Teilen";
+"more" = "Mehr";
+"saved_in_album"="In Galerie gespeicherte Photos";
+"instagram_notinstall"="Instagram ist nicht instaliert";
+"dialog_sure"="Ja";
+"saved_in_album_Fail" = "Speichern des Photos fehlgeschlagen";
+"saveOrBack" = "Du hast deine Änderungen nicht gesichert , bist du sicher?";
+"cancel" = "Abrechen";
+"comment_us"="Vielen Dank für dein Vertrauen in Face2Face, was hältst du von der App?";
+"rate_now"="Jetzt bewerten";
+"comment_later"="Später erinnern";
+"never_attention"="Nicht mehr erinnern";
+"shareContent" = "Ich hab Face2Face, mit dieser App kannst du atemberaubende Photos machen und Gesichter miteinander verschmelzen, probier sie doch gleich mal aus. Hier kanst du die App downloaden:http://bit.ly/1osEVGU";
+"free" = "kostenlos";
+"open" = "einschalten";
+"showWaterMark" = "App Wasseryeichen hinzufügen";
+"application_update" = "Una nuova versione dell'applicazione, se l'aggiornamento?";
+"go" = "andare";

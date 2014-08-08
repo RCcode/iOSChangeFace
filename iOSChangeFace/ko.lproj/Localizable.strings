@@ -6,8 +6,38 @@
   Copyright (c) 2014年 rcplatform. All rights reserved.
 */
 
+"New Version available" = "최신 버전이 있습니다";
+"Upgrade now" = "업데이트";
+"Remind later" = "나중에";
 "Update" = "업데이트";
 "Rate this app" = "평점";
 "Feedback" = "피드백";
 "Share" = "공유";
 "Follow us" = "팔로우";
+"Thanks for using Face2Face, please take some time to rate us, thanks for your support!" = "사진 거울 반사 효과 어플을 사용해 주셔서 감사합니다. 좋은 평점 부탁해요!";
+"Rate now" = "평가하기";
+"Remind later" = "나중에 하기";
+"No thanks" = "다시 보지 않기";
+"library_not_availabel" = "앨범을 시작할 수 없습니다";
+"camena_not_availabel" = "카메라를 시작할 수 없습니다";
+"user_camera_step" = "Face2Face 권한 카메라를여십시오 : 전화 설정 -> 개인 정보 보호 -> 카메라 -> Face2Face (오픈)";
+"user_library_step" = "Face2Face 권한 카메라를여십시오 : 전화 설정 -> 개인 정보 보호 -> 사진 -> Face2Face (오픈)";
+"save" = "저장하기";
+"share" = "공유하기";
+"more" = "더보기";
+"saved_in_album"="갤러리에 저장됨";
+"instagram_notinstall"="Instagram이 설치되어 있지 않습니다.";
+"dialog_sure"="확인";
+"saved_in_album_Fail" = "사진 저장 실패";
+"saveOrBack" = "변경된 내용을 저장하지 않고 종료하시겠습니까? ";
+"cancel" = "취소";
+"comment_us"="Face2Face 어플을 사용해 주셔서 감사합니다. 위 어플을 어떻게 평가하십니까?";
+"rate_now"="평가하기";
+"comment_later"="나중에 하기";
+"never_attention"="다시 보지 않기";
+"shareContent" = "지금 사용중인 Face2Face 얼굴 합성 어플 추천합니다. 한번 써보세요. 다운로드 주소:http://bit.ly/1osEVGU ";
+"free" = "무료";
+"open" = "켜";
+"showWaterMark" = "사진에 로고 표시 ";
+"application_update" = "업그레이드할지 여부를 응용 프로그램의 새 버전?";
+"go" = "가기";

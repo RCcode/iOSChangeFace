@@ -6,8 +6,38 @@
   Copyright (c) 2014年 rcplatform. All rights reserved.
 */
 
+"New Version available" = "เวอร์ชั่นใหม่มาแล้ว";
+"Upgrade now" = "อัพเกรดเลย";
+"Remind later" = "เตือนทีหลัง";
 "Update" = "อัพเดท";
 "Rate this app" = "ให้คะแนนแอพนี้";
 "Feedback" = "ข้อติชม";
 "Share" = "แบ่งปัน";
 "Follow us" = "ติดตามเรา";
+"Thanks for using Face2Face, please take some time to rate us, thanks for your support!" = "ขอบคุณที่ใช้ Face2Face ขอรบกวนท่านให้คะแนนแอพนี้ ขอบคุณที่ให้การสนับสนุน! ";
+"Rate now" = "ให้คะแนนเลย";
+"Remind later" = "เตือนทีหลัง";
+"No thanks" = "ไม่ให้คะแนน";
+"library_not_availabel" = "ไม่สามารถเปิดอัลบั้มภาพได้";
+"camena_not_availabel" = "ไม่สามารถที่จะเริ่มต้นกล้อง";
+"user_camera_step" = "โปรดอนุญาติ Face2Face ในกล้องถ่ายรูปของคุณ ไปที่ การตั้งค่าโทรศัพท์ -> ส่วนตัว -> กล้องถ่ายรูป -> (เปิด) Face2Face ";
+"user_library_step" = "โปรดอนุญาติFace2Face ในอัลบั้มภาพของคุณ ไปที่ การตั้งค่าโทรศัพท์ -> ส่วนตัว -> กล้องถ่ายรูป -> (เปิด) Face2Face ";
+"save" = "บันทึก";
+"share" = "แบ่งปัน";
+"more" = "เพิ่ม";
+"saved_in_album" = "บันทึกภาพไว้ในอัลบั้มภาพแล้ว";
+"instagram_notinstall" = "ยังไม่ได้ติดตั้ง Instagram";
+"dialog_sure" = "ใช่";
+"saved_in_album_Fail" = "ไม่สามารถบันทึกภาพได้";
+"saveOrBack" = "ยังไม่ได้บันทึกการเปลี่ยนแปลง คุณแน่ใจหรือไม่?";
+"cancel" = "ยกเลิก";
+"comment_us"="ขอบคุณที่ใช้ Face2Face คิดว่าแอพตัวนี้เป็นยังไงบ้าง?";
+"rate_now"="ให้คะแนนเลย";
+"comment_later"="เตือนทีหลัง";
+"never_attention"="ไม่ให้คะแนน";
+"shareContent" = "ตอนนี้กำลังใช้ Face2Face เป็นแอพแต่งภาพที่ผสมใบหน้าต่างๆ อยากให้ลองใช้กันดู ไปโหลดได้ที่: http://bit.ly/1osEVGU";
+"free" = "ฟรี";
+"open" = "เปิดสวิตช์";
+"showWaterMark" = "แสดงโลโก้ของแอปบนภาพถ่าย";
+"application_update" = "รุ่นใหม่ไม่ว่าจะเป็นในการปรับรุ่น?";
+"go" = "ไป";

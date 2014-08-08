@@ -28,8 +28,6 @@ static NSString *kShareHotTags = @"（Made with @MirrorGrid) #mirrorgrid";
 
 @interface ME_ShareViewController ()
 {
-    NSArray *cellTitleArray;
-    NSArray *cellImagesArray;
     UITableView *appMoretableView;
     UIDocumentInteractionController *documetnInteractionController;
 }
@@ -49,8 +47,6 @@ static NSString *kShareHotTags = @"（Made with @MirrorGrid) #mirrorgrid";
 - (void)dealloc
 {
     [FTF_Global shareGlobal].bigImage = nil;
-    cellTitleArray = nil;
-    cellImagesArray = nil;
     appMoretableView = nil;
     documetnInteractionController = nil;
 }
@@ -74,11 +70,7 @@ static NSString *kShareHotTags = @"（Made with @MirrorGrid) #mirrorgrid";
         arrayWithObjects:@"btn_save_normal",@"btn_Insta_normal",@"btn_Facebook_normal",@"btn_more_normal", nil];
     NSArray *imagesSelectArray = [NSArray arrayWithObjects:@"btn_save_pressed",@"btn_Insta_pressed",@"btn_Facebook_pressed",@"btn_more_pressed", nil];
     NSArray *titleArray = [NSArray
-        arrayWithObjects:LocalizedString(@"save", @""),@"Instagram",@"Facebook",LocalizedString(@"share", @""), nil];
-    cellTitleArray = [NSArray
-        arrayWithObjects:LocalizedString(@"NoCropForInstagram", @""),LocalizedString(@"BeautyForInstagram", @""),LocalizedString(@"ShapeForInstagram", @""), nil];
-    cellImagesArray = [NSArray
-        arrayWithObjects:@"nocrop-ios",@"ios-banner",@"Shape banner - ios", nil];
+        arrayWithObjects:LocalizedString(@"save", @""),@"Instagram",@"Facebook",LocalizedString(@"more", @""), nil];
     
     for (int i = 0; i < 4; i++) {
         

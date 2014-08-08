@@ -6,8 +6,38 @@
   Copyright (c) 2014年 rcplatform. All rights reserved.
 */
 
+"New Version available" = "Nova versão disponível";
+"Upgrade now" = "Atualizar agora";
+"Remind later" = "Lembrar mais tarde";
 "Update" = "Atualizar";
 "Rate this app" = "Avaliar esse aplicativo";
 "Feedback" = "Comentários";
 "Share" = "Compartilhar";
 "Follow us" = "Sigue-nos";
+"Thanks for using Face2Face, please take some time to rate us, thanks for your support!" = "Obrigado por usar Espelho Mágico, por favor, gaste um minutinho e nos ajude deixando seu comentário!";
+"Rate now" = "Avaliar agora";
+"Remind later" = "Lembrar mais tarde";
+"No thanks" = "Não obrigado(a)";
+"library_not_availabel" = "Não foi possível iniciar o álbum";
+"camena_not_availabel" = "Não foi possível iniciar a câmera";
+"user_camera_step" = "Por favor, abra a câmera para as permissões Face2Face: Configurações do telefone -> Privacidade -> Câmara -> Face2Face (aberto)";
+"user_library_step" = "Por favor, abra a câmera para as permissões Face2Face: Configurações do telefone -> Privacidade -> Fotos -> Face2Face (aberto)";
+"save" = "Salvar";
+"share" = "Compartilhar";
+"more" = "Mais";
+"saved_in_album"="Foto guardada en la galería";
+"instagram_notinstall"="No has instalado Instagram";
+"dialog_sure"="Sí";
+"saved_in_album_Fail" = "Falha ao salvar a foto";
+"saveOrBack" = "Você ainda não salvou suas alterações, tem certeza？";
+"cancel" = "Cancelar";
+"comment_us"="Obrigado por utilizar o Face2Face, O que acha desse aplicativo?";
+"rate_now"="Puntuar ahora";
+"comment_later"="Más tarde";
+"never_attention"="No volver a recordar";
+"shareContent" = "Eu estou utilizando o Face2Face, ele torna minhas fotos incriveis e mescla rostos, eu recomendo para você baixar agora. O link para baixar é:http://bit.ly/1osEVGU";
+"free" = "livre";
+"open" = "ligar";
+"showWaterMark" = "Adicionar aplicação Marca D'água";
+"application_update" = "Uma nova versão do aplicativo, seja para atualizar?";
+"go" = "ir";

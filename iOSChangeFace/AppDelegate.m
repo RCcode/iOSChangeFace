@@ -182,7 +182,7 @@
                                                                message:alert
                                                               delegate:self
                                                      cancelButtonTitle:LocalizedString(@"cancel", @"")
-                                                     otherButtonTitles:LocalizedString(@"Done", @""), nil];
+                                                     otherButtonTitles:LocalizedString(@"dialog_sure", @""), nil];
             alertView.tag = 12;
             [alertView show];
             
@@ -192,10 +192,10 @@
         {
             //Update
             UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@""
-                                                           message:LocalizedString(@"newVersion", @"")
+                                                           message:LocalizedString(@"New Version available", @"")
                                                           delegate:self
-                                                 cancelButtonTitle:LocalizedString(@"remindLater", @"")
-                                                 otherButtonTitles:LocalizedString(@"updateNow", @""), nil];
+                                                 cancelButtonTitle:LocalizedString(@"Remind later", @"")
+                                                 otherButtonTitles:LocalizedString(@"Upgrade now", @""), nil];
             alert.tag = 13;
             [alert show];
         }
@@ -323,7 +323,7 @@
             if ([currentVersion compare:version options:NSNumericSearch] == NSOrderedAscending)
             {
                 
-                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:LocalizedString(@"tips", @"")
+                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil
                                                                message:LocalizedString(@"application_update", @"")
                                                               delegate:self
                                                      cancelButtonTitle:LocalizedString(@"cancel", @"")
@@ -414,7 +414,7 @@
         if(buttonIndex == 1)
         {//马上评
 //            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:kAppStoreURL]];
-            NSString  *nsStringToOpen = [NSString  stringWithFormat:@"itms-apps://ax.itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=%@",appleID];
+            NSString  *nsStringToOpen = [NSString  stringWithFormat:@"itms-apps://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=%@",appleID];
             
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:nsStringToOpen]];
         }

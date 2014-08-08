@@ -147,7 +147,7 @@
             MFMailComposeViewController *picker = [[MFMailComposeViewController alloc] init];
             if(!picker) break;
             picker.mailComposeDelegate =self;
-            NSString *subject = [NSString stringWithFormat:@"Mirror Grid %@ (iOS)", LocalizedString(@"Feedback", nil)];
+            NSString *subject = [NSString stringWithFormat:@"Face2Face %@ (iOS)", LocalizedString(@"Feedback", nil)];
             [picker setSubject:subject];
             [picker setToRecipients:@[FEEDBACK_EMAIL]];
             [picker setMessageBody:diveceInfo isHTML:NO];

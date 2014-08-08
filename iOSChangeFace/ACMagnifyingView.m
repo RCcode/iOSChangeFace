@@ -47,9 +47,9 @@ static CGFloat const kACMagnifyingViewDefaultShowDelay = 0.5;
     [self addGestureRecognizerToView:self.imageView];
     self.image = imgView.image;
     [self addSubview:self.imageView];
-    CGAffineTransform currentTransform = self.imageView.transform;
-    CGAffineTransform newTransform = CGAffineTransformRotate(currentTransform, [FTF_Global shareGlobal].rorationDegree);
-    [self.imageView setTransform:newTransform];
+//    CGAffineTransform currentTransform = self.imageView.transform;
+//    CGAffineTransform newTransform = CGAffineTransformRotate(currentTransform, [FTF_Global shareGlobal].rorationDegree);
+//    [self.imageView setTransform:newTransform];
     //抠图操作视图
     cropView = [[MZCroppableView alloc]initWithImageView:self.imageView];
     cropView.userInteractionEnabled = NO;
@@ -211,7 +211,6 @@ static CGFloat const kACMagnifyingViewDefaultShowDelay = 0.5;
 #pragma mark 缩放
 - (void)pinView:(UIPinchGestureRecognizer *)recognizer changeScale:(float)tinyScale
 {
-    UIView *imageView = recognizer.view;
     
     CGFloat scale;
     if (isTiny)
@@ -230,9 +229,9 @@ static CGFloat const kACMagnifyingViewDefaultShowDelay = 0.5;
         return;
     }
     
-    CGAffineTransform newTransform = CGAffineTransformScale(imageView.transform, scale, scale);
-    [imageView setTransform:newTransform];
-    cropView.frame = imageView.frame;
+    CGAffineTransform newTransform = CGAffineTransformScale(self.transform, scale, scale);
+    [self setTransform:newTransform];
+    //cropView.frame = imageView.frame;
     
     lastScale = [recognizer scale];
 }
@@ -242,7 +241,6 @@ static CGFloat const kACMagnifyingViewDefaultShowDelay = 0.5;
 - (void)rotateView:(UIRotationGestureRecognizer *)recognizer changeRotate:(float)tinyScale
 {
     
-    UIView *imageView = recognizer.view;
     CGFloat rotation;
     
     if (isTiny)
@@ -254,10 +252,14 @@ static CGFloat const kACMagnifyingViewDefaultShowDelay = 0.5;
     {
         rotation = 0.0 - (recordedRotation - [recognizer rotation]);
     }
+
+    CGAffineTransform cropTransform = self.transform;
+    CGAffineTransform newCropTransform = CGAffineTransformRotate(cropTransform,rotation);
+    [self setTransform:newCropTransform];
     
-    CGAffineTransform currentTransform = imageView.transform;
-    CGAffineTransform newTransform = CGAffineTransformRotate(currentTransform,rotation);
-    [imageView setTransform:newTransform];
+//    CGAffineTransform currentTransform = imageView.transform;
+//    CGAffineTransform newTransform = CGAffineTransformRotate(currentTransform,rotation);
+//    [imageView setTransform:newTransform];
     
     recordedRotation = [recognizer rotation];
     if([recognizer state] == UIGestureRecognizerStateEnded) {

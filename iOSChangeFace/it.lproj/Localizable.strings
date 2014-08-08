@@ -6,8 +6,38 @@
   Copyright (c) 2014年 rcplatform. All rights reserved.
 */
 
+"New Version available" = "Nuova versione disponibile";
+"Upgrade now" = "Aggiorna ora";
+"Remind later" = "Ricordamelo dopo";
 "Update" = "Aggiorna";
 "Rate this app" = "Vota questa applicazione";
 "Feedback" = "Commenti";
 "Share" = "Condividi";
 "Follow us" = "Seguici";
+"Thanks for using Face2Face, please take some time to rate us, thanks for your support!" = "Grazie per aver usato Face2Face! Vi preghiamo di darci il vosto voto e grazie ancora per il vostro supporto!";
+"Rate now" = "Vota ora";
+"Remind later" = "Ricordamelo più tardi";
+"No thanks" = "No grazie";
+"library_not_availabel" = "Impossibile avviare l'album";
+"camena_not_availabel" = "Impossibile avviare la fotocamera";
+"user_camera_step" = "Si prega di aprire la fotocamera per le autorizzazioni Face2Face: Impostazioni telefono -> Privacy -> Camera -> Face2Face (aperto)";
+"user_library_step" = "Si prega di aprire la fotocamera per le autorizzazioni Face2Face: Impostazioni telefono -> Privacy -> Foto -> Face2Face (aperto)";
+"save" = "Salva";
+"share" = "Condividi";
+"more" = "Altro";
+"saved_in_album"="Foto salvate in galleria";
+"instagram_notinstall"="Insagram non è stato installato";
+"dialog_sure"="Si";
+"saved_in_album_Fail" = "Salvataggio foto non riuscito";
+"saveOrBack" = "Non hai salvato le modifiche, sei sicuro?";
+"cancel" = "No";
+"comment_us"="grazie per aver usato Face2Face, cosa ne pensi di questa applicazione?";
+"rate_now"="Vota ora";
+"comment_later"="Ricordamelo più tardi";
+"never_attention"="No grazie";
+"shareContent" = "Sto utilizzando Face2Face, fa foto incredibili che si fondono affronta insieme, vi consiglio di usarlo. L'indirizzo di download è:http://bit.ly/1osEVGU";
+"free" = "gratuito";
+"open" = "accendere";
+"showWaterMark" = "Aggiungi design dell'applicazione";
+"application_update" = "Una nuova versione dell'applicazione, se l'aggiornamento?";
+"go" = "andare";

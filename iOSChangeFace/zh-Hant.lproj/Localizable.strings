@@ -6,8 +6,38 @@
   Copyright (c) 2014年 rcplatform. All rights reserved.
 */
 
+"New Version available" = "有新版本";
+"Upgrade now" = "馬上升級";
+"Remind later" = "稍後再說";
 "Update" = "更新";
 "Rate this app" = "評分";
 "Feedback" = "反饋";
 "Share" = "分享";
 "Follow us" = "關注我們";
+"Thanks for using Face2Face, please take some time to rate us, thanks for your support!" = "感謝使用，請花點時間給予五星評分，感謝你對我們的支持！";
+"Rate now" = "馬上評價";
+"Remind later" = "稍後再說";
+"No thanks" = "不再提醒";
+"library_not_availabel" = "無法啟動相冊";
+"camena_not_availabel" = "無法啟動相機";
+"user_camera_step" = "請為變臉開放相機權限：手機設置->隱私->相機->變臉（打開）";
+"user_library_step" = "請為變臉開放相機權限：手機設置->隱私->照片->變臉（打開）";
+"save" = "保存";
+"share" = "分享";
+"more" = "更多";
+"saved_in_album"="照片已保存到系統相冊";
+"instagram_notinstall"="你沒有安裝Instagram";
+"dialog_sure"="確定";
+"saved_in_album_Fail" = "圖片保存失敗";
+"saveOrBack" = "圖片未保存，放棄編輯？";
+"cancel" = "取消";
+"comment_us"="感謝使用Face2Face，您認為這款APP怎麽樣？";
+"rate_now"="馬上評價";
+"comment_later"="稍後再說";
+"never_attention"="不再提醒";
+"shareContent" = "我正在用的變臉,可以制作令人驚訝的臉部融合圖片，推薦妳也用用。下載地址：http://bit.ly/1osEVGU";
+"free" = "免費";
+"open" = "打開";
+"showWaterMark" = "顯示應用水印";
+"application_update" = "有新版本，是否升級?";
+"go" = "前往";
