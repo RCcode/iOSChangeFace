@@ -12,6 +12,7 @@
 
 #define HTTP_BASEURL @"http://moreapp.rcplatformhk.net/pbweb/app/"
 #define kPushURL @"http://iospush.rcplatformhk.net/IOSPushWeb/userinfo/regiUserInfo.do"
+#define kAppStoreURL [NSString stringWithFormat:@"%@%@", @"itms-apps://itunes.apple.com/app/id",appleID]
 
 #ifdef __OBJC__
     #import <UIKit/UIKit.h>

@@ -23,6 +23,7 @@
     BOOL isTiny;
     double recordedRotation;
     UIImageView *libaryImageView;
+    NSArray *eventArray;
 }
 @end
 
@@ -41,6 +42,7 @@
 - (void)dealloc
 {
     libaryImageView = nil;
+    eventArray = nil;
 }
 
 - (void)viewDidLoad
@@ -78,6 +80,8 @@
     toolBarView.delegate = self;
     [self.view addSubview:toolBarView];
     
+    eventArray = @[@"adjust_normal",@"adjust_left",@"adjust_up",@"adjust_right",@"adjust_down",@"adjust_big",@"adjust_small",@"adjust_ronateleft",@"adjust_ronateright"];
+    
 }
 
 #pragma mark -
@@ -114,16 +118,23 @@
 - (void)addGestureRecognizerToView:(UIView *)view
 {
     UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] init];
+    pan.delegate = self;
     [pan addTarget:self action:@selector(panView:changePoint:)];
     [view addGestureRecognizer:pan];
     
     UIPinchGestureRecognizer *pin = [[UIPinchGestureRecognizer alloc] init];
+    pin.delegate = self;
     [pin addTarget:self action:@selector(pinView:changeScale:)];
     [view addGestureRecognizer:pin];
     
     UIRotationGestureRecognizer *rotationGesture = [[UIRotationGestureRecognizer alloc] initWithTarget:self action:@selector(rotateView:changeRotate:)];
-    
+    rotationGesture.delegate = self;
     [view addGestureRecognizer:rotationGesture];
+}
+
+#pragma mark - UIGestureRecognizerDelegate
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
+    return YES;
 }
 
 #pragma mark -
@@ -221,6 +232,7 @@
 #pragma mark DirectionDelegate
 - (void)directionBtnClick:(NSUInteger)tag
 {
+    [FTF_Global event:eventArray[tag] label:@"Edit"];
     if (tag == 0)
     {
         libaryImageView.transform = CGAffineTransformMakeRotation(0);

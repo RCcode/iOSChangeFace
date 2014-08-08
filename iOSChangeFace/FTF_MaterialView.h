@@ -7,11 +7,11 @@
 //
 
 enum MaterialModelType{
-    AnimalModel = 0,
-    CrossBonesModel = 1,
-    GirlModel = 2,
-    MaskModel = 3,
-    OtherModel = 4,
+    CrossBonesModel = 0,
+    MaskModel,
+    AnimalModel,
+    GirlModel,
+    OtherModel,
 };
 
 #import <UIKit/UIKit.h>

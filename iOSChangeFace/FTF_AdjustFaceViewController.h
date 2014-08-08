@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "FTF_Delegates.h"
 
-@interface FTF_AdjustFaceViewController : UIViewController <DirectionDelegate>
+@interface FTF_AdjustFaceViewController : UIViewController <DirectionDelegate,UIGestureRecognizerDelegate>
 
 - (void)loadAdjustViews:(UIImage *)image;
 

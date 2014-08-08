@@ -51,6 +51,7 @@
 
 - (IBAction)openLibaryClick:(id)sender
 {
+    [FTF_Global event:@"Home" label:@"home_gallery"];
     //判断相册功能是否被人为禁止
     ALAuthorizationStatus author = [ALAssetsLibrary authorizationStatus];
     if (author == ALAuthorizationStatusRestricted || author == ALAuthorizationStatusDenied)
@@ -90,6 +91,7 @@
 
 - (IBAction)openCamanaClick:(id)sender
 {
+    [FTF_Global event:@"Home" label:@"home_camera"];
     AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
     if (authStatus == AVAuthorizationStatusRestricted || authStatus == AVAuthorizationStatusDenied)
     {
@@ -107,6 +109,7 @@
 
 - (IBAction)moreApp:(id)sender
 {
+    [FTF_Global event:@"Home" label:@"moreApp"];
     ME_MoreAppViewController *moreApp = [[ME_MoreAppViewController alloc]initWithNibName:@"ME_MoreAppViewController" bundle:nil];
     UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:moreApp];
     [self presentViewController:nav animated:YES completion:nil];

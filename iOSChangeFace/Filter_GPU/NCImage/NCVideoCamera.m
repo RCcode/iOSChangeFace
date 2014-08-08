@@ -13,7 +13,7 @@
 
 //@property (nonatomic, copy) FilterCompletionBlock filterCompletionBlock;
 
-@property (nonatomic, strong)NSLock *theLock;
+//@property (nonatomic, strong)NSLock *theLock;
 
 @property (nonatomic, strong) NCImageFilter *filter;
 @property (nonatomic, strong) GPUImagePicture *sourcePicture1;
@@ -707,7 +707,7 @@ CGFloat outputWH = 320 * 1.5;
     CGRect frame = CGRectMake(0, 0, outputWH, outputWH);
     NCVideoCamera *instance = [[[self class] alloc] initWithSessionPreset:AVCaptureSessionPresetPhoto cameraPosition:AVCaptureDevicePositionUnspecified highVideoQuality:NO WithFrame:frame];
     [instance switchFilter:NC_NORMAL_FILTER];
-    instance.theLock = [[NSLock alloc] init];
+    //instance.theLock = [[NSLock alloc] init];
     return instance;
 }
 
@@ -774,7 +774,7 @@ int imagesIndex ;
     for (UIImage *image in images) {
         
         //锁
-        [_theLock lock];
+        //[_theLock lock];
 
         if(![image isKindOfClass:[UIImage class]]){
 
@@ -784,7 +784,7 @@ int imagesIndex ;
                 }
             });
             
-            [_theLock unlock];
+            //[_theLock unlock];
             
             continue;
         }
@@ -806,7 +806,7 @@ int imagesIndex ;
     imagesIndex = 0;
     
     //锁
-    [_theLock lock];
+    //[_theLock lock];
     
     if(![image isKindOfClass:[UIImage class]]){
         
@@ -816,7 +816,7 @@ int imagesIndex ;
             }
         });
         
-        [_theLock unlock];
+        //[_theLock unlock];
         return;
     }
     
@@ -861,7 +861,7 @@ int imagesIndex ;
             [self.delegate videoCameraDidFinishFilter:outputImage Index:imagesIndex++];
         }
         
-        [_theLock unlock];
+        //[_theLock unlock];
         
     });
     

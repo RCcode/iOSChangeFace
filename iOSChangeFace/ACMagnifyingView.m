@@ -99,15 +99,23 @@ static CGFloat const kACMagnifyingViewDefaultShowDelay = 0.5;
 - (void)addGestureRecognizerToView:(UIView *)view
 {
     UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] init];
+    pan.delegate = self;
     [pan addTarget:self action:@selector(panView:changePoint:)];
     [view addGestureRecognizer:pan];
     
     UIPinchGestureRecognizer *pin = [[UIPinchGestureRecognizer alloc] init];
+    pin.delegate = self;
     [pin addTarget:self action:@selector(pinView:changeScale:)];
     [view addGestureRecognizer:pin];
     
     UIRotationGestureRecognizer *rotationGesture = [[UIRotationGestureRecognizer alloc] initWithTarget:self action:@selector(rotateView:changeRotate:)];
+    rotationGesture.delegate = self;
     [view addGestureRecognizer:rotationGesture];
+}
+
+#pragma mark - UIGestureRecognizerDelegate
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
+    return YES;
 }
 
 - (void)moveBtnClick:(NSInteger)tag

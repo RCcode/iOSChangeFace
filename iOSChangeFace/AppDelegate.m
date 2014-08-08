@@ -399,6 +399,40 @@
     
 }
 
+#pragma mark - UIAlertViewDelegate
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    
+    if (alertView.tag == 11)
+    {
+        if(buttonIndex == 2){//稍后
+            return;
+        }
+        
+        [[NSUserDefaults standardUserDefaults] setObject:@(-1) forKey:UDKEY_ShareCount];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        
+        if(buttonIndex == 1)
+        {//马上评
+//            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:kAppStoreURL]];
+            NSString  *nsStringToOpen = [NSString  stringWithFormat:@"itms-apps://ax.itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=%@",appleID];
+            
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:nsStringToOpen]];
+        }
+    }
+    else if (alertView.tag == 12)
+    {
+        if (buttonIndex == 1) {
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:self.updateUrlStr]];
+        }
+    }
+    else if (alertView.tag == 13 || alertView.tag == 14)
+    {
+        if (buttonIndex == 1) {
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:kAppStoreURL]];
+        }
+    }
+}
+
 - (void)applicationWillResignActive:(UIApplication *)application
 {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

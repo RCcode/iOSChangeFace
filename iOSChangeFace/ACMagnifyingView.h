@@ -11,7 +11,7 @@
 @class ACMagnifyingGlass;
 @class MZCroppableView;
 
-@interface ACMagnifyingView : UIView
+@interface ACMagnifyingView : UIView <UIGestureRecognizerDelegate>
 {
     MZCroppableView *cropView;
     float lastScale;

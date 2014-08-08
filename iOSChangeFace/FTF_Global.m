@@ -19,6 +19,7 @@
     self.modelImageName = nil;
     self.modelImage = nil;
     self.bannerView = nil;
+    self.bigImage = nil;
 }
 
 + (instancetype)shareGlobal
@@ -28,12 +29,13 @@
     dispatch_once(&onceToken, ^{
         _public_Global = [[[self class] alloc] init];
         _public_Global.appsArray = [[NSMutableArray alloc]init];
+        _public_Global.isOn = YES;
     });
     
     return _public_Global;
 }
 
-+ (void)event:(NSString *)eventID label:(NSString *)label;
++ (void)event:(NSString *)eventID label:(NSString *)label
 {
     //友盟
     [MobClick event:eventID label:label];

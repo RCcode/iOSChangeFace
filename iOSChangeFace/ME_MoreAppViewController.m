@@ -192,6 +192,8 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     RC_AppInfo *appInfo = [[FTF_Global shareGlobal].appsArray objectAtIndex:indexPath.row];
+    [FTF_Global event:@"Share" label:appInfo.appName];
+    
     if (appInfo.isHave)
     {
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:appInfo.openUrl]];

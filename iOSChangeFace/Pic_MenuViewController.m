@@ -49,7 +49,6 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [FTF_Global event:@"home" label:@"home_more"];
 }
 
 - (void)didReceiveMemoryWarning
@@ -105,21 +104,21 @@
         case 0:
         {
             //更新
-            [FTF_Global event:@"home" label:@"more_update"];
+            [FTF_Global event:@"Home" label:@"more_update"];
             [self jumpToAppStore];
         }
             break;
         case 1:
         {
             //评分
-            [FTF_Global event:@"home" label:@"more_rate"];
+            [FTF_Global event:@"Home" label:@"more_rate"];
             [self jumpToAppStore];
         }
             break;
         case 2:
             //反馈
         {
-            [FTF_Global event:@"home" label:@"more_feedback"];
+            [FTF_Global event:@"Home" label:@"more_feedback"];
             
             // app名称 版本
             NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
@@ -159,7 +158,7 @@
         case 3:
         {
             //分享
-            [FTF_Global event:@"home" label:@"more_share"];
+            [FTF_Global event:@"Home" label:@"more_share"];
             //需要分享的内容
             
             NSString *shareContent = LocalizedString(@"shareContent", nil);
@@ -183,7 +182,7 @@
         case 4:
         {
             //关注我们
-            [FTF_Global event:@"home" label:@"more_care"];
+            [FTF_Global event:@"Home" label:@"more_care"];
             NSURL *instagramURL = [NSURL URLWithString:@"instagram://user?username=mirrorgrid"];
             if ([[UIApplication sharedApplication] canOpenURL:instagramURL]) {
                 [[UIApplication sharedApplication] openURL:instagramURL];

@@ -124,6 +124,7 @@
             break;
         case 1:
         {
+            [FTF_Global event:@"Fodder" label:@"fodder_gallery"];
             //判断相册功能是否被人为禁止
             ALAuthorizationStatus author = [ALAssetsLibrary authorizationStatus];
             if (author == ALAuthorizationStatusRestricted || author == ALAuthorizationStatusDenied)
@@ -142,6 +143,7 @@
             break;
         case 2:
         {
+            [FTF_Global event:@"Fodder" label:@"fodder_camera"];
             AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
             if (authStatus == AVAuthorizationStatusRestricted || authStatus == AVAuthorizationStatusDenied)
             {

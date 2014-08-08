@@ -250,7 +250,7 @@ expectedTotalBytes:(int64_t)expectedTotalBytes {
 @property (readwrite, nonatomic, strong) NSOperationQueue *operationQueue;
 @property (readwrite, nonatomic, strong) NSURLSession *session;
 @property (readwrite, nonatomic, strong) NSMutableDictionary *mutableTaskDelegatesKeyedByTaskIdentifier;
-@property (readwrite, nonatomic, strong) NSLock *lock;
+//@property (readwrite, nonatomic, strong) NSLock *lock;
 @property (readwrite, nonatomic, copy) AFURLSessionDidBecomeInvalidBlock sessionDidBecomeInvalid;
 @property (readwrite, nonatomic, copy) AFURLSessionDidReceiveAuthenticationChallengeBlock sessionDidReceiveAuthenticationChallenge;
 @property (readwrite, nonatomic, copy) AFURLSessionTaskWillPerformHTTPRedirectionBlock taskWillPerformHTTPRedirection;
@@ -298,8 +298,8 @@ expectedTotalBytes:(int64_t)expectedTotalBytes {
 
     self.reachabilityManager = [AFNetworkReachabilityManager sharedManager];
 
-    self.lock = [[NSLock alloc] init];
-    self.lock.name = AFURLSessionManagerLockName;
+//    self.lock = [[NSLock alloc] init];
+//    self.lock.name = AFURLSessionManagerLockName;
     
     [self.session getTasksWithCompletionHandler:^(NSArray *dataTasks, NSArray *uploadTasks, NSArray *downloadTasks) {
         for (NSURLSessionDataTask *task in dataTasks) {
@@ -324,9 +324,9 @@ expectedTotalBytes:(int64_t)expectedTotalBytes {
     NSParameterAssert(task);
 
     AFURLSessionManagerTaskDelegate *delegate = nil;
-    [self.lock lock];
+    //[self.lock lock];
     delegate = self.mutableTaskDelegatesKeyedByTaskIdentifier[@(task.taskIdentifier)];
-    [self.lock unlock];
+    //[self.lock unlock];
 
     return delegate;
 }
@@ -337,10 +337,10 @@ expectedTotalBytes:(int64_t)expectedTotalBytes {
     NSParameterAssert(task);
     NSParameterAssert(delegate);
 
-    [self.lock lock];
+    //[self.lock lock];
     [task addObserver:self forKeyPath:NSStringFromSelector(@selector(state)) options:NSKeyValueObservingOptionOld |NSKeyValueObservingOptionNew context:AFTaskStateChangedContext];
     self.mutableTaskDelegatesKeyedByTaskIdentifier[@(task.taskIdentifier)] = delegate;
-    [self.lock unlock];
+    //[self.lock unlock];
 }
 
 - (void)addDelegateForDataTask:(NSURLSessionDataTask *)dataTask
@@ -411,16 +411,16 @@ expectedTotalBytes:(int64_t)expectedTotalBytes {
 - (void)removeDelegateForTask:(NSURLSessionTask *)task {
     NSParameterAssert(task);
 
-    [self.lock lock];
+    //[self.lock lock];
     [task removeObserver:self forKeyPath:NSStringFromSelector(@selector(state)) context:AFTaskStateChangedContext];
     [self.mutableTaskDelegatesKeyedByTaskIdentifier removeObjectForKey:@(task.taskIdentifier)];
-    [self.lock unlock];
+    //[self.lock unlock];
 }
 
 - (void)removeAllDelegates {
-    [self.lock lock];
+    //[self.lock lock];
     [self.mutableTaskDelegatesKeyedByTaskIdentifier removeAllObjects];
-    [self.lock unlock];
+    //[self.lock unlock];
 }
 
 #pragma mark -

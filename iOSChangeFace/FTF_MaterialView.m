@@ -81,6 +81,26 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (modelType == AnimalModel)
+    {
+        [FTF_Global event:[NSString stringWithFormat:@"fodder_animal_%d",(int)indexPath.row + 1] label:@"Fodder"];
+    }
+    else if (modelType == CrossBonesModel)
+    {
+        [FTF_Global event:[NSString stringWithFormat:@"fodder_skeleton_%d",(int)indexPath.row + 1] label:@"Fodder"];
+    }
+    else if (modelType == GirlModel)
+    {
+        [FTF_Global event:[NSString stringWithFormat:@"fodder_girl_%d",(int)indexPath.row + 1] label:@"Fodder"];
+    }
+    else if (modelType == MaskModel)
+    {
+        [FTF_Global event:[NSString stringWithFormat:@"fodder_mask_%d",(int)indexPath.row + 1] label:@"Fodder"];
+    }
+    else if (modelType == OtherModel)
+    {
+        [FTF_Global event:[NSString stringWithFormat:@"fodder_more_%d",(int)indexPath.row + 1] label:@"Fodder"];
+    }
     NSArray *dataArray = [self.dataDic objectForKey:[NSString stringWithFormat:@"%d",modelType]];
     NSString *imageName = [dataArray objectAtIndex:indexPath.row];
     [FTF_Global shareGlobal].modelImageName = nil;

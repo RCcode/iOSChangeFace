@@ -29,6 +29,7 @@ enum DirectionType
 #import "ACMagnifyingGlass.h"
 #import "FTF_DirectionView.h"
 #import "FTF_MaterialViewController.h"
+#import "ME_ShareViewController.h"
 
 @interface FTF_EditFaceViewController ()
 {
@@ -44,7 +45,9 @@ enum DirectionType
     FTF_DirectionView *detailView;//辅工具栏
     UIImageView *fuzzyImage;//模糊图片
     NCVideoCamera *_videoCamera;
-    
+    NSArray *directionArray;
+    NSArray *fuzzyArray;
+    NSArray *modelArray;
 }
 @property (nonatomic ,strong) UISlider *modelSlider;
 @property (nonatomic ,strong) UISlider *cropSlider;
@@ -58,6 +61,9 @@ enum DirectionType
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+        directionArray = @[@"edit_normal",@"edit_left",@"edit_up",@"edit_right",@"edit_down",@"edit_big",@"edit_small",@"edit_ronateleft",@"edit_ronateright"];
+        fuzzyArray = @[@"beauty_normal",@"beauty_small",@"beauty_middle",@"beauty_big"];
+        modelArray = @[@"switch_left",@"switch_right",@"switch_up",@"switch_down"];
         
     }
     return self;
@@ -65,20 +71,6 @@ enum DirectionType
 
 - (void)dealloc
 {
-    bottomView = nil;
-    colorArray = nil;
-    maskLayer = nil;
-    _libaryImage = nil;
-    libaryImageView = nil;
-    backView = nil;
-    mag = nil;
-    backImageView = nil;
-    dataArray = nil;
-    detailView = nil;
-    _cropSlider = nil;
-    _modelSlider = nil;
-    fuzzyImage = nil;
-    _videoCamera = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
@@ -223,17 +215,15 @@ enum DirectionType
 
 - (void)homeItemClick:(UIBarButtonItem *)item
 {
+    [FTF_Global event:@"Edit" label:@"edit_home"];
     [self.navigationController popToRootViewControllerAnimated:YES];
-}
-
-- (void)cameraItemClick:(UIBarButtonItem *)item
-{
-    
 }
 
 - (void)shareItemClick:(UIBarButtonItem *)item
 {
-
+    [FTF_Global event:@"Edit" label:@"edit_share"];
+    ME_ShareViewController *shareController = [[ME_ShareViewController alloc]initWithNibName:@"ME_ShareViewController" bundle:nil];
+    [self.navigationController pushViewController:shareController animated:YES];
 }
 
 #pragma mark -
@@ -497,21 +487,24 @@ enum DirectionType
 {
     if (tag < 9)
     {
+        [FTF_Global event:directionArray[tag] label:@"Edit"];
         [backView moveBtnClick:tag];
     }
     else if (tag == 10 || tag == 11 || tag == 12 || tag == 13)
     {
+        [FTF_Global event:modelArray[tag - 10] label:@"Edit"];
         [self changeModelBtnClick:tag - 10];
     }
     else if (tag == 20 || tag == 21 || tag == 22 || tag == 23)
     {
+        [FTF_Global event:fuzzyArray[tag - 20] label:@"Edit"];
         [self addFuzzyView:tag - 20];
     }
     else if (tag >= 100)
     {
+        [FTF_Global event:[NSString stringWithFormat:@"filter_%d",(int)tag - 100] label:@"Edit"];
         [self filterImage:tag - 100];
     }
-    
 }
 
 - (void)directionSlider:(UISlider *)slider
