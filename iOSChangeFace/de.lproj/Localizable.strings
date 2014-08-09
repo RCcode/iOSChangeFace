@@ -25,6 +25,9 @@
 "save" = "Sichern";
 "share" = "Teilen";
 "more" = "Mehr";
+"good" = "Sehr  gut.";
+"bad" = "Sehr schlecht";
+"normal" = "Okay";
 "saved_in_album"="In Galerie gespeicherte Photos";
 "instagram_notinstall"="Instagram ist nicht instaliert";
 "dialog_sure"="Ja";

@@ -25,6 +25,9 @@
 "save" = "保存";
 "share" = "シェア";
 "more" = "More";
+"good" = "すごく良い";
+"bad" = "すごく悪い";
+"normal" = "普通";
 "saved_in_album"="写真が保存されました";
 "instagram_notinstall"="Instagramがインストールされていません";
 "dialog_sure"="はい";

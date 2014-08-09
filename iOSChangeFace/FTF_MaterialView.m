@@ -28,6 +28,13 @@
             };
         
         self.dataDic = dic;
+        
+        UIImageView *blur = [[UIImageView alloc] initWithFrame:self.bounds];
+        blur.userInteractionEnabled = YES;
+        UIEdgeInsets ed = {0.0f, 10.0f, 0.0f, 10.0f};
+        UIImage *newImage = [pngImagePath(@"bg") resizableImageWithCapInsets:ed resizingMode:UIImageResizingModeTile];
+        blur.image = newImage;
+        [self addSubview:blur];
     }
     return self;
 }
@@ -81,6 +88,7 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    [FTF_Global shareGlobal].modelType = modelType;
     if (modelType == AnimalModel)
     {
         [FTF_Global event:[NSString stringWithFormat:@"fodder_animal_%d",(int)indexPath.row + 1] label:@"Fodder"];

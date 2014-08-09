@@ -25,6 +25,9 @@
 "save" = "保存";
 "share" = "分享";
 "more" = "更多";
+"good" = "很好";
+"bad" = "很差";
+"normal" = "壹般";
 "saved_in_album"="照片已保存到系統相冊";
 "instagram_notinstall"="你沒有安裝Instagram";
 "dialog_sure"="確定";

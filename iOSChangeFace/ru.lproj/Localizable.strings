@@ -25,6 +25,9 @@
 "save" = "Сохранить";
 "share" = "Поделиться";
 "more" = "Еще";
+"good" = "Отличное";
+"bad" = "Очень плохое";
+"normal" = "Обычное";
 "saved_in_album"="Фотография сохранена в галерее";
 "instagram_notinstall"="Instagram не установлен";
 "dialog_sure"="Да";

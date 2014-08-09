@@ -25,6 +25,9 @@
 "save" = "บันทึก";
 "share" = "แบ่งปัน";
 "more" = "เพิ่ม";
+"good" = "ดีมาก";
+"bad" = "แย่มาก";
+"normal" = "ใช้ได้";
 "saved_in_album" = "บันทึกภาพไว้ในอัลบั้มภาพแล้ว";
 "instagram_notinstall" = "ยังไม่ได้ติดตั้ง Instagram";
 "dialog_sure" = "ใช่";

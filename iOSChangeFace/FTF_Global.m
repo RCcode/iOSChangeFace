@@ -9,6 +9,7 @@
 #import "FTF_Global.h"
 #import "MobClick.h"
 #import "Flurry.h"
+#import "FTF_MaterialView.h"
 
 @implementation FTF_Global
 
@@ -30,6 +31,7 @@
         _public_Global = [[[self class] alloc] init];
         _public_Global.appsArray = [[NSMutableArray alloc]init];
         _public_Global.isOn = YES;
+        _public_Global.modelType = 0;
     });
     
     return _public_Global;

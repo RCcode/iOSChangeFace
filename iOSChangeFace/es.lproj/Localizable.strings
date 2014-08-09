@@ -25,6 +25,9 @@
 "save" = "Guardar";
 "share" = "Compartir";
 "more" = "Más";
+"good" = "muy bien ";
+"bad" = "muy bien ";
+"normal" = "ok";
 "saved_in_album"="Foto guardada en la galería";
 "instagram_notinstall"="No has instalado Instagram";
 "dialog_sure"="Sí";

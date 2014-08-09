@@ -71,6 +71,7 @@
     //下载应用列表
     [self downLoadAppsInfo];
     
+    
     //三次分享，即弹框
     NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
     int shareCount = [[userDefault objectForKey:UDKEY_ShareCount] intValue];
@@ -82,8 +83,8 @@
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@""
                                                             message:LocalizedString(@"comment_us", nil)
                                                            delegate:self
-                                                  cancelButtonTitle:LocalizedString(@"never_attention", nil)
-                                                  otherButtonTitles:LocalizedString(@"rate_now", nil), LocalizedString(@"comment_later", nil), nil];
+                                                  cancelButtonTitle:LocalizedString(@"normal", nil)
+                                                  otherButtonTitles:LocalizedString(@"good", nil), LocalizedString(@"bad", nil), nil];
             alert.tag = 11;
             [alert show];
         }
@@ -336,7 +337,6 @@
             break;
         case 11:
         {
-            NSLog(@"dic.......%@",dic);
             NSArray *infoArray = [dic objectForKey:@"list"];
             NSMutableArray *isDownArray = [NSMutableArray arrayWithCapacity:0];
             NSMutableArray *noDownArray = [NSMutableArray arrayWithCapacity:0];
@@ -404,7 +404,8 @@
     
     if (alertView.tag == 11)
     {
-        if(buttonIndex == 2){//稍后
+        if(buttonIndex == 0)
+        {
             return;
         }
         
@@ -412,11 +413,8 @@
         [[NSUserDefaults standardUserDefaults] synchronize];
         
         if(buttonIndex == 1)
-        {//马上评
-//            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:kAppStoreURL]];
-            NSString  *nsStringToOpen = [NSString  stringWithFormat:@"itms-apps://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=%@",appleID];
-            
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:nsStringToOpen]];
+        {
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:kAppStoreURL]];
         }
     }
     else if (alertView.tag == 12)

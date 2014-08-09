@@ -25,6 +25,9 @@
 "save" = "Salva";
 "share" = "Condividi";
 "more" = "Altro";
+"good" = "molto buona";
+"bad" = "molto scarsa";
+"normal" = "ok";
 "saved_in_album"="Foto salvate in galleria";
 "instagram_notinstall"="Insagram non è stato installato";
 "dialog_sure"="Si";

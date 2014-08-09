@@ -27,6 +27,7 @@ enum DirectionType
 #import "MZCroppableView.h"
 #import "ACMagnifyingView.h"
 #import "ACMagnifyingGlass.h"
+#import "FTF_MaterialView.h"
 #import "FTF_DirectionView.h"
 #import "FTF_MaterialViewController.h"
 #import "ME_ShareViewController.h"
@@ -38,6 +39,7 @@ enum DirectionType
     NSMutableArray *colorArray;
     CAGradientLayer *maskLayer;//模糊层
     UIImageView *libaryImageView;
+    UIView *acBackView;//放大镜背景图
     ACMagnifyingView *backView;//放大镜操作图
     ACMagnifyingGlass *mag;//放大镜显示框
     UIImageView *backImageView;
@@ -187,15 +189,17 @@ enum DirectionType
     [bottomView addSubview:backImageView];
     
     //放大镜
+    acBackView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 320)];
+    acBackView.layer.masksToBounds = YES;
     backView = [[ACMagnifyingView alloc] initWithFrame:CGRectMake(0, 0, 320, 320)];
-    //backView.transform = CGAffineTransformMakeRotation([FTF_Global shareGlobal].rorationDegree);
+    backView.transform = CGAffineTransformMakeRotation([FTF_Global shareGlobal].rorationDegree);
     //放大操作显示框
     mag = [[ACMagnifyingGlass alloc] initWithFrame:CGRectMake(0, 0, 90, 90)];
     
     mag.scale = 1.5;
     backView.magnifyingGlass = mag;
-    backView.layer.masksToBounds = YES;
-    [bottomView addSubview:backView];
+    [acBackView addSubview:backView];
+    [bottomView addSubview:acBackView];
     
     //从相册中选取的图片
     libaryImageView = [[UIImageView alloc]initWithFrame:_imageRect];
@@ -315,7 +319,7 @@ enum DirectionType
     }
     
     maskLayer.colors = colorArray;
-    [backView.layer setMask:maskLayer];
+    [acBackView.layer setMask:maskLayer];
 }
 
 #pragma mark -
@@ -385,6 +389,23 @@ enum DirectionType
 #pragma mark 合成图片
 - (void)scaleEditImage
 {
+    UIImageView *waterView = nil;
+    
+    if ([FTF_Global shareGlobal].isOn)
+    {
+        NSArray *imageArray = @[pngImagePath(@"skull"),pngImagePath(@"mask"),pngImagePath(@"animal"),pngImagePath(@"women"),pngImagePath(@"other")];
+        
+        int model = (int)[FTF_Global shareGlobal].modelType;
+        UIImage *waterImage = imageArray[model];
+        float width = waterImage.size.width;
+        float height = waterImage.size.height;
+        float x = 320.f - width;
+        float y = 320.f - height;
+        
+        waterView = [[UIImageView alloc]initWithFrame:CGRectMake(x, y, width, height)];
+        waterView.image = imageArray[model];
+        [bottomView addSubview:waterView];
+    }
     
     CGSize size = bottomView.frame.size;
     CGFloat scale = 3.375f;
@@ -399,6 +420,9 @@ enum DirectionType
 
     UIImage *viewImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
+    
+    [waterView removeFromSuperview];
+    waterView = nil;
     
     //保存
     [FTF_Global shareGlobal].bigImage = viewImage;

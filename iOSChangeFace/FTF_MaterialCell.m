@@ -19,8 +19,8 @@
         UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(10, 10, 140, 140)];
         self.imageView = imageView;
         self.imageView.userInteractionEnabled = NO;
-        self.layer.borderColor = [UIColor grayColor].CGColor;
-        self.layer.borderWidth = .7f;
+        self.imageView.layer.borderColor = [UIColor whiteColor].CGColor;
+        self.imageView.layer.borderWidth = .7f;
         
         [self.contentView addSubview:self.imageView];
         

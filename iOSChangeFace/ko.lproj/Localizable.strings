@@ -25,6 +25,9 @@
 "save" = "저장하기";
 "share" = "공유하기";
 "more" = "더보기";
+"good" = "좋음";
+"bad" = "나쁨";
+"normal" = "보통";
 "saved_in_album"="갤러리에 저장됨";
 "instagram_notinstall"="Instagram이 설치되어 있지 않습니다.";
 "dialog_sure"="확인";

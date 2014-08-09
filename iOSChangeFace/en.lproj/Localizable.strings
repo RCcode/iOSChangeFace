@@ -25,6 +25,9 @@
 "save" = "Save";
 "share" = "Share";
 "more" = "More";
+"good" = "Very good";
+"bad" = "Very poor";
+"normal" = "Okay";
 "saved_in_album" = "Photo saved to gallery";
 "instagram_notinstall" = "Instagram is not installed.";
 "dialog_sure" = "Yes";

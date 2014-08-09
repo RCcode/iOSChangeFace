@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 @class LRNavigationController;
+@class FTF_MaterialView;
 
 @interface FTF_Global : NSObject
 
@@ -22,6 +23,7 @@
 @property (nonatomic ,strong) NSMutableArray *appsArray;
 @property (nonatomic ,assign) BOOL isOn;
 @property (nonatomic ,assign) BOOL isChange;
+@property (nonatomic ,assign) enum MaterialModelType modelType;
 
 
 //广告条
