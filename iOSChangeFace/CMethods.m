@@ -159,7 +159,7 @@ NSData* toJSONData(id theData)
     }
 }
 
-MBProgressHUD *mb;
+static MBProgressHUD *mb = nil;
 MBProgressHUD * showMBProgressHUD(NSString *content,BOOL showView)
 {
     //显示LoadView

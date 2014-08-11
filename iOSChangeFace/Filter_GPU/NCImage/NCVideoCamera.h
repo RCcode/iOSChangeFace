@@ -51,6 +51,5 @@ typedef void(^FilterCompletionBlock) (UIImage *filterImage);
 
 //完成之后，代理返回图片
 - (void)setImages:(NSArray *)images WithFilterType:(NCFilterType)filterType;
-- (void)setImage:(UIImage *)image WithFilterType:(NCFilterType)filterType;
 
 @end

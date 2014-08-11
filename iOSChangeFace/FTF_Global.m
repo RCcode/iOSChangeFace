@@ -17,7 +17,6 @@
 {
     self.compressionImage = nil;
     self.originalImage = nil;
-    self.modelImageName = nil;
     self.modelImage = nil;
     self.bannerView = nil;
     self.bigImage = nil;

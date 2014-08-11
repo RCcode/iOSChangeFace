@@ -20,6 +20,7 @@
 @interface FTF_AdjustFaceViewController ()
 {
     float lastScale;
+    float imageScale;
     BOOL isTiny;
     double recordedRotation;
     UIImageView *libaryImageView;
@@ -52,6 +53,14 @@
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
     
     lastScale = 1.f;
+    imageScale = 1.f;
+    
+    UIImageView *blur = [[UIImageView alloc] initWithFrame:self.view.bounds];
+    blur.userInteractionEnabled = YES;
+    UIEdgeInsets ed = {0.0f, 10.0f, 0.0f, 10.0f};
+    UIImage *newImage = [pngImagePath(@"bg") resizableImageWithCapInsets:ed resizingMode:UIImageResizingModeTile];
+    blur.image = newImage;
+    [self.view addSubview:blur];
 
     //返回按钮
     UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -111,7 +120,7 @@
     [backView addSubview:libaryImageView];
     
     //脸图
-    UIImageView *faceModelImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 320)];
+    UIImageView *faceModelImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 10, 320, 320)];
     faceModelImageView.image = [UIImage zoomImageWithImage:pngImagePath(@"focus")];
     [backView addSubview:faceModelImageView];
 }
@@ -182,6 +191,8 @@
         return;
     }
     
+    imageScale *= scale;
+    
     CGAffineTransform newTransform = CGAffineTransformScale(imageView.transform, scale, scale);
     [imageView setTransform:newTransform];
     
@@ -206,6 +217,8 @@
         rotation = 0.0 - (recordedRotation - [recognizer rotation]);
     }
     
+    [FTF_Global shareGlobal].rorationDegree += rotation;
+    
     CGAffineTransform currentTransform = imageView.transform;
     CGAffineTransform newTransform = CGAffineTransformRotate(currentTransform,rotation);
     [imageView setTransform:newTransform];
@@ -217,26 +230,19 @@
     }
 }
 
-- (void)computeRotationNumber
-{
-    CGAffineTransform transform = libaryImageView.transform;
-    CGAffineTransform newTransForm = CGAffineTransformRotate(transform, 0);
-    CGFloat newRotate = acosf(newTransForm.a);
-    if (newTransForm.b < 0) {
-        newRotate *= -1;
-    }
-    [FTF_Global shareGlobal].rorationDegree = newRotate;
-    //CGFloat newDegree = newRotate/M_PI * 180;
-    NSLog(@"newRotate.......%f",newRotate);
-}
-
 - (void)rightItemClick:(UIBarButtonItem *)item
 {
-    [self computeRotationNumber];
+    libaryImageView.transform = CGAffineTransformMakeRotation(0);
+    CGAffineTransform newTransform = CGAffineTransformScale(libaryImageView.transform, imageScale, imageScale);
+    [libaryImageView setTransform:newTransform];
+    
     FTF_EditFaceViewController *editFace = [[FTF_EditFaceViewController alloc] initWithNibName:@"FTF_EditFaceViewController" bundle:nil];
     editFace.libaryImage = libaryImageView.image;
     editFace.imageRect = libaryImageView.frame;
     [self.navigationController pushViewController:editFace animated:YES];
+    
+    CGAffineTransform transform = CGAffineTransformRotate(libaryImageView.transform,[FTF_Global shareGlobal].rorationDegree);
+    [libaryImageView setTransform:transform];
 }
 
 - (void)backItemClick:(UIBarButtonItem *)item
@@ -251,6 +257,9 @@
     [FTF_Global event:eventArray[tag] label:@"Edit"];
     if (tag == 0)
     {
+        [FTF_Global shareGlobal].rorationDegree = 0;
+        imageScale = 1.f;
+
         libaryImageView.transform = CGAffineTransformMakeRotation(0);
         if ([FTF_Global shareGlobal].compressionImage.size.width > [FTF_Global shareGlobal].compressionImage.size.height)
         {

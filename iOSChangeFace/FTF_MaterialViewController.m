@@ -231,7 +231,7 @@
         
     }
     
-    [FTF_Global shareGlobal].isFromLibary = YES;
+    [FTF_Global shareGlobal].modelImage = nil;
     [FTF_Global shareGlobal].modelImage = [UIImage zoomImageWithImage:headImage];
     
     [picker dismissViewControllerAnimated:YES completion:^{
@@ -275,12 +275,10 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (void)changeMaterialImage
 {
-    [FTF_Global shareGlobal].isFromLibary = NO;
     [self.delegate changeModelImage];
     [self.navigationController popViewControllerAnimated:YES];
 }

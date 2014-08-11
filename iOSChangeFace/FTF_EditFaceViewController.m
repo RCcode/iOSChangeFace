@@ -50,6 +50,9 @@ enum DirectionType
     NSArray *directionArray;
     NSArray *fuzzyArray;
     NSArray *modelArray;
+    NSMutableArray *filterImageArray;
+    float position_X;
+    float position_Y;
 }
 @property (nonatomic ,strong) UISlider *modelSlider;
 @property (nonatomic ,strong) UISlider *cropSlider;
@@ -66,7 +69,9 @@ enum DirectionType
         directionArray = @[@"edit_normal",@"edit_left",@"edit_up",@"edit_right",@"edit_down",@"edit_big",@"edit_small",@"edit_ronateleft",@"edit_ronateright"];
         fuzzyArray = @[@"beauty_normal",@"beauty_small",@"beauty_middle",@"beauty_big"];
         modelArray = @[@"switch_left",@"switch_right",@"switch_up",@"switch_down"];
-        
+        filterImageArray = [NSMutableArray arrayWithCapacity:0];
+        position_X = 180.f;
+        position_Y = 160.f;
     }
     return self;
 }
@@ -87,6 +92,13 @@ enum DirectionType
     
     _videoCamera = [NCVideoCamera videoCamera];
     _videoCamera.delegate = self;
+    
+    UIImageView *blur = [[UIImageView alloc] initWithFrame:self.view.bounds];
+    blur.userInteractionEnabled = YES;
+    UIEdgeInsets ed = {0.0f, 10.0f, 0.0f, 10.0f};
+    UIImage *newImage = [pngImagePath(@"bg") resizableImageWithCapInsets:ed resizingMode:UIImageResizingModeTile];
+    blur.image = newImage;
+    [self.view addSubview:blur];
     
     [self addNavItem];
     [self layoutSubViews];
@@ -147,6 +159,10 @@ enum DirectionType
         btn.toolImageView.image = pngImagePath([dataArray[0] objectAtIndex:i]);
         btn.normelName = [dataArray[0] objectAtIndex:i];
         btn.selectName = [dataArray[1] objectAtIndex:i];
+        if (i == 1)
+        {
+            [btn changeBtnImage];
+        }
         btn.tag = i;
         [btn addTarget:self action:@selector(toolBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         [toolBarView addSubview:btn];
@@ -155,6 +171,7 @@ enum DirectionType
     
     detailView = [[FTF_DirectionView alloc]initWithFrame:CGRectMake(0, self.view.bounds.size.height - 204, 320, 0)];
     detailView.delegate = self;
+//    [detailView loadDirectionItools];
     [self.view addSubview:detailView];
 }
 
@@ -185,8 +202,9 @@ enum DirectionType
     
     //默认底图
     backImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 320)];
-    backImageView.image = [UIImage zoomImageWithImage:[UIImage imageNamed:@"crossBones01.jpg"]];
-    [bottomView addSubview:backImageView];
+    [FTF_Global shareGlobal].modelImage = [UIImage zoomImageWithImage:[UIImage imageNamed:@"crossBones01.jpg"]];
+    backImageView.image = [FTF_Global shareGlobal].modelImage;
+    [bottomView addSubview:backImageView];;
     
     //放大镜
     acBackView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 320)];
@@ -206,7 +224,7 @@ enum DirectionType
     libaryImageView.layer.shouldRasterize = YES;
     libaryImageView.userInteractionEnabled = YES;
     
-    [self adjustViews:_libaryImage withFrame:_imageRect];
+    [self adjustViews:_libaryImage];
 }
 
 - (void)backItemClick:(UIBarButtonItem *)item
@@ -240,6 +258,7 @@ enum DirectionType
             [button btnHaveClicked];
         }
     }
+    
     [btn changeBtnImage];
     libaryImageView.userInteractionEnabled = YES;
     [backView setMZViewNotUserInteractionEnabled];
@@ -280,10 +299,10 @@ enum DirectionType
 
 #pragma mark -
 #pragma mark 初始化视图
-- (void)adjustViews:(UIImage *)image withFrame:(CGRect)rect
+- (void)adjustViews:(UIImage *)image
 {
 
-    libaryImageView.image = [UIImage zoomImageWithImage:_libaryImage];
+    libaryImageView.image = _libaryImage;
     [backView loadCropImageView:libaryImageView];
     
     //模糊图层
@@ -332,6 +351,15 @@ enum DirectionType
     self.modelSlider.value = 0;
     self.modelSlider.value = 0.5f;
     
+    if (directionStyle == leftToRight || directionStyle == rightToLeft)
+    {
+        maskLayer.position = CGPointMake(directionStyle == leftToRight ? 180.f : 140.f, 160);
+    }
+    else
+    {
+        maskLayer.position = CGPointMake(160, directionStyle == topToBottom ? 180.f : 140.f);
+    }
+    
     [colorArray removeAllObjects];
     for (int i = 0; i < 24; i++)
     {
@@ -359,7 +387,7 @@ enum DirectionType
         
     }
     
-    [self adjustViews:_libaryImage withFrame:_imageRect];
+    [self adjustViews:_libaryImage];
 
 }
 
@@ -435,10 +463,13 @@ enum DirectionType
 {
     dispatch_queue_t myQueue = dispatch_queue_create("my_filter_queue", nil);
     [NSThread sleepForTimeInterval:0.3];
+    
     MBProgressHUD *mb = showMBProgressHUD(nil, YES);
     mb.userInteractionEnabled = YES;
+    
+    [filterImageArray removeAllObjects];
     dispatch_async(myQueue, ^{
-        [_videoCamera setImage:[FTF_Global shareGlobal].compressionImage WithFilterType:(NCFilterType)tag];
+        [_videoCamera setImages:@[[FTF_Global shareGlobal].compressionImage,[FTF_Global shareGlobal].modelImage] WithFilterType:(NCFilterType)tag];
     });
 }
 
@@ -481,20 +512,22 @@ enum DirectionType
         {
             if (directionStyle == leftToRight)
             {
-                maskLayer.position = CGPointMake(180 + 280 * (slider.value - 0.5), 160);
+                maskLayer.position = CGPointMake(position_X + 280 * (slider.value - 0.5), position_Y);
             }
             else if (directionStyle == rightToLeft)
             {
-                maskLayer.position = CGPointMake(140 + 280 * (slider.value - 0.5), 160);
+                maskLayer.position = CGPointMake(position_X + 280 * (slider.value - 0.5), position_Y);
             }
             else if (directionStyle == topToBottom)
             {
-                maskLayer.position = CGPointMake(160, 180 + 280 * (slider.value - 0.5));
+                maskLayer.position = CGPointMake(position_X, position_Y + 280 * (slider.value - 0.5));
             }
             else if (directionStyle == bottomToTop)
             {
-                maskLayer.position = CGPointMake(160, 140 + 280 * (slider.value - 0.5));
+                maskLayer.position = CGPointMake(position_X, position_Y + 280 * (slider.value - 0.5));
             }
+//            position_X = maskLayer.position.x;
+//            position_Y = maskLayer.position.y;
         }
             break;
         case 1:
@@ -502,7 +535,10 @@ enum DirectionType
             float endSize = 640 + 2560 * slider.value;
             maskLayer.frame = CGRectMake(0, 0, endSize, endSize);
             
-            maskLayer.position = CGPointMake((directionStyle == leftToRight ? 180 : 140) + (directionStyle == leftToRight ? (endSize - 640)/24 : -(endSize - 640)/24) , (directionStyle == topToBottom ? 180 : 140) + (directionStyle == topToBottom ? (endSize - 640)/24 : -(endSize - 640)/24));
+//            maskLayer.position = CGPointMake((directionStyle == leftToRight ? 180 : 140) + (directionStyle == leftToRight ? (endSize - 640)/24 : -(endSize - 640)/24) , (directionStyle == topToBottom ? 180 : 140) + (directionStyle == topToBottom ? (endSize - 640)/24 : -(endSize - 640)/24));
+            
+            maskLayer.position = CGPointMake(position_X + (directionStyle == leftToRight ? (endSize - 640)/24 : -(endSize - 640)/24) , position_Y + (directionStyle == topToBottom ? (endSize - 640)/24 : -(endSize - 640)/24));
+            
         }
             break;
             
@@ -515,14 +551,7 @@ enum DirectionType
 #pragma mark ChangeModelDelegate
 - (void)changeModelImage
 {
-    if ([FTF_Global shareGlobal].isFromLibary)
-    {
-        backImageView.image = [FTF_Global shareGlobal].modelImage;
-    }
-    else
-    {
-        backImageView.image = [UIImage zoomImageWithImage:jpgImagePath([FTF_Global shareGlobal].modelImageName)];
-    }
+    backImageView.image = [FTF_Global shareGlobal].modelImage;
     backImageView.center = CGPointMake(160, 160);
 }
 
@@ -568,11 +597,21 @@ enum DirectionType
 #pragma mark - NCVideoCameraDelegate
 - (void)videoCameraDidFinishFilter:(UIImage *)image Index:(NSUInteger)index
 {
-    self.libaryImage = nil;
-    self.libaryImage = image;
-    backView.image = nil;
-    backView.image = image;
-    libaryImageView.image = image;
+    [filterImageArray addObject:image];
+    if (index == 1)
+    {
+        UIImage *customImage = filterImageArray[0];
+        self.libaryImage = nil;
+        self.libaryImage = customImage;
+        backView.image = nil;
+        backView.image = customImage;
+        libaryImageView.image = customImage;
+        
+        UIImage *modelImage = filterImageArray[1];
+        backImageView.image = nil;
+        backImageView.image = modelImage;
+    }
+    
     hideMBProgressHUD();
 }
 

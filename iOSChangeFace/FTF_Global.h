@@ -14,10 +14,8 @@
 
 @property (nonatomic ,strong) UIImage *originalImage; //原始图片
 @property (nonatomic ,strong) UIImage *compressionImage; //压缩后的图片
-@property (nonatomic ,strong) NSString *modelImageName;//模板
 @property (nonatomic ,strong) UIImage *bigImage;
 @property (nonatomic ,strong) UIImage *modelImage;
-@property (nonatomic ,assign) BOOL isFromLibary;
 @property (nonatomic ,weak) LRNavigationController *nav;
 @property (assign, nonatomic) double rorationDegree;
 @property (nonatomic ,strong) NSMutableArray *appsArray;

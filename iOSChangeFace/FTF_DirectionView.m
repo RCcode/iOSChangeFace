@@ -10,7 +10,6 @@
 #import "AMBlurView.h"
 #import "FTF_Button.h"
 #import "CMethods.h"
-#import "FTF_VolumeSlide.h"
 
 #define Btn_Width 30.f
 #define Btn_Height 30.f
@@ -22,9 +21,27 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-
+        //ZVolumeSlide 自定义Slide控件
+        volumeSlide = [[FTF_VolumeSlide alloc]initWithFrame:CGRectMake(17.5, 64, 285, 30)];
+        volumeSlide.delegate = self;
+        [volumeSlide setSlideValue:0];
+        
+        lindeSlider = [[UISlider alloc]initWithFrame:CGRectMake(17.5f, 64, 285, 30)];
+        [lindeSlider setMaximumTrackTintColor:colorWithHexString(@"#999999", 1.0f)];
+        [lindeSlider setMinimumTrackTintColor:colorWithHexString(@"#D9AF20", 1.0f)];
+        [lindeSlider setThumbImage:pngImagePath(@"switch_btn_line_normal") forState:UIControlStateNormal];
+        [lindeSlider setThumbImage:pngImagePath(@"switch_btn_line_pressed") forState:UIControlStateHighlighted];
+        lindeSlider.value = .5f;
+        lindeSlider.tag = 0;
+        [lindeSlider addTarget:self action:@selector(sliderValueChanged:) forControlEvents:UIControlEventValueChanged];
     }
     return self;
+}
+
+- (void)dealloc
+{
+    lindeSlider = nil;
+    volumeSlide = nil;
 }
 
 - (void)loadDirectionItools
@@ -34,12 +51,9 @@
         [subView removeFromSuperview];
     }
     
-    UIImageView *blur = [[UIImageView alloc] initWithFrame:self.bounds];
+    AMBlurView *blur = [[AMBlurView alloc] initWithFrame:self.bounds];
     blur.userInteractionEnabled = YES;
-    UIEdgeInsets ed = {0.0f, 10.0f, 0.0f, 10.0f};
-    // 指定为拉伸模式，伸缩后重新赋值
-    UIImage *newImage = [pngImagePath(@"bg") resizableImageWithCapInsets:ed resizingMode:UIImageResizingModeTile];
-    blur.image = newImage;
+    blur.blurTintColor = colorWithHexString(@"#202225", 0.9f);
 
     //恢复原始
     FTF_Button *resetBtn = [[FTF_Button alloc]initWithFrame:CGRectMake(Btn_Distance, 37, Btn_Width, Btn_Height)];
@@ -109,12 +123,15 @@
         [subView removeFromSuperview];
     }
     
-    UIImageView *blur = [[UIImageView alloc] initWithFrame:self.bounds];
+//    UIImageView *blur = [[UIImageView alloc] initWithFrame:self.bounds];
+//    blur.userInteractionEnabled = YES;
+//    UIEdgeInsets ed = {0.0f, 10.0f, 0.0f, 10.0f};
+//    //指定为拉伸模式，伸缩后重新赋值
+//    UIImage *newImage = [pngImagePath(@"bg") resizableImageWithCapInsets:ed resizingMode:UIImageResizingModeTile];
+//    blur.image = newImage;
+    AMBlurView *blur = [[AMBlurView alloc] initWithFrame:self.bounds];
     blur.userInteractionEnabled = YES;
-    UIEdgeInsets ed = {0.0f, 10.0f, 0.0f, 10.0f};
-    //指定为拉伸模式，伸缩后重新赋值
-    UIImage *newImage = [pngImagePath(@"bg") resizableImageWithCapInsets:ed resizingMode:UIImageResizingModeTile];
-    blur.image = newImage;
+    blur.blurTintColor = colorWithHexString(@"#202225", 0.9f);
     
     //脸部样式
     NSArray *array = @[@[@"switch_icon_left_normal",@"switch_icon_right_normal",@"switch_icon_up_normal",@"switch_icon_down_normal"],
@@ -145,15 +162,7 @@
     lineView.backgroundColor = colorWithHexString(@"#666666", 1.0f);
     [blur addSubview:lineView];
     
-    UISlider *slider = [[UISlider alloc]initWithFrame:CGRectMake(17.5f, 64, 285, 30)];
-    [slider setMaximumTrackTintColor:colorWithHexString(@"#999999", 1.0f)];
-    [slider setMinimumTrackTintColor:colorWithHexString(@"#D9AF20", 1.0f)];
-    [slider setThumbImage:pngImagePath(@"switch_btn_line_normal") forState:UIControlStateNormal];
-    [slider setThumbImage:pngImagePath(@"switch_btn_line_pressed") forState:UIControlStateHighlighted];
-    slider.value = .5f;
-    slider.tag = 0;
-    [slider addTarget:self action:@selector(sliderValueChanged:) forControlEvents:UIControlEventValueChanged];
-    [blur addSubview:slider];
+    [blur addSubview:lindeSlider];
     
     [self addSubview:blur];
 }
@@ -165,11 +174,14 @@
         [subView removeFromSuperview];
     }
     
-    UIImageView *blur = [[UIImageView alloc] initWithFrame:self.bounds];
+//    UIImageView *blur = [[UIImageView alloc] initWithFrame:self.bounds];
+//    blur.userInteractionEnabled = YES;
+//    UIEdgeInsets ed = {0.0f, 10.0f, 0.0f, 10.0f};
+//    UIImage *newImage = [pngImagePath(@"bg") resizableImageWithCapInsets:ed resizingMode:UIImageResizingModeTile];
+//    blur.image = newImage;
+    AMBlurView *blur = [[AMBlurView alloc] initWithFrame:self.bounds];
     blur.userInteractionEnabled = YES;
-    UIEdgeInsets ed = {0.0f, 10.0f, 0.0f, 10.0f};
-    UIImage *newImage = [pngImagePath(@"bg") resizableImageWithCapInsets:ed resizingMode:UIImageResizingModeTile];
-    blur.image = newImage;
+    blur.blurTintColor = colorWithHexString(@"#202225", 0.9f);
     
     //脸部样式
     NSArray *array = @[@[@"icon_reset_normal",@"icon_shadow01_normal",@"icon_shadow02_normal",@"icon_shadow03_normal"],
@@ -195,10 +207,7 @@
     lineView.backgroundColor = colorWithHexString(@"#666666", 1.0f);
     [blur addSubview:lineView];
     
-    //ZVolumeSlide 自定义Slide控件
-    FTF_VolumeSlide *volumeSlide = [[FTF_VolumeSlide alloc]initWithFrame:CGRectMake(17.5, 64, 285, 30)];
-    volumeSlide.delegate = self;
-    [volumeSlide setSlideValue:0];
+    
     [blur addSubview:volumeSlide];
     
     [self addSubview:blur];
@@ -211,11 +220,14 @@
         [subView removeFromSuperview];
     }
     
-    UIImageView *blur = [[UIImageView alloc] initWithFrame:self.bounds];
+//    UIImageView *blur = [[UIImageView alloc] initWithFrame:self.bounds];
+//    blur.userInteractionEnabled = YES;
+//    UIEdgeInsets ed = {0.0f, 10.0f, 0.0f, 10.0f};
+//    UIImage *newImage = [pngImagePath(@"bg") resizableImageWithCapInsets:ed resizingMode:UIImageResizingModeTile];
+//    blur.image = newImage;
+    AMBlurView *blur = [[AMBlurView alloc] initWithFrame:self.bounds];
     blur.userInteractionEnabled = YES;
-    UIEdgeInsets ed = {0.0f, 10.0f, 0.0f, 10.0f};
-    UIImage *newImage = [pngImagePath(@"bg") resizableImageWithCapInsets:ed resizingMode:UIImageResizingModeTile];
-    blur.image = newImage;
+    blur.blurTintColor = colorWithHexString(@"#202225", 0.9f);
     
     UIScrollView *filterScroller = [[UIScrollView alloc]initWithFrame:blur.bounds];
     [filterScroller setContentSize:CGSizeMake(80 * 30, 0)];

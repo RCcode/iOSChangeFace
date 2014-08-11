@@ -111,8 +111,9 @@
     }
     NSArray *dataArray = [self.dataDic objectForKey:[NSString stringWithFormat:@"%d",modelType]];
     NSString *imageName = [dataArray objectAtIndex:indexPath.row];
-    [FTF_Global shareGlobal].modelImageName = nil;
-    [FTF_Global shareGlobal].modelImageName = imageName;
+
+    [FTF_Global shareGlobal].modelImage = nil;
+    [FTF_Global shareGlobal].modelImage = [UIImage zoomImageWithImage:jpgImagePath(imageName)];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"changeMaterialImage" object:nil];
 }
 

@@ -47,9 +47,7 @@ static CGFloat const kACMagnifyingViewDefaultShowDelay = 0.5;
     [self addGestureRecognizerToView:self.imageView];
     self.image = imgView.image;
     [self addSubview:self.imageView];
-//    CGAffineTransform currentTransform = self.imageView.transform;
-//    CGAffineTransform newTransform = CGAffineTransformRotate(currentTransform, [FTF_Global shareGlobal].rorationDegree);
-//    [self.imageView setTransform:newTransform];
+
     //抠图操作视图
     cropView = [[MZCroppableView alloc]initWithImageView:self.imageView];
     cropView.userInteractionEnabled = NO;
