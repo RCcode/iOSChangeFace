@@ -183,7 +183,7 @@
         {
             //关注我们
             [FTF_Global event:@"Home" label:@"more_care"];
-            NSURL *instagramURL = [NSURL URLWithString:@"instagram://user?username=mirrorgrid"];
+            NSURL *instagramURL = [NSURL URLWithString:@"instagram://user?username=face2face_rc"];
             if ([[UIApplication sharedApplication] canOpenURL:instagramURL]) {
                 [[UIApplication sharedApplication] openURL:instagramURL];
             }else {

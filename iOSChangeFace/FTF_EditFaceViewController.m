@@ -24,6 +24,7 @@ enum DirectionType
 #import "CMethods.h"
 #import "FTF_Global.h"
 #import "FTF_Button.h"
+#import "RC_View.h"
 #import "MZCroppableView.h"
 #import "ACMagnifyingView.h"
 #import "ACMagnifyingGlass.h"
@@ -34,6 +35,7 @@ enum DirectionType
 
 @interface FTF_EditFaceViewController ()
 {
+    FTF_Button *modelBtn;
     UIView *bottomView;//底图
     enum DirectionType directionStyle;
     NSMutableArray *colorArray;
@@ -53,6 +55,7 @@ enum DirectionType
     NSMutableArray *filterImageArray;
     float position_X;
     float position_Y;
+    BOOL isFirst;
 }
 @property (nonatomic ,strong) UISlider *modelSlider;
 @property (nonatomic ,strong) UISlider *cropSlider;
@@ -65,7 +68,7 @@ enum DirectionType
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
+        
         directionArray = @[@"edit_normal",@"edit_left",@"edit_up",@"edit_right",@"edit_down",@"edit_big",@"edit_small",@"edit_ronateleft",@"edit_ronateright"];
         fuzzyArray = @[@"beauty_normal",@"beauty_small",@"beauty_middle",@"beauty_big"];
         modelArray = @[@"switch_left",@"switch_right",@"switch_up",@"switch_down"];
@@ -85,6 +88,21 @@ enum DirectionType
 {
     [super viewDidLoad];
     
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"isFirst"] == nil)
+    {
+        isFirst = YES;
+        
+        //引导动画
+        UIWindow *window = [[UIApplication sharedApplication].delegate window];
+        RC_View *guideView = [[RC_View alloc]initWithFrame:window.bounds];
+        guideView.tag = 1001;
+        guideView.editFace = self;
+        guideView.backgroundColor = [UIColor clearColor];
+        [window addSubview:guideView];
+        
+        [[NSUserDefaults standardUserDefaults] setObject:@1 forKey:@"isFirst"];
+    }
+    
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(endCropImage) name:@"EndCropImage" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(beginCropImage) name:@"BeginCropImage" object:nil];
@@ -103,8 +121,19 @@ enum DirectionType
     [self addNavItem];
     [self layoutSubViews];
     [self addDetailItools];
-    
 
+}
+
+- (void)removeGuideView
+{
+    UIWindow *window = [[UIApplication sharedApplication].delegate window];
+    UIView *guideView = [window viewWithTag:1001];
+    [guideView removeFromSuperview];
+    guideView = nil;
+    
+    [modelBtn changeBtnImage];
+    modelBtn = nil;
+    [detailView loadModelStyleItools];
 }
 
 #pragma mark -
@@ -148,8 +177,8 @@ enum DirectionType
     toolBarView.backgroundColor = [UIColor grayColor];
     [self.view addSubview:toolBarView];
     
-    dataArray = @[@[@"icon_fodder_normal",@"icon_switch_normal",@"icon_beautify_normal",@"icon_adjust_normal",@"icon_filter_normal"],
-                  @[@"icon_fodder_pressed",@"icon_switch_pressed",@"icon_beautify_pressed",@"icon_adjust_pressed",@"icon_filter_pressed"]];
+    dataArray = @[@[@"icon_fodder_normal",@"icon_switch_normal",@"icon_adjust_normal",@"icon_beautify_normal",@"icon_filter_normal"],
+                  @[@"icon_fodder_pressed",@"icon_switch_pressed",@"icon_adjust_pressed",@"icon_beautify_pressed",@"icon_filter_pressed"]];
     
     int i = 0;
     while (i < 5)
@@ -161,7 +190,13 @@ enum DirectionType
         btn.selectName = [dataArray[1] objectAtIndex:i];
         if (i == 1)
         {
-            [btn changeBtnImage];
+            if (!isFirst) {
+                [btn changeBtnImage];
+            }
+            else
+            {
+                modelBtn = btn;
+            }
         }
         btn.tag = i;
         [btn addTarget:self action:@selector(toolBtnClick:) forControlEvents:UIControlEventTouchUpInside];
@@ -169,9 +204,11 @@ enum DirectionType
         i++;
     }
     
-    detailView = [[FTF_DirectionView alloc]initWithFrame:CGRectMake(0, self.view.bounds.size.height - 204, 320, 0)];
+    detailView = [[FTF_DirectionView alloc]initWithFrame:CGRectMake(0, self.view.bounds.size.height - 268, 320, 104)];
     detailView.delegate = self;
-//    [detailView loadDirectionItools];
+    if (!isFirst) {
+        [detailView loadModelStyleItools];
+    }
     [self.view addSubview:detailView];
 }
 
@@ -278,15 +315,15 @@ enum DirectionType
         }
             break;
         case 2:
+            detailView.frame = CGRectMake(0, self.view.bounds.size.height - 204, 320, 104);
+            [detailView loadDirectionItools];
+            break;
+        case 3:
             libaryImageView.userInteractionEnabled = NO;
             detailView.frame = CGRectMake(0, self.view.bounds.size.height - 204, 320, 104);
             [detailView loadCropItools];
             [backView setMZViewUserInteractionEnabled];
             [backView setMZImageView];
-            break;
-        case 3:
-            detailView.frame = CGRectMake(0, self.view.bounds.size.height - 204, 320, 104);
-            [detailView loadDirectionItools];
             break;
         case 4:
             detailView.frame = CGRectMake(0, self.view.bounds.size.height - 204, 320, 104);

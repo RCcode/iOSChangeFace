@@ -18,4 +18,6 @@
 @property (strong, nonatomic) UIImage *libaryImage;
 @property (assign, nonatomic) CGRect imageRect;
 
+- (void)removeGuideView;
+
 @end
