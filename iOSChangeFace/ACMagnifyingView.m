@@ -229,7 +229,6 @@ static CGFloat const kACMagnifyingViewDefaultShowDelay = 0.5;
     
     CGAffineTransform newTransform = CGAffineTransformScale(self.transform, scale, scale);
     [self setTransform:newTransform];
-    //cropView.frame = imageView.frame;
     
     lastScale = [recognizer scale];
 }
@@ -254,10 +253,6 @@ static CGFloat const kACMagnifyingViewDefaultShowDelay = 0.5;
     CGAffineTransform cropTransform = self.transform;
     CGAffineTransform newCropTransform = CGAffineTransformRotate(cropTransform,rotation);
     [self setTransform:newCropTransform];
-    
-//    CGAffineTransform currentTransform = imageView.transform;
-//    CGAffineTransform newTransform = CGAffineTransformRotate(currentTransform,rotation);
-//    [imageView setTransform:newTransform];
     
     recordedRotation = [recognizer rotation];
     if([recognizer state] == UIGestureRecognizerStateEnded) {
@@ -306,6 +301,7 @@ static CGFloat const kACMagnifyingViewDefaultShowDelay = 0.5;
 - (void)endCropImage
 {
     UIImage *croppedImage = [cropView deleteBackgroundOfImage:_imageView];
+    
     if (croppedImage == nil)
     {
         _imageView.image = _image;

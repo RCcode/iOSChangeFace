@@ -53,9 +53,9 @@ enum DirectionType
     NSArray *fuzzyArray;
     NSArray *modelArray;
     NSMutableArray *filterImageArray;
+    BOOL isFirst;
     float position_X;
     float position_Y;
-    BOOL isFirst;
 }
 @property (nonatomic ,strong) UISlider *modelSlider;
 @property (nonatomic ,strong) UISlider *cropSlider;
@@ -73,8 +73,6 @@ enum DirectionType
         fuzzyArray = @[@"beauty_normal",@"beauty_small",@"beauty_middle",@"beauty_big"];
         modelArray = @[@"switch_left",@"switch_right",@"switch_up",@"switch_down"];
         filterImageArray = [NSMutableArray arrayWithCapacity:0];
-        position_X = 180.f;
-        position_Y = 160.f;
     }
     return self;
 }
@@ -156,17 +154,27 @@ enum DirectionType
     [homeBtn setImage:pngImagePath(@"btn_home_normal") forState:UIControlStateNormal];
     [homeBtn setImage:pngImagePath(@"btn_home_pressed") forState:UIControlStateHighlighted];
     [homeBtn addTarget:self action:@selector(homeItemClick:) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *homeItem = [[UIBarButtonItem alloc] initWithCustomView:homeBtn];
+    UIBarButtonItem *btnItem = [[UIBarButtonItem alloc] initWithCustomView:homeBtn];
+    
+    UIBarButtonItem *negativeSeperator = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
+    negativeSeperator.width = -16;
     
     UIButton *shareBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    shareBtn.frame = CGRectMake(0, 0, 44, 44);
+    shareBtn.frame = CGRectMake(44, 0, 44, 44);
+    [shareBtn setImageEdgeInsets:UIEdgeInsetsMake(0, 0,0, -16)];
     [shareBtn setImage:pngImagePath(@"btn_share_normal") forState:UIControlStateNormal];
     [shareBtn setImage:pngImagePath(@"btn_share_pressed") forState:UIControlStateHighlighted];
     [shareBtn addTarget:self action:@selector(shareItemClick:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *shareItem = [[UIBarButtonItem alloc] initWithCustomView:shareBtn];
     
-    NSArray *actionButtonItems = @[shareItem,homeItem];
-    self.navigationItem.rightBarButtonItems = actionButtonItems;
+    UIView *itemView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 88, 44)];
+    [itemView addSubview:homeBtn];
+    [itemView addSubview:shareBtn];
+
+    [self.navigationItem setRightBarButtonItems:@[negativeSeperator,btnItem,shareItem]];
+    
+//    NSArray *actionButtonItems = @[shareItem,homeItem];
+//    self.navigationItem.rightBarButtonItems = actionButtonItems;
 }
 
 #pragma mark -
@@ -174,7 +182,7 @@ enum DirectionType
 - (void)addDetailItools
 {
     UIView *toolBarView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height - 164, 320, BtnHeight)];
-    toolBarView.backgroundColor = [UIColor grayColor];
+    toolBarView.backgroundColor = colorWithHexString(@"#202225", 1.0);
     [self.view addSubview:toolBarView];
     
     dataArray = @[@[@"icon_fodder_normal",@"icon_switch_normal",@"icon_adjust_normal",@"icon_beautify_normal",@"icon_filter_normal"],
@@ -250,7 +258,6 @@ enum DirectionType
     backView.transform = CGAffineTransformMakeRotation([FTF_Global shareGlobal].rorationDegree);
     //放大操作显示框
     mag = [[ACMagnifyingGlass alloc] initWithFrame:CGRectMake(0, 0, 90, 90)];
-    
     mag.scale = 1.5;
     backView.magnifyingGlass = mag;
     [acBackView addSubview:backView];
@@ -533,38 +540,64 @@ enum DirectionType
 
 - (void)sliderValueChanged:(UISlider *)slider
 {
-    NSString *str = [NSString stringWithFormat:@"%f",slider.value];
-    int number;
-    if ([str floatValue] == 1.f)
-    {
-        number = 10;
-    }
-    else
-    {
-        number = [[str substringWithRange:NSMakeRange(2, 1)] intValue];
-    }
+
+//    switch (slider.tag) {
+//        case 0:
+//        {
+//            if (directionStyle == leftToRight)
+//            {
+//                maskLayer.position = CGPointMake(180 + 280 * (slider.value - 0.5), 160);
+//            }
+//            else if (directionStyle == rightToLeft)
+//            {
+//                maskLayer.position = CGPointMake(140 + 280 * (slider.value - 0.5), 160);
+//            }
+//            else if (directionStyle == topToBottom)
+//            {
+//                maskLayer.position = CGPointMake(160, 180 + 280 * (slider.value - 0.5));
+//            }
+//            else if (directionStyle == bottomToTop)
+//            {
+//                maskLayer.position = CGPointMake(160, 140 + 280 * (slider.value - 0.5));
+//            }
+//            
+//        }
+//            break;
+//        case 1:
+//        {
+//            float endSize = 640 + 2560 * slider.value;
+//            maskLayer.frame = CGRectMake(0, 0, endSize, endSize);
+//            
+//            maskLayer.position = CGPointMake((directionStyle == leftToRight ? 180 : 140) + (directionStyle == leftToRight ? (endSize - 640)/24 : -(endSize - 640)/24) , (directionStyle == topToBottom ? 180 : 140) + (directionStyle == topToBottom ? (endSize - 640)/24 : -(endSize - 640)/24));
+//        }
+//            break;
+//            
+//        default:
+//            break;
+//    }
+    
+    float spacing = (160.f - maskLayer.frame.size.width/24.f) * 2;
     
     switch (slider.tag) {
         case 0:
         {
             if (directionStyle == leftToRight)
             {
-                maskLayer.position = CGPointMake(position_X + 280 * (slider.value - 0.5), position_Y);
+                maskLayer.position = CGPointMake(180 + spacing * (slider.value - 0.5), 160);
             }
             else if (directionStyle == rightToLeft)
             {
-                maskLayer.position = CGPointMake(position_X + 280 * (slider.value - 0.5), position_Y);
+                maskLayer.position = CGPointMake(140 + spacing * (slider.value - 0.5), 160);
             }
             else if (directionStyle == topToBottom)
             {
-                maskLayer.position = CGPointMake(position_X, position_Y + 280 * (slider.value - 0.5));
+                maskLayer.position = CGPointMake(160, 180 + spacing * (slider.value - 0.5));
             }
             else if (directionStyle == bottomToTop)
             {
-                maskLayer.position = CGPointMake(position_X, position_Y + 280 * (slider.value - 0.5));
+                maskLayer.position = CGPointMake(160, 140 + spacing * (slider.value - 0.5));
             }
-//            position_X = maskLayer.position.x;
-//            position_Y = maskLayer.position.y;
+            
         }
             break;
         case 1:
@@ -572,16 +605,17 @@ enum DirectionType
             float endSize = 640 + 2560 * slider.value;
             maskLayer.frame = CGRectMake(0, 0, endSize, endSize);
             
-//            maskLayer.position = CGPointMake((directionStyle == leftToRight ? 180 : 140) + (directionStyle == leftToRight ? (endSize - 640)/24 : -(endSize - 640)/24) , (directionStyle == topToBottom ? 180 : 140) + (directionStyle == topToBottom ? (endSize - 640)/24 : -(endSize - 640)/24));
-            
-            maskLayer.position = CGPointMake(position_X + (directionStyle == leftToRight ? (endSize - 640)/24 : -(endSize - 640)/24) , position_Y + (directionStyle == topToBottom ? (endSize - 640)/24 : -(endSize - 640)/24));
-            
+            maskLayer.position = CGPointMake((directionStyle == leftToRight ? 180 : 140) + (directionStyle == leftToRight ? (endSize - 640)/24 : -(endSize - 640)/24) , (directionStyle == topToBottom ? 180 : 140) + (directionStyle == topToBottom ? (endSize - 640)/24 : -(endSize - 640)/24));
         }
             break;
             
         default:
             break;
     }
+    
+    position_X = maskLayer.position.x;
+    position_Y = maskLayer.position.y;
+    
 }
 
 #pragma mark -

@@ -36,8 +36,6 @@
         _slideView.tag = 1;
         _slideView.value = 0;
         [_slideView setThumbImage:pngImagePath(@"slider") forState:UIControlStateNormal];
-        _slideView.maximumValue = 1.0;
-        _slideView.minimumValue = 0.0;
         
         [_slideView setMaximumTrackImage:[UIImage imageNamed:@"clearBack.png"] forState:UIControlStateNormal];
         [_slideView setMinimumTrackImage:[UIImage imageNamed:@"clearBack.png"] forState:UIControlStateNormal];

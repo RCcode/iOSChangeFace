@@ -72,14 +72,14 @@
     [self downLoadAppsInfo];
     
     
-    //三次分享，即弹框
+    //4次分享，即弹框
     NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
     int shareCount = [[userDefault objectForKey:UDKEY_ShareCount] intValue];
     
     if(shareCount != -1)
     {
         shareCount++;
-        if((shareCount >= 4) && !(shareCount % 2)){
+        if((shareCount >= 4) && !(shareCount % 4)){
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@""
                                                             message:LocalizedString(@"comment_us", nil)
                                                            delegate:self

@@ -64,13 +64,13 @@
     logoImage.image = pngImagePath(@"listlogo");
     [self.view addSubview:logoImage];
     
-    UIImageView *lineImage = [[UIImageView alloc] initWithFrame:CGRectMake(14, 86, 162, 6)];
+    UIImageView *lineImage = [[UIImageView alloc] initWithFrame:CGRectMake(14, 103, 162, 6)];
     lineImage.image = pngImagePath(@"listlogo_line");
     [self.view addSubview:lineImage];
     
      _dataArray = [[NSMutableArray alloc] init];
     [self initViewsWith1136];
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 90, 320, 400)];
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 116, 320, 400)];
     _tableView.dataSource = self;
     _tableView.delegate = self;
     [self.view addSubview:_tableView];

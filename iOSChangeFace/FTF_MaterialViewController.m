@@ -11,12 +11,11 @@
 #import "CMethods.h"
 #import "UIImage+Zoom.h"
 #import "FTF_Global.h"
-#import "AMBlurView.h"
 #import "FTF_Button.h"
 
 @interface FTF_MaterialViewController ()
 {
-    AMBlurView *amb;
+    UIView *amb;
 }
 @end
 
@@ -80,14 +79,8 @@
     self.modelScrollerView.pagingEnabled = YES;
     self.modelScrollerView.delegate = self;
     
-    amb = [[AMBlurView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height - 164, 320, 50)];
-    //amb.blurTintColor = colorWithHexString(@"#202225", 0.9f);
-    UIImageView *blur = [[UIImageView alloc] initWithFrame:amb.bounds];
-    blur.userInteractionEnabled = YES;
-    UIEdgeInsets ed = {0.0f, 10.0f, 0.0f, 10.0f};
-    UIImage *newImage = [pngImagePath(@"bg") resizableImageWithCapInsets:ed resizingMode:UIImageResizingModeTile];
-    blur.image = newImage;
-    [amb addSubview:blur];
+    amb = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height - 164, 320, 50)];
+    amb.backgroundColor = colorWithHexString(@"#202225", 1.f);
     [self.view addSubview:amb];
     
     NSArray *dataArray = @[@[@"icon_skull_normal",@"icon_mask_normal",@"icon_animal_normal",@"icon_women_normal",@"icon_other_normal"],

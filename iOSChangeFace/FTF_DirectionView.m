@@ -7,7 +7,6 @@
 //
 
 #import "FTF_DirectionView.h"
-#import "AMBlurView.h"
 #import "FTF_Button.h"
 #import "CMethods.h"
 
@@ -21,6 +20,8 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
+        self.backgroundColor = [UIColor clearColor];
+        
         //ZVolumeSlide 自定义Slide控件
         volumeSlide = [[FTF_VolumeSlide alloc]initWithFrame:CGRectMake(17.5, 64, 285, 30)];
         volumeSlide.delegate = self;
@@ -51,9 +52,9 @@
         [subView removeFromSuperview];
     }
     
-    AMBlurView *blur = [[AMBlurView alloc] initWithFrame:self.bounds];
+    UIView *blur = [[UIView alloc] initWithFrame:self.bounds];
     blur.userInteractionEnabled = YES;
-    blur.blurTintColor = colorWithHexString(@"#202225", 0.9f);
+    blur.backgroundColor = colorWithHexString(@"#202225", 0.6f);
 
     //恢复原始
     FTF_Button *resetBtn = [[FTF_Button alloc]initWithFrame:CGRectMake(Btn_Distance, 37, Btn_Width, Btn_Height)];
@@ -123,15 +124,9 @@
         [subView removeFromSuperview];
     }
     
-//    UIImageView *blur = [[UIImageView alloc] initWithFrame:self.bounds];
-//    blur.userInteractionEnabled = YES;
-//    UIEdgeInsets ed = {0.0f, 10.0f, 0.0f, 10.0f};
-//    //指定为拉伸模式，伸缩后重新赋值
-//    UIImage *newImage = [pngImagePath(@"bg") resizableImageWithCapInsets:ed resizingMode:UIImageResizingModeTile];
-//    blur.image = newImage;
-    AMBlurView *blur = [[AMBlurView alloc] initWithFrame:self.bounds];
+    UIView *blur = [[UIView alloc] initWithFrame:self.bounds];
     blur.userInteractionEnabled = YES;
-    blur.blurTintColor = colorWithHexString(@"#202225", 0.9f);
+    blur.backgroundColor = colorWithHexString(@"#202225", 0.6f);
     
     //脸部样式
     NSArray *array = @[@[@"switch_icon_left_normal",@"switch_icon_right_normal",@"switch_icon_up_normal",@"switch_icon_down_normal"],
@@ -174,14 +169,9 @@
         [subView removeFromSuperview];
     }
     
-//    UIImageView *blur = [[UIImageView alloc] initWithFrame:self.bounds];
-//    blur.userInteractionEnabled = YES;
-//    UIEdgeInsets ed = {0.0f, 10.0f, 0.0f, 10.0f};
-//    UIImage *newImage = [pngImagePath(@"bg") resizableImageWithCapInsets:ed resizingMode:UIImageResizingModeTile];
-//    blur.image = newImage;
-    AMBlurView *blur = [[AMBlurView alloc] initWithFrame:self.bounds];
+    UIView *blur = [[UIView alloc] initWithFrame:self.bounds];
     blur.userInteractionEnabled = YES;
-    blur.blurTintColor = colorWithHexString(@"#202225", 0.9f);
+    blur.backgroundColor = colorWithHexString(@"#202225", 0.3f);
     
     //脸部样式
     NSArray *array = @[@[@"icon_reset_normal",@"icon_shadow01_normal",@"icon_shadow02_normal",@"icon_shadow03_normal"],
@@ -220,14 +210,9 @@
         [subView removeFromSuperview];
     }
     
-//    UIImageView *blur = [[UIImageView alloc] initWithFrame:self.bounds];
-//    blur.userInteractionEnabled = YES;
-//    UIEdgeInsets ed = {0.0f, 10.0f, 0.0f, 10.0f};
-//    UIImage *newImage = [pngImagePath(@"bg") resizableImageWithCapInsets:ed resizingMode:UIImageResizingModeTile];
-//    blur.image = newImage;
-    AMBlurView *blur = [[AMBlurView alloc] initWithFrame:self.bounds];
+    UIView *blur = [[UIView alloc] initWithFrame:self.bounds];
     blur.userInteractionEnabled = YES;
-    blur.blurTintColor = colorWithHexString(@"#202225", 0.9f);
+    blur.backgroundColor = colorWithHexString(@"#202225", 0.3f);
     
     UIScrollView *filterScroller = [[UIScrollView alloc]initWithFrame:blur.bounds];
     [filterScroller setContentSize:CGSizeMake(80 * 30, 0)];
