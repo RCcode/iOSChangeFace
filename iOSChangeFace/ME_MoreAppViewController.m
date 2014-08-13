@@ -42,10 +42,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
     self.title = @"More App";
-    
-    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
-    
     CGFloat itemWH = 44;
     UIButton *navBackItem = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, itemWH, itemWH)];
     [navBackItem setImage:pngImagePath(@"btn_back_black_normal") forState:UIControlStateNormal];
@@ -110,7 +108,6 @@
     
     [_timer invalidate];
     _timer = nil;
-    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
     [[SDImageCache sharedImageCache] clearMemory];
 }
 

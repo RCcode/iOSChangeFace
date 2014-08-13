@@ -80,9 +80,6 @@ enum DirectionType
 {
     [super viewDidLoad];
     
-    [FTF_Global shareGlobal].bannerView.hidden = YES;
-
-    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(endCropImage) name:@"EndCropImage" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(beginCropImage) name:@"BeginCropImage" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(scaleEditImage) name:@"scaleImage" object:nil];
@@ -156,7 +153,7 @@ enum DirectionType
 #pragma mark 初始化工具栏
 - (void)addDetailItools
 {
-    UIView *toolBarView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height - 114, 320, BtnHeight)];
+    UIView *toolBarView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height - 144, 320, BtnHeight)];
     toolBarView.backgroundColor = colorWithHexString(@"#202225", 1.0);
     [self.view addSubview:toolBarView];
     
@@ -181,7 +178,7 @@ enum DirectionType
         i++;
     }
     
-    detailView = [[FTF_DirectionView alloc]initWithFrame:CGRectMake(0, self.view.bounds.size.height - 218, 320, 104)];
+    detailView = [[FTF_DirectionView alloc]initWithFrame:CGRectMake(0, self.view.bounds.size.height - 248, 320, 104)];
     detailView.delegate = self;
     [detailView loadModelStyleItools];
     [self.view addSubview:detailView];
@@ -247,7 +244,6 @@ enum DirectionType
 
 - (void)shareItemClick:(UIBarButtonItem *)item
 {
-    [FTF_Global shareGlobal].bannerView.hidden = YES;
     [FTF_Global event:@"Edit" label:@"edit_share"];
     ME_ShareViewController *shareController = [[ME_ShareViewController alloc]initWithNibName:@"ME_ShareViewController" bundle:nil];
     [self.navigationController pushViewController:shareController animated:YES];
@@ -272,7 +268,6 @@ enum DirectionType
     switch (btn.tag) {
         case 0:
         {
-            [FTF_Global shareGlobal].bannerView.hidden = NO;
             FTF_MaterialViewController *materialController = [[FTF_MaterialViewController alloc] initWithNibName:@"FTF_MaterialViewController" bundle:nil];
             materialController.delegate = self;
             [self.navigationController pushViewController:materialController animated:YES];
@@ -281,12 +276,12 @@ enum DirectionType
             break;
         case 1:
         {
-            detailView.frame = CGRectMake(0, self.view.bounds.size.height - 154, 320, 104);
+            detailView.frame = CGRectMake(0, self.view.bounds.size.height - 204, 320, 104);
             [detailView loadModelStyleItools];
         }
             break;
         case 2:
-            detailView.frame = CGRectMake(0, self.view.bounds.size.height - 154, 320, 104);
+            detailView.frame = CGRectMake(0, self.view.bounds.size.height - 204, 320, 104);
             [detailView loadDirectionItools];
             break;
         case 3:
@@ -305,15 +300,27 @@ enum DirectionType
                 [[NSUserDefaults standardUserDefaults] setObject:@1 forKey:@"isFirst"];
             }
             
+        {
+            //引导动画
+            UIWindow *window = [[UIApplication sharedApplication].delegate window];
+            RC_View *guideView = [[RC_View alloc]initWithFrame:window.bounds];
+            guideView.tag = 1001;
+            guideView.editFace = self;
+            guideView.backgroundColor = [UIColor clearColor];
+            [window addSubview:guideView];
+            
             libaryImageView.userInteractionEnabled = NO;
-            detailView.frame = CGRectMake(0, self.view.bounds.size.height - 154, 320, 104);
-
+            detailView.frame = CGRectMake(0, self.view.bounds.size.height - 204, 320, 104);
+            
             [backView setMZViewUserInteractionEnabled];
             [backView setMZImageView];
+        }
+            
+            
 
             break;
         case 4:
-            detailView.frame = CGRectMake(0, self.view.bounds.size.height - 154, 320, 104);
+            detailView.frame = CGRectMake(0, self.view.bounds.size.height - 204, 320, 104);
             [detailView loadFilerItools];
             break;
         default:

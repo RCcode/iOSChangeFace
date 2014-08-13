@@ -78,9 +78,9 @@
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 
 }
+
 - (void)initViewsWith1136
 {
-    
     NSArray *titleArray = [[NSArray alloc] initWithObjects:LocalizedString(@"Update", nil),LocalizedString(@"Rate this app", nil),LocalizedString(@"Feedback", nil), LocalizedString(@"Share", nil),LocalizedString(@"Follow us", nil),nil];
     NSArray *imageNameArray = [[NSArray alloc] initWithObjects:@"icon_update_normal",@"icon_grade_norma",@"icon_Feedback_normal",@"icon_share_normal",@"icon_Follow us_norma", nil];
     NSArray *imageHLNameArray = [[NSArray alloc] initWithObjects:@"icon_update_pressed",@"icon_grade_pressed",@"icon_Feedback_pressed",@"icon_share_pressed",@"icon_Follow us_pressed", nil];
@@ -93,7 +93,6 @@
         [_dataArray addObject:model];
     }
 }
-
 
 #pragma mark -
 #pragma mark - UITableViewDelegate
@@ -140,7 +139,6 @@
             //本地语言
             NSString *language = [[NSLocale preferredLanguages] firstObject];
             
-            //NSString *diveceInfo = @"app版本号 手机型号 手机系统版本 分辨率 语言";
             NSString *diveceInfo = [NSString stringWithFormat:@"%@ %@, %@, %@ %@, %@, %@", app_Name, app_Version, deviceName, deviceSystemName, deviceSystemVer,  resolution, language];
             
             //直接发邮件
@@ -168,7 +166,8 @@
             __weak UIActivityViewController *blockActivityVC = activityVC;
             
             activityVC.completionHandler = ^(NSString *activityType,BOOL completed){
-                if(completed){
+                if(completed)
+                {
 
                 }
                 [blockActivityVC dismissViewControllerAnimated:YES completion:nil];

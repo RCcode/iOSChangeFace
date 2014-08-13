@@ -39,6 +39,39 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"guideIsFirst"] == nil)
+    {
+        //引导动画
+        UIWindow *window = [[UIApplication sharedApplication].delegate window];
+        UIView *guideView = [[UIView alloc]initWithFrame:window.bounds];
+        guideView.tag = 1002;
+        guideView.backgroundColor = colorWithHexString(@"#202225", 0.6);
+        
+        UITapGestureRecognizer *tapGes = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handelTap)];
+        [tapGes setNumberOfTapsRequired:1];//点击次数
+        [guideView addGestureRecognizer:tapGes];
+        
+        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(252, 50, 45, 45)];
+        imageView.image = [UIImage imageNamed:@"jiantou"];
+        [guideView addSubview:imageView];
+        
+        [window addSubview:guideView];
+        
+        UILabel *shotLabel = [[UILabel alloc]init];
+        shotLabel.numberOfLines = 0;
+        shotLabel.tag = 1003;
+        shotLabel.lineBreakMode = NSLineBreakByWordWrapping;
+        CGSize size = sizeWithContentAndFont(LocalizedString(@"UseYourself", @""), CGSizeMake(160, 100), 16);
+        shotLabel.frame = CGRectMake(0, 0, size.width, size.height);
+        shotLabel.center = CGPointMake(230 - size.width/2, 96);
+        shotLabel.text = LocalizedString(@"UseYourself", @"");
+        shotLabel.textColor = [UIColor whiteColor];
+        shotLabel.font = [UIFont systemFontOfSize:14.f];
+        [window addSubview:shotLabel];
+        
+        [[NSUserDefaults standardUserDefaults] setObject:@1 forKey:@"guideIsFirst"];
+    }
     
     //返回按钮
     UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -82,7 +115,7 @@
     self.modelScrollerView.pagingEnabled = YES;
     self.modelScrollerView.delegate = self;
     
-    amb = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height - 164, 320, 50)];
+    amb = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height - 144, 320, 50)];
     amb.backgroundColor = colorWithHexString(@"#202225", 1.f);
     [self.view addSubview:amb];
     
@@ -104,13 +137,15 @@
         [btn addTarget:self action:@selector(modelBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         [amb addSubview:btn];
         
-        if (i == 0)
+        if (i == [FTF_Global shareGlobal].modelType)
         {
             [btn changeBtnImage];
         }
         
         i++;
     }
+    
+    [self.modelScrollerView setContentOffset:CGPointMake(320 * [FTF_Global shareGlobal].modelType, 0) animated:NO];
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeMaterialImage) name:@"changeMaterialImage" object:nil];
     
@@ -122,7 +157,6 @@
 {
     switch (btn.tag) {
         case 0:
-            [FTF_Global shareGlobal].bannerView.hidden = YES;
             [self.navigationController popViewControllerAnimated:YES];
             break;
         case 1:
@@ -179,6 +213,17 @@
     }
     [btn changeBtnImage];
     [self.modelScrollerView setContentOffset:CGPointMake(320 * btn.tag, 0) animated:YES];
+}
+
+- (void)handelTap
+{
+    UIWindow *window = [[UIApplication sharedApplication].delegate window];
+    UIView *guideView = [window viewWithTag:1002];
+    [guideView removeFromSuperview];
+    guideView = nil;
+    UIView *label = [window viewWithTag:1003];
+    [label removeFromSuperview];
+    label = nil;
 }
 
 #pragma mark -
@@ -277,7 +322,6 @@
 - (void)changeMaterialImage
 {
     [self.delegate changeModelImage];
-    [FTF_Global shareGlobal].bannerView.hidden = YES;
     [self.navigationController popViewControllerAnimated:YES];
 }
 

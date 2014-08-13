@@ -15,11 +15,11 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        UIImageView *backImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 64, 320, 320)];
+        UIImageView *backImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 44, 320, 320)];
         backImageView.image = [UIImage imageNamed:@"xuxian.png"];
         [self addSubview:backImageView];
         
-        imageView = [[UIImageView alloc]initWithFrame:CGRectMake(164, 64, 40, 40)];
+        imageView = [[UIImageView alloc]initWithFrame:CGRectMake(164, 44, 40, 40)];
         imageView.center = CGPointMake(164, 64);
         imageView.image = [UIImage imageNamed:@"dot.png"];
         [self addSubview:imageView];
@@ -35,8 +35,8 @@
 {
     
     UIBezierPath *path=[UIBezierPath bezierPath];
-    [path moveToPoint:CGPointMake(164, 64)];
-    [path addCurveToPoint:CGPointMake(164, 384) controlPoint1:CGPointMake(0, 64) controlPoint2:CGPointMake(0, 384)];
+    [path moveToPoint:CGPointMake(164, 44)];
+    [path addCurveToPoint:CGPointMake(164, 364) controlPoint1:CGPointMake(0, 44) controlPoint2:CGPointMake(0, 364)];
     [path closePath];
     
     CGPathRef ref = path.CGPath;
@@ -44,7 +44,7 @@
     animation.path = ref;
     animation.duration = 5.f;
     animation.delegate = self;
-    [imageView.layer addAnimation:animation forKey:@"position"];
+    //[imageView.layer addAnimation:animation forKey:@"position"];
     
 }
 

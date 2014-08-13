@@ -10,7 +10,6 @@
 #import "MobClick.h"
 #import "Flurry.h"
 #import "GADBannerView.h"
-#import "GADInterstitial.h"
 #import "FTF_RootViewController.h"
 #import "SliderViewController.h"
 #import "Pic_MenuViewController.h"
@@ -32,6 +31,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    [application setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];

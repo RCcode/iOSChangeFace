@@ -23,7 +23,6 @@
 @property (nonatomic ,assign) BOOL isChange;
 @property (nonatomic ,assign) enum MaterialModelType modelType;
 
-
 //广告条
 @property (nonatomic, strong) UIView *bannerView;
 

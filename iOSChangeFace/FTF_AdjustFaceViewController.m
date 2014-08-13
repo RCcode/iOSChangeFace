@@ -50,10 +50,6 @@
 {
     [super viewDidLoad];
     
-    [FTF_Global shareGlobal].bannerView.hidden = YES;
-    
-    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
-    
     lastScale = 1.f;
     imageScale = 1.f;
     
@@ -86,7 +82,7 @@
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithCustomView:nextBtn];
     self.navigationItem.rightBarButtonItem = rightItem;
     
-    FTF_DirectionView *toolBarView = [[FTF_DirectionView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height - 168, 320, ToolBarHeight)];
+    FTF_DirectionView *toolBarView = [[FTF_DirectionView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height - 198, 320, ToolBarHeight)];
     [toolBarView loadDirectionItools];
     toolBarView.delegate = self;
     [self.view addSubview:toolBarView];
@@ -249,7 +245,6 @@
 
 - (void)backItemClick:(UIBarButtonItem *)item
 {
-    [FTF_Global shareGlobal].bannerView.hidden = NO;
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -282,7 +277,7 @@
             if ([recognizer isKindOfClass:[UIPinchGestureRecognizer class]])
             {
                 UIPinchGestureRecognizer *pin = (UIPinchGestureRecognizer *)recognizer;
-                float scale = 1 + (tag == 5 ? 0.06 : -0.06);
+                float scale = 1 + (tag == 5 ? 0.01 : -0.01);
                 isTiny = YES;
                 [self pinView:pin changeScale:scale];
             }
@@ -295,7 +290,7 @@
             if ([recognizer isKindOfClass:[UIRotationGestureRecognizer class]])
             {
                 UIRotationGestureRecognizer *rotationNumber = (UIRotationGestureRecognizer *)recognizer;
-                float scale = tag == 7 ? -0.01 : 0.01;
+                float scale = tag == 7 ? -0.006 : 0.006;
                 isTiny = YES;
                 [self rotateView:rotationNumber changeRotate:scale];
             }
@@ -312,11 +307,11 @@
                 CGPoint point;
                 if (tag == 2 || tag == 4)
                 {
-                    point = CGPointMake(0, tag == 2 ? -5 : 5);
+                    point = CGPointMake(0, tag == 2 ? -2 : 2);
                 }
                 else
                 {
-                    point = CGPointMake(tag == 1 ? -5 : 5, 0);
+                    point = CGPointMake(tag == 1 ? -2 : 2, 0);
                 }
                 isTiny = YES;
                 [self panView:pan changePoint:point];

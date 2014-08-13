@@ -67,6 +67,17 @@ static NSString *kShareHotTags = @"(Made with @face2face_rc)#face2face";
     [navBackItem addTarget:self action:@selector(cancel:) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:navBackItem];
     
+    //下一级
+    UIButton *nextBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    nextBtn.frame = CGRectMake(0, 0, 44, 44);
+    [nextBtn setImage:pngImagePath(@"btn_home_normal") forState:UIControlStateNormal];
+    [nextBtn setImage:pngImagePath(@"btn_home_pressed") forState:UIControlStateHighlighted];
+    nextBtn.imageView.contentMode = UIViewContentModeCenter;
+    nextBtn.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, -32);
+    [nextBtn addTarget:self action:@selector(homeItem:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithCustomView:nextBtn];
+    self.navigationItem.rightBarButtonItem = rightItem;
+    
     NSArray *imagesNormalArray = [NSArray
         arrayWithObjects:@"btn_save_normal",@"btn_Insta_normal",@"btn_Facebook_normal",@"btn_more_normal", nil];
     NSArray *imagesSelectArray = [NSArray arrayWithObjects:@"btn_save_pressed",@"btn_Insta_pressed",@"btn_Facebook_pressed",@"btn_more_pressed", nil];
@@ -163,9 +174,13 @@ static NSString *kShareHotTags = @"(Made with @face2face_rc)#face2face";
 
 - (void)cancel:(id)sender
 {
-    [FTF_Global shareGlobal].bannerView.hidden = NO;
     [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadView" object:nil];
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)homeItem:(id)sender
+{
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 - (void)btnClick:(UIButton *)button

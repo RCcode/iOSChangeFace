@@ -51,6 +51,7 @@ static CGFloat const kACMagnifyingViewDefaultShowDelay = 0.5;
     //抠图操作视图
     cropView = [[MZCroppableView alloc]initWithImageView:self.imageView];
     cropView.userInteractionEnabled = NO;
+    self.magnifyingGlass = [[ACMagnifyingGlass alloc] init];
     self.magnifyingGlass.hidden = YES;
     [self addSubview:cropView];
 }
@@ -139,7 +140,7 @@ static CGFloat const kACMagnifyingViewDefaultShowDelay = 0.5;
             if ([recognizer isKindOfClass:[UIPinchGestureRecognizer class]])
             {
                 UIPinchGestureRecognizer *pin = (UIPinchGestureRecognizer *)recognizer;
-                float scale = 1 + (tag == 5 ? 0.06 : -0.06);
+                float scale = 1 + (tag == 5 ? 0.01 : -0.01);
                 isTiny = YES;
                 [self pinView:pin changeScale:scale];
             }
@@ -152,7 +153,7 @@ static CGFloat const kACMagnifyingViewDefaultShowDelay = 0.5;
             if ([recognizer isKindOfClass:[UIRotationGestureRecognizer class]])
             {
                 UIRotationGestureRecognizer *rotation = (UIRotationGestureRecognizer *)recognizer;
-                float scale = tag == 7 ? -0.01 : 0.01;
+                float scale = tag == 7 ? -0.006 : 0.006;
                 isTiny = YES;
                 [self rotateView:rotation changeRotate:scale];
             }
@@ -169,11 +170,11 @@ static CGFloat const kACMagnifyingViewDefaultShowDelay = 0.5;
                 CGPoint point;
                 if (tag == 2 || tag == 4)
                 {
-                    point = CGPointMake(0, tag == 2 ? -5 : 5);
+                    point = CGPointMake(0, tag == 2 ? -2 : 2);
                 }
                 else
                 {
-                    point = CGPointMake(tag == 1 ? -5 : 5, 0);
+                    point = CGPointMake(tag == 1 ? -2 : 2, 0);
                 }
                 isTiny = YES;
                 [self panView:pan changePoint:point];
