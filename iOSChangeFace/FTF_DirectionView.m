@@ -54,7 +54,7 @@
     
     UIView *blur = [[UIView alloc] initWithFrame:self.bounds];
     blur.userInteractionEnabled = YES;
-    blur.backgroundColor = colorWithHexString(@"#202225", 0.6f);
+    blur.backgroundColor = colorWithHexString(@"#202225", 0.7f);
 
     //恢复原始
     FTF_Button *resetBtn = [[FTF_Button alloc]initWithFrame:CGRectMake(Btn_Distance, 37, Btn_Width, Btn_Height)];
@@ -126,7 +126,7 @@
     
     UIView *blur = [[UIView alloc] initWithFrame:self.bounds];
     blur.userInteractionEnabled = YES;
-    blur.backgroundColor = colorWithHexString(@"#202225", 0.6f);
+    blur.backgroundColor = colorWithHexString(@"#202225", 0.7f);
     
     //脸部样式
     NSArray *array = @[@[@"switch_icon_left_normal",@"switch_icon_right_normal",@"switch_icon_up_normal",@"switch_icon_down_normal"],
@@ -171,7 +171,7 @@
     
     UIView *blur = [[UIView alloc] initWithFrame:self.bounds];
     blur.userInteractionEnabled = YES;
-    blur.backgroundColor = colorWithHexString(@"#202225", 0.3f);
+    blur.backgroundColor = colorWithHexString(@"#202225", 0.7f);
     
     //脸部样式
     NSArray *array = @[@[@"icon_reset_normal",@"icon_shadow01_normal",@"icon_shadow02_normal",@"icon_shadow03_normal"],
@@ -212,7 +212,7 @@
     
     UIView *blur = [[UIView alloc] initWithFrame:self.bounds];
     blur.userInteractionEnabled = YES;
-    blur.backgroundColor = colorWithHexString(@"#202225", 0.3f);
+    blur.backgroundColor = colorWithHexString(@"#202225", 0.7f);
     
     UIScrollView *filterScroller = [[UIScrollView alloc]initWithFrame:blur.bounds];
     [filterScroller setContentSize:CGSizeMake(80 * 30, 0)];

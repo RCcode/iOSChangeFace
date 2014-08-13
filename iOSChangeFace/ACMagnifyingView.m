@@ -280,7 +280,7 @@ static CGFloat const kACMagnifyingViewDefaultShowDelay = 0.5;
 	}
 	
 	magnifyingGlass.touchPoint = point;
-	[self.superview addSubview:magnifyingGlass];
+	[self.superview.superview addSubview:magnifyingGlass];
 	[magnifyingGlass setNeedsDisplay];
 }
 
@@ -314,5 +314,9 @@ static CGFloat const kACMagnifyingViewDefaultShowDelay = 0.5;
     cropView.userInteractionEnabled = NO;
 }
 
+- (void)changeMagnifyingGlassCenter:(CGPoint)center
+{
+    [self.magnifyingGlass setCenter:center];
+}
 
 @end

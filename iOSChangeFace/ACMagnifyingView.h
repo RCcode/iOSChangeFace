@@ -32,5 +32,6 @@
 - (void)setMZViewNotUserInteractionEnabled;
 - (void)setMZImageView;
 - (void)moveBtnClick:(NSInteger)tag;
+- (void)changeMagnifyingGlassCenter:(CGPoint)center;
 
 @end

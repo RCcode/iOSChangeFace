@@ -56,20 +56,23 @@
     librayBtn.frame = CGRectMake(0, 0, 44, 44);
     [librayBtn setImage:pngImagePath(@"icon_pic_normal") forState:UIControlStateNormal];
     [librayBtn setImage:pngImagePath(@"icon_pic_pressed") forState:UIControlStateHighlighted];
-    librayBtn.tag = 1;
+    librayBtn.tag = 0;
     [librayBtn addTarget:self action:@selector(navItemClick:) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *homeItem = [[UIBarButtonItem alloc] initWithCustomView:librayBtn];
+    UIBarButtonItem *librayItem = [[UIBarButtonItem alloc] initWithCustomView:librayBtn];
+    
+    UIBarButtonItem *negativeSeperator = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
+    negativeSeperator.width = -16;
     
     UIButton *cameraBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     cameraBtn.frame = CGRectMake(0, 0, 44, 44);
+    [cameraBtn setImageEdgeInsets:UIEdgeInsetsMake(0, 0,0, -16)];
     [cameraBtn setImage:pngImagePath(@"btn_ig_normal") forState:UIControlStateNormal];
     [cameraBtn setImage:pngImagePath(@"btn_ig_pressed") forState:UIControlStateHighlighted];
-    cameraBtn.tag = 2;
+    cameraBtn.tag = 1;
     [cameraBtn addTarget:self action:@selector(navItemClick:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *cameraItem = [[UIBarButtonItem alloc] initWithCustomView:cameraBtn];
     
-    NSArray *actionButtonItems = @[cameraItem,homeItem];
-    self.navigationItem.rightBarButtonItems = actionButtonItems;
+    [self.navigationItem setRightBarButtonItems:@[negativeSeperator,librayItem,cameraItem]];
     
     //配置ScrollerView
     self.modelScrollerView.contentSize = CGSizeMake(320 * 5, 0);
@@ -119,6 +122,7 @@
 {
     switch (btn.tag) {
         case 0:
+            [FTF_Global shareGlobal].bannerView.hidden = YES;
             [self.navigationController popViewControllerAnimated:YES];
             break;
         case 1:
@@ -273,6 +277,7 @@
 - (void)changeMaterialImage
 {
     [self.delegate changeModelImage];
+    [FTF_Global shareGlobal].bannerView.hidden = YES;
     [self.navigationController popViewControllerAnimated:YES];
 }
 

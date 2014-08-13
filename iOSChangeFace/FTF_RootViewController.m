@@ -14,9 +14,14 @@
 #import "LRNavigationController.h"
 #import "SliderViewController.h"
 #import "ME_MoreAppViewController.h"
+#import "GADInterstitial.h"
+#define AdMobID @"ca-app-pub-3747943735238482/5713575053"
 
 @interface FTF_RootViewController ()
-
+{
+    // 将其中一个声明为实例变量
+    GADInterstitial *interstitial_;
+}
 @property (weak, nonatomic) IBOutlet UIImageView *bg_ImageView;
 - (IBAction)openLibaryClick:(id)sender;
 - (IBAction)openCamanaClick:(id)sender;
@@ -39,6 +44,22 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    NSString *dataStr = [NSString stringWithFormat:@"%@",[NSDate date]];
+    NSString *newDate = [dataStr substringWithRange:NSMakeRange(0, 10)];
+    NSLog(@"%@",newDate);
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"time"] == nil || ![[[NSUserDefaults standardUserDefaults] objectForKey:@"time"] isEqualToString:newDate]) {
+        interstitial_ = [[GADInterstitial alloc] init];
+        interstitial_.adUnitID = AdMobID;
+        interstitial_.delegate = self;
+        [interstitial_ loadRequest:[GADRequest request]];
+        
+        [[NSUserDefaults standardUserDefaults] setObject:newDate forKey:@"time"];
+    }
+    
+    
+    
+    
     // Do any additional setup after loading the view from its nib.
 }
 
@@ -184,6 +205,18 @@
          NSLog(@"Error: %@",[err localizedDescription]);
      }];
     
+}
+
+#pragma mark -
+#pragma mark GADInterstitialDelegate
+- (void)interstitialDidReceiveAd:(GADInterstitial *)ad
+{
+    [interstitial_ presentFromRootViewController:self];
+}
+
+- (void)interstitial:(GADInterstitial *)ad didFailToReceiveAdWithError:(GADRequestError *)error
+{
+    NSLog(@"error.....%@",error);
 }
 
 @end

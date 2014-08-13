@@ -27,7 +27,6 @@ enum DirectionType
 #import "RC_View.h"
 #import "MZCroppableView.h"
 #import "ACMagnifyingView.h"
-#import "ACMagnifyingGlass.h"
 #import "FTF_MaterialView.h"
 #import "FTF_DirectionView.h"
 #import "FTF_MaterialViewController.h"
@@ -35,7 +34,6 @@ enum DirectionType
 
 @interface FTF_EditFaceViewController ()
 {
-    FTF_Button *modelBtn;
     UIView *bottomView;//底图
     enum DirectionType directionStyle;
     NSMutableArray *colorArray;
@@ -43,7 +41,6 @@ enum DirectionType
     UIImageView *libaryImageView;
     UIView *acBackView;//放大镜背景图
     ACMagnifyingView *backView;//放大镜操作图
-    ACMagnifyingGlass *mag;//放大镜显示框
     UIImageView *backImageView;
     NSArray *dataArray;
     FTF_DirectionView *detailView;//辅工具栏
@@ -53,9 +50,6 @@ enum DirectionType
     NSArray *fuzzyArray;
     NSArray *modelArray;
     NSMutableArray *filterImageArray;
-    BOOL isFirst;
-    float position_X;
-    float position_Y;
 }
 @property (nonatomic ,strong) UISlider *modelSlider;
 @property (nonatomic ,strong) UISlider *cropSlider;
@@ -86,21 +80,8 @@ enum DirectionType
 {
     [super viewDidLoad];
     
-    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"isFirst"] == nil)
-    {
-        isFirst = YES;
-        
-        //引导动画
-        UIWindow *window = [[UIApplication sharedApplication].delegate window];
-        RC_View *guideView = [[RC_View alloc]initWithFrame:window.bounds];
-        guideView.tag = 1001;
-        guideView.editFace = self;
-        guideView.backgroundColor = [UIColor clearColor];
-        [window addSubview:guideView];
-        
-        [[NSUserDefaults standardUserDefaults] setObject:@1 forKey:@"isFirst"];
-    }
-    
+    [FTF_Global shareGlobal].bannerView.hidden = YES;
+
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(endCropImage) name:@"EndCropImage" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(beginCropImage) name:@"BeginCropImage" object:nil];
@@ -129,9 +110,7 @@ enum DirectionType
     [guideView removeFromSuperview];
     guideView = nil;
     
-    [modelBtn changeBtnImage];
-    modelBtn = nil;
-    [detailView loadModelStyleItools];
+    [detailView loadCropItools];
 }
 
 #pragma mark -
@@ -150,6 +129,7 @@ enum DirectionType
     self.navigationItem.leftBarButtonItem = leftItem;
     
     UIButton *homeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    homeBtn.tag = 0;
     homeBtn.frame = CGRectMake(0, 0, 44, 44);
     [homeBtn setImage:pngImagePath(@"btn_home_normal") forState:UIControlStateNormal];
     [homeBtn setImage:pngImagePath(@"btn_home_pressed") forState:UIControlStateHighlighted];
@@ -160,28 +140,23 @@ enum DirectionType
     negativeSeperator.width = -16;
     
     UIButton *shareBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    shareBtn.tag = 1;
     shareBtn.frame = CGRectMake(44, 0, 44, 44);
     [shareBtn setImageEdgeInsets:UIEdgeInsetsMake(0, 0,0, -16)];
     [shareBtn setImage:pngImagePath(@"btn_share_normal") forState:UIControlStateNormal];
     [shareBtn setImage:pngImagePath(@"btn_share_pressed") forState:UIControlStateHighlighted];
     [shareBtn addTarget:self action:@selector(shareItemClick:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *shareItem = [[UIBarButtonItem alloc] initWithCustomView:shareBtn];
-    
-    UIView *itemView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 88, 44)];
-    [itemView addSubview:homeBtn];
-    [itemView addSubview:shareBtn];
 
     [self.navigationItem setRightBarButtonItems:@[negativeSeperator,btnItem,shareItem]];
     
-//    NSArray *actionButtonItems = @[shareItem,homeItem];
-//    self.navigationItem.rightBarButtonItems = actionButtonItems;
 }
 
 #pragma mark -
 #pragma mark 初始化工具栏
 - (void)addDetailItools
 {
-    UIView *toolBarView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height - 164, 320, BtnHeight)];
+    UIView *toolBarView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height - 114, 320, BtnHeight)];
     toolBarView.backgroundColor = colorWithHexString(@"#202225", 1.0);
     [self.view addSubview:toolBarView];
     
@@ -198,13 +173,7 @@ enum DirectionType
         btn.selectName = [dataArray[1] objectAtIndex:i];
         if (i == 1)
         {
-            if (!isFirst) {
-                [btn changeBtnImage];
-            }
-            else
-            {
-                modelBtn = btn;
-            }
+            [btn changeBtnImage];
         }
         btn.tag = i;
         [btn addTarget:self action:@selector(toolBtnClick:) forControlEvents:UIControlEventTouchUpInside];
@@ -212,11 +181,9 @@ enum DirectionType
         i++;
     }
     
-    detailView = [[FTF_DirectionView alloc]initWithFrame:CGRectMake(0, self.view.bounds.size.height - 268, 320, 104)];
+    detailView = [[FTF_DirectionView alloc]initWithFrame:CGRectMake(0, self.view.bounds.size.height - 218, 320, 104)];
     detailView.delegate = self;
-    if (!isFirst) {
-        [detailView loadModelStyleItools];
-    }
+    [detailView loadModelStyleItools];
     [self.view addSubview:detailView];
 }
 
@@ -256,10 +223,6 @@ enum DirectionType
     acBackView.layer.masksToBounds = YES;
     backView = [[ACMagnifyingView alloc] initWithFrame:CGRectMake(0, 0, 320, 320)];
     backView.transform = CGAffineTransformMakeRotation([FTF_Global shareGlobal].rorationDegree);
-    //放大操作显示框
-    mag = [[ACMagnifyingGlass alloc] initWithFrame:CGRectMake(0, 0, 90, 90)];
-    mag.scale = 1.5;
-    backView.magnifyingGlass = mag;
     [acBackView addSubview:backView];
     [bottomView addSubview:acBackView];
     
@@ -284,6 +247,7 @@ enum DirectionType
 
 - (void)shareItemClick:(UIBarButtonItem *)item
 {
+    [FTF_Global shareGlobal].bannerView.hidden = YES;
     [FTF_Global event:@"Edit" label:@"edit_share"];
     ME_ShareViewController *shareController = [[ME_ShareViewController alloc]initWithNibName:@"ME_ShareViewController" bundle:nil];
     [self.navigationController pushViewController:shareController animated:YES];
@@ -293,7 +257,6 @@ enum DirectionType
 #pragma mark 工具栏点击事件
 - (void)toolBtnClick:(FTF_Button *)btn
 {
-
     for (UIView *subView in [btn.superview subviews])
     {
         if ([subView isKindOfClass:[FTF_Button class]])
@@ -309,6 +272,7 @@ enum DirectionType
     switch (btn.tag) {
         case 0:
         {
+            [FTF_Global shareGlobal].bannerView.hidden = NO;
             FTF_MaterialViewController *materialController = [[FTF_MaterialViewController alloc] initWithNibName:@"FTF_MaterialViewController" bundle:nil];
             materialController.delegate = self;
             [self.navigationController pushViewController:materialController animated:YES];
@@ -317,23 +281,39 @@ enum DirectionType
             break;
         case 1:
         {
-            detailView.frame = CGRectMake(0, self.view.bounds.size.height - 204, 320, 104);
+            detailView.frame = CGRectMake(0, self.view.bounds.size.height - 154, 320, 104);
             [detailView loadModelStyleItools];
         }
             break;
         case 2:
-            detailView.frame = CGRectMake(0, self.view.bounds.size.height - 204, 320, 104);
+            detailView.frame = CGRectMake(0, self.view.bounds.size.height - 154, 320, 104);
             [detailView loadDirectionItools];
             break;
         case 3:
+
+            if ([[NSUserDefaults standardUserDefaults] objectForKey:@"isFirst"] == nil)
+            {
+                
+                //引导动画
+                UIWindow *window = [[UIApplication sharedApplication].delegate window];
+                RC_View *guideView = [[RC_View alloc]initWithFrame:window.bounds];
+                guideView.tag = 1001;
+                guideView.editFace = self;
+                guideView.backgroundColor = [UIColor clearColor];
+                [window addSubview:guideView];
+                
+                [[NSUserDefaults standardUserDefaults] setObject:@1 forKey:@"isFirst"];
+            }
+            
             libaryImageView.userInteractionEnabled = NO;
-            detailView.frame = CGRectMake(0, self.view.bounds.size.height - 204, 320, 104);
-            [detailView loadCropItools];
+            detailView.frame = CGRectMake(0, self.view.bounds.size.height - 154, 320, 104);
+
             [backView setMZViewUserInteractionEnabled];
             [backView setMZImageView];
+
             break;
         case 4:
-            detailView.frame = CGRectMake(0, self.view.bounds.size.height - 204, 320, 104);
+            detailView.frame = CGRectMake(0, self.view.bounds.size.height - 154, 320, 104);
             [detailView loadFilerItools];
             break;
         default:
@@ -357,28 +337,28 @@ enum DirectionType
         maskLayer.startPoint = CGPointMake(0, 0.5);
         maskLayer.endPoint = CGPointMake(1, 0.5);
         maskLayer.position = CGPointMake(180, 160);
-        mag.center = CGPointMake(275, 45);
+        [backView changeMagnifyingGlassCenter:CGPointMake(275, 45)];
     }
     else if (directionStyle == rightToLeft)
     {
         maskLayer.startPoint = CGPointMake(1, 0.5);
         maskLayer.endPoint = CGPointMake(0, 0.5);
         maskLayer.position = CGPointMake(140, 160);
-        mag.center = CGPointMake(45, 45);
+        [backView changeMagnifyingGlassCenter:CGPointMake(45, 45)];
     }
     else if (directionStyle ==  topToBottom)
     {
         maskLayer.startPoint = CGPointMake(0.5, 0);
         maskLayer.endPoint = CGPointMake(0.5, 1);
         maskLayer.position = CGPointMake(160, 180);
-        mag.center = CGPointMake(45, 275);
+        [backView changeMagnifyingGlassCenter:CGPointMake(45, 275)];
     }
     else if (directionStyle == bottomToTop)
     {
         maskLayer.startPoint = CGPointMake(0.5, 1);
         maskLayer.endPoint = CGPointMake(0.5, 0);
         maskLayer.position = CGPointMake(160, 140);
-        mag.center = CGPointMake(275, 45);
+        [backView changeMagnifyingGlassCenter:CGPointMake(275, 45)];
     }
     
     maskLayer.colors = colorArray;
@@ -541,61 +521,24 @@ enum DirectionType
 - (void)sliderValueChanged:(UISlider *)slider
 {
 
-//    switch (slider.tag) {
-//        case 0:
-//        {
-//            if (directionStyle == leftToRight)
-//            {
-//                maskLayer.position = CGPointMake(180 + 280 * (slider.value - 0.5), 160);
-//            }
-//            else if (directionStyle == rightToLeft)
-//            {
-//                maskLayer.position = CGPointMake(140 + 280 * (slider.value - 0.5), 160);
-//            }
-//            else if (directionStyle == topToBottom)
-//            {
-//                maskLayer.position = CGPointMake(160, 180 + 280 * (slider.value - 0.5));
-//            }
-//            else if (directionStyle == bottomToTop)
-//            {
-//                maskLayer.position = CGPointMake(160, 140 + 280 * (slider.value - 0.5));
-//            }
-//            
-//        }
-//            break;
-//        case 1:
-//        {
-//            float endSize = 640 + 2560 * slider.value;
-//            maskLayer.frame = CGRectMake(0, 0, endSize, endSize);
-//            
-//            maskLayer.position = CGPointMake((directionStyle == leftToRight ? 180 : 140) + (directionStyle == leftToRight ? (endSize - 640)/24 : -(endSize - 640)/24) , (directionStyle == topToBottom ? 180 : 140) + (directionStyle == topToBottom ? (endSize - 640)/24 : -(endSize - 640)/24));
-//        }
-//            break;
-//            
-//        default:
-//            break;
-//    }
-    
-    float spacing = (160.f - maskLayer.frame.size.width/24.f) * 2;
-    
     switch (slider.tag) {
         case 0:
         {
             if (directionStyle == leftToRight)
             {
-                maskLayer.position = CGPointMake(180 + spacing * (slider.value - 0.5), 160);
+                maskLayer.position = CGPointMake(180 + 280 * (slider.value - 0.5), 160);
             }
             else if (directionStyle == rightToLeft)
             {
-                maskLayer.position = CGPointMake(140 + spacing * (slider.value - 0.5), 160);
+                maskLayer.position = CGPointMake(140 + 280 * (slider.value - 0.5), 160);
             }
             else if (directionStyle == topToBottom)
             {
-                maskLayer.position = CGPointMake(160, 180 + spacing * (slider.value - 0.5));
+                maskLayer.position = CGPointMake(160, 180 + 280 * (slider.value - 0.5));
             }
             else if (directionStyle == bottomToTop)
             {
-                maskLayer.position = CGPointMake(160, 140 + spacing * (slider.value - 0.5));
+                maskLayer.position = CGPointMake(160, 140 + 280 * (slider.value - 0.5));
             }
             
         }
@@ -612,10 +555,7 @@ enum DirectionType
         default:
             break;
     }
-    
-    position_X = maskLayer.position.x;
-    position_Y = maskLayer.position.y;
-    
+
 }
 
 #pragma mark -
@@ -682,7 +622,6 @@ enum DirectionType
         backImageView.image = nil;
         backImageView.image = modelImage;
     }
-    
     hideMBProgressHUD();
 }
 

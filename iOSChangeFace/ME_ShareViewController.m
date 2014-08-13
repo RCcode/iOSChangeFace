@@ -14,7 +14,7 @@
 #define kToInstagramPath [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:@"EditImage.igo"]
 #define kToMorePath [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:@"EditImage.jpg"]
 
-static NSString *kShareHotTags = @"（Made with @face2face_rc) #face2face";
+static NSString *kShareHotTags = @"(Made with @face2face_rc)#face2face";
 
 #import "CMethods.h"
 #import "FTF_Global.h"
@@ -38,8 +38,9 @@ static NSString *kShareHotTags = @"（Made with @face2face_rc) #face2face";
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
+    if (self)
+    {
+        
     }
     return self;
 }
@@ -162,6 +163,7 @@ static NSString *kShareHotTags = @"（Made with @face2face_rc) #face2face";
 
 - (void)cancel:(id)sender
 {
+    [FTF_Global shareGlobal].bannerView.hidden = NO;
     [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadView" object:nil];
     [self.navigationController popViewControllerAnimated:YES];
 }

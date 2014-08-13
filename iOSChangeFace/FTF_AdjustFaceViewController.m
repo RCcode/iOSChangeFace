@@ -50,6 +50,8 @@
 {
     [super viewDidLoad];
     
+    [FTF_Global shareGlobal].bannerView.hidden = YES;
+    
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
     
     lastScale = 1.f;
@@ -84,7 +86,7 @@
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithCustomView:nextBtn];
     self.navigationItem.rightBarButtonItem = rightItem;
     
-    FTF_DirectionView *toolBarView = [[FTF_DirectionView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height - 218, 320, ToolBarHeight)];
+    FTF_DirectionView *toolBarView = [[FTF_DirectionView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height - 168, 320, ToolBarHeight)];
     [toolBarView loadDirectionItools];
     toolBarView.delegate = self;
     [self.view addSubview:toolBarView];
@@ -247,6 +249,7 @@
 
 - (void)backItemClick:(UIBarButtonItem *)item
 {
+    [FTF_Global shareGlobal].bannerView.hidden = NO;
     [self.navigationController popViewControllerAnimated:YES];
 }
 

@@ -10,7 +10,10 @@
 @import AssetsLibrary;
 @import AVFoundation;
 @import MobileCoreServices;
+#import "GADInterstitialDelegate.h"
 
-@interface FTF_RootViewController : UIViewController <UIImagePickerControllerDelegate,UINavigationControllerDelegate>
-
+@interface FTF_RootViewController : UIViewController <UIImagePickerControllerDelegate,UINavigationControllerDelegate,GADInterstitialDelegate>
+{
+    
+}
 @end

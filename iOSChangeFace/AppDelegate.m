@@ -10,6 +10,7 @@
 #import "MobClick.h"
 #import "Flurry.h"
 #import "GADBannerView.h"
+#import "GADInterstitial.h"
 #import "FTF_RootViewController.h"
 #import "SliderViewController.h"
 #import "Pic_MenuViewController.h"
@@ -150,6 +151,7 @@
     [bannerView loadRequest:request];
     //赋值
     [FTF_Global shareGlobal].bannerView = bannerView;
+    
 }
 
 - (void)registNotification{
