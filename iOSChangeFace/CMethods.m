@@ -295,7 +295,7 @@ CGSize sizeWithContentAndFont(NSString *content,CGSize size,float fontSize)
     
     UIFont *font = [UIFont boldSystemFontOfSize:fontSize];
     NSDictionary * tdic = [NSDictionary dictionaryWithObjectsAndKeys:font, NSFontAttributeName,nil];
-    CGSize labelsize =[content boundingRectWithSize:size options:NSStringDrawingUsesLineFragmentOrigin |NSStringDrawingUsesFontLeading attributes:tdic context:nil].size;
+    CGSize labelsize = [content boundingRectWithSize:size options:(NSStringDrawingOptions)(NSStringDrawingUsesLineFragmentOrigin |NSStringDrawingUsesFontLeading) attributes:tdic context:nil].size;
     
     return labelsize;
 }

@@ -169,7 +169,7 @@
             
             if (sqlite3_prepare_v2(_database, sql, -1, &statement, NULL) != SQLITE_OK)
             {
-                return NO;
+                return NULL;
             }else {
                 //查询结果集中一条一条的遍历所有的记录，这里的数字对应的是列值。
                 sqlite3_bind_int(statement, 1, i);

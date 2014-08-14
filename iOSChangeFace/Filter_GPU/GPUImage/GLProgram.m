@@ -184,7 +184,7 @@ typedef void (*GLLogFunction) (GLuint program,
     if (logLength < 1)
         return nil;
     
-    char *logBytes = malloc(logLength);
+    char *logBytes = (char *)malloc(logLength);
     logFunc(object, logLength, &charsWritten, logBytes);
     NSString *log = [[NSString alloc] initWithBytes:logBytes 
                                               length:logLength 

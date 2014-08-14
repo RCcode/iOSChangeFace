@@ -19,5 +19,18 @@
     #import <Foundation/Foundation.h>
 #endif
 
+#ifdef __cplusplus
+#include <opencv2/opencv.hpp>
+#endif
+
 #define appleID @"904923023"
 static int moreAppID = 20063;
+
+enum MaterialModelType{
+    CrossBonesModel = 0,
+    MaskModel,
+    AnimalModel,
+    GirlModel,
+    OtherModel,
+};
+

@@ -30,7 +30,7 @@
         _public_Global = [[[self class] alloc] init];
         _public_Global.appsArray = [[NSMutableArray alloc]init];
         _public_Global.isOn = YES;
-        _public_Global.modelType = 0;
+        _public_Global.modelType = (MaterialModelType)0;
     });
     
     return _public_Global;

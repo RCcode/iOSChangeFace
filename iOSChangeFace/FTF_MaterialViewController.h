@@ -8,9 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "FTF_Delegates.h"
-@import AssetsLibrary;
-@import AVFoundation;
-@import MobileCoreServices;
+#import <AssetsLibrary/AssetsLibrary.h>
+#import <AVFoundation/AVFoundation.h>
+#import <MobileCoreServices/MobileCoreServices.h>
 
 @interface FTF_MaterialViewController : UIViewController <UIScrollViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 

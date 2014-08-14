@@ -7,9 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-@import AssetsLibrary;
-@import AVFoundation;
-@import MobileCoreServices;
+#import <AssetsLibrary/AssetsLibrary.h>
+#import <AVFoundation/AVFoundation.h>
+#import <MobileCoreServices/MobileCoreServices.h>
 #import "GADInterstitialDelegate.h"
 
 @interface FTF_RootViewController : UIViewController <UIImagePickerControllerDelegate,UINavigationControllerDelegate,GADInterstitialDelegate>

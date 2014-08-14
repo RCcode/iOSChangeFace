@@ -22,7 +22,7 @@ static NSString *kShareHotTags = @"(Made with @face2face_rc)#face2face";
 #import "FTF_DataRequest.h"
 #import "RC_AppInfo.h"
 #import "UIImageView+WebCache.h"
-@import Social;
+#import <Social/Social.h>
 
 #import "ME_ShareViewController.h"
 

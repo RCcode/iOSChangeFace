@@ -15,7 +15,7 @@
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     self.logoImageView.layer.cornerRadius = 12.f;
     self.logoImageView.layer.masksToBounds = YES;
-    self.titleLabel.lineBreakMode = NSLineBreakByWordWrapping|NSLineBreakByTruncatingTail;
+    self.titleLabel.lineBreakMode = (NSLineBreakMode)(NSLineBreakByWordWrapping|NSLineBreakByTruncatingTail);
     self.titleLabel.textColor = colorWithHexString(@"#000000", 1.f);
     self.typeLabel.textColor = colorWithHexString(@"#777777", 1.f);
     self.commentLabel.textColor = colorWithHexString(@"#777777", 1.f);

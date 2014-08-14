@@ -6,13 +6,13 @@
 //  Copyright (c) 2014年 rcplatform. All rights reserved.
 //
 
-enum MaterialModelType{
-    CrossBonesModel = 0,
-    MaskModel,
-    AnimalModel,
-    GirlModel,
-    OtherModel,
-};
+//enum MaterialModelType{
+//    CrossBonesModel = 0,
+//    MaskModel,
+//    AnimalModel,
+//    GirlModel,
+//    OtherModel,
+//};
 
 #import <UIKit/UIKit.h>
 

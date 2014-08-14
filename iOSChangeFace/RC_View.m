@@ -44,7 +44,7 @@
     animation.path = ref;
     animation.duration = 5.f;
     animation.delegate = self;
-    //[imageView.layer addAnimation:animation forKey:@"position"];
+    [imageView.layer addAnimation:animation forKey:@"position"];
     
 }
 

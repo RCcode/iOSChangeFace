@@ -20,8 +20,7 @@
 #import "ME_SQLMassager.h"
 #import "FTF_DataRequest.h"
 #import "UIDevice+DeviceInfo.h"
-@import AdSupport;
-
+#import <AdSupport/AdSupport.h>
 #define AdMobID @"ca-app-pub-3747943735238482/7117549852"
 #define UMengKey @"53d607ff56240b5d11055ecd"
 #define FlurryAppKey @"Q85WBVSCNNNC284VSQ8K"

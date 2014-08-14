@@ -300,24 +300,12 @@ enum DirectionType
                 [[NSUserDefaults standardUserDefaults] setObject:@1 forKey:@"isFirst"];
             }
             
-        {
-            //引导动画
-            UIWindow *window = [[UIApplication sharedApplication].delegate window];
-            RC_View *guideView = [[RC_View alloc]initWithFrame:window.bounds];
-            guideView.tag = 1001;
-            guideView.editFace = self;
-            guideView.backgroundColor = [UIColor clearColor];
-            [window addSubview:guideView];
-            
             libaryImageView.userInteractionEnabled = NO;
             detailView.frame = CGRectMake(0, self.view.bounds.size.height - 204, 320, 104);
             
             [backView setMZViewUserInteractionEnabled];
             [backView setMZImageView];
-        }
             
-            
-
             break;
         case 4:
             detailView.frame = CGRectMake(0, self.view.bounds.size.height - 204, 320, 104);
