@@ -88,6 +88,7 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    [FTF_Global shareGlobal].isChange = YES;
     [FTF_Global shareGlobal].modelType = modelType;
     if (modelType == AnimalModel)
     {

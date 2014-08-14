@@ -20,7 +20,7 @@
         [self addSubview:backImageView];
         
         imageView = [[UIImageView alloc]initWithFrame:CGRectMake(164, 44, 40, 40)];
-        imageView.center = CGPointMake(164, 64);
+        imageView.center = CGPointMake(164, 44);
         imageView.image = [UIImage imageNamed:@"dot.png"];
         [self addSubview:imageView];
         
@@ -36,7 +36,7 @@
     
     UIBezierPath *path=[UIBezierPath bezierPath];
     [path moveToPoint:CGPointMake(164, 44)];
-    [path addCurveToPoint:CGPointMake(164, 364) controlPoint1:CGPointMake(0, 44) controlPoint2:CGPointMake(0, 364)];
+    [path addCurveToPoint:CGPointMake(164, 364) controlPoint1:CGPointMake(0, 24) controlPoint2:CGPointMake(0, 364)];
     [path closePath];
     
     CGPathRef ref = path.CGPath;

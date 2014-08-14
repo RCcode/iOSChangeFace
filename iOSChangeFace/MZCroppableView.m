@@ -81,31 +81,12 @@
     [self.croppingPath strokeWithBlendMode:kCGBlendModeNormal alpha:1.0f];
 }
 
-- (UIImage *)deleteBackgroundOfImage:(UIImageView *)imageView
+- (UIImage *)deleteBackgroundOfImage:(UIImageView *)imageView isLastPath:(BOOL)isLast
 {
-    NSMutableArray *points = [self.croppingPath points];
-    //插入默认的四个点
-//    //默认起点
-//    [points insertObject:[NSValue valueWithCGPoint:CGPointMake(-self.frame.origin.x, -self.frame.origin.y)] atIndex:0];
-//    if (points.count >= 2)
-//    {
-//        CGPoint point = [(NSValue *)[points objectAtIndex:1] CGPointValue];
-//        point.x = point.x;
-//        point.y = -self.frame.origin.y;
-//        [points insertObject:[NSValue valueWithCGPoint:point] atIndex:1];
-//    }
-//    
-//    CGPoint point = [(NSValue *)[points objectAtIndex:points.count - 1] CGPointValue];
-//    point.x = point.x;
-//    point.y = -self.frame.origin.y + 320;
-//    [points addObject:[NSValue valueWithCGPoint:point]];
-//    //默认终点
-//    [points addObject:[NSValue valueWithCGPoint:CGPointMake(-self.frame.origin.x, -self.frame.origin.y + 320)]];
-//    
-//    if (points.count <= 5)
-//    {
-//        return nil;
-//    }
+    if (!isLast)
+    {
+        self.points = [self.croppingPath points];
+    }
     
     CGRect rect = CGRectZero;
     rect.size = imageView.image.size;
@@ -120,12 +101,12 @@
         
         aPath = [UIBezierPath bezierPath];
         
-        CGPoint p1 = [MZCroppableView convertCGPoint:[[points objectAtIndex:0] CGPointValue] fromRect1:imageView.frame.size toRect2:imageView.image.size];
+        CGPoint p1 = [MZCroppableView convertCGPoint:[[_points objectAtIndex:0] CGPointValue] fromRect1:imageView.frame.size toRect2:imageView.image.size];
         [aPath moveToPoint:CGPointMake(p1.x, p1.y)];
         
-        for (uint i=1; i<points.count; i++)
+        for (uint i=1; i<_points.count; i++)
         {
-            CGPoint p = [MZCroppableView convertCGPoint:[[points objectAtIndex:i] CGPointValue] fromRect1:imageView.frame.size toRect2:imageView.image.size];
+            CGPoint p = [MZCroppableView convertCGPoint:[[_points objectAtIndex:i] CGPointValue] fromRect1:imageView.frame.size toRect2:imageView.image.size];
             [aPath addLineToPoint:CGPointMake(p.x, p.y)];
         }
         [aPath closePath];
@@ -181,7 +162,7 @@
     
     img1 = [self CreateIplImageFromUIImage:mask];
     img2 = [self CreateIplImageFromUIImage:mask];
-    cvSmooth(img1, img2,CV_BLUR,80,80);
+    cvSmooth(img1, img2,CV_BLUR,40,40);
     mask = [self UIImageFromIplImage:img2];
     cvReleaseImage(&img1);
     cvReleaseImage(&img2);

@@ -67,7 +67,8 @@
 //创建数据库
 - (BOOL)createTable:(sqlite3 *)db
 {
-    char *sql = "create table if not exists appsInfoTable(ID INTEGER PRIMARY KEY AUTOINCREMENT, appCate text,appComment int,appId int,appName text,bannerUrl text,downUrl text,iconUrl text,packageName text,price text,openUrl text,isHave int,appDesc text)";
+    NSString *str = @"create table if not exists appsInfoTable(ID INTEGER PRIMARY KEY AUTOINCREMENT, appCate text,appComment int,appId int,appName text,bannerUrl text,downUrl text,iconUrl text,packageName text,price text,openUrl text,isHave int,appDesc text)";
+    const char *sql = [str UTF8String];
     
 	sqlite3_stmt *statement;
 	//sqlite3_prepare_v2 接口把一条SQL语句解析到statement结构里去. 使用该接口访问数据库是当前比较好的的一种方法
@@ -108,7 +109,8 @@
             sqlite3_stmt *statement;
             
             //这个 sql 语句特别之处在于 values 里面有个? 号。在sqlite3_prepare函数里，?号表示一个未定的值，它的值等下才插入。
-            char *sql = "INSERT INTO appsInfoTable(appCate, appComment ,appId ,appName , bannerUrl, downUrl, iconUrl, packageName, price, openUrl, isHave ,appDesc) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
+            NSString *str = @"INSERT INTO appsInfoTable(appCate, appComment ,appId ,appName , bannerUrl, downUrl, iconUrl, packageName, price, openUrl, isHave ,appDesc) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
+            const char *sql = [str UTF8String];
             
             //准备语句：第三个参数是从zSql中读取的字节数的最大值
             int success2 = sqlite3_prepare_v2(_database, sql, -1, &statement, NULL);
@@ -165,7 +167,8 @@
         while (i < 2) {
             sqlite3_stmt *statement = nil;
             
-            char *sql = "SELECT appCate ,appComment ,appId ,appName ,bannerUrl ,downUrl ,iconUrl, packageName, price, openUrl, isHave ,appDesc FROM appsInfoTable where isHave = ?";
+            NSString *str = @"SELECT appCate ,appComment ,appId ,appName ,bannerUrl ,downUrl ,iconUrl, packageName, price, openUrl, isHave ,appDesc FROM appsInfoTable where isHave = ?";
+            const char *sql = [str UTF8String];
             
             if (sqlite3_prepare_v2(_database, sql, -1, &statement, NULL) != SQLITE_OK)
             {
@@ -257,7 +260,8 @@
 		//我想下面几行已经不需要我讲解了，嘎嘎
 		sqlite3_stmt *statement;
 		//组织SQL语句
-		char *sql = "UPDATE appsInfoTable SET isHave = ? WHERE appId = ?;";
+        NSString *str = @"UPDATE appsInfoTable SET isHave = ? WHERE appId = ?;";
+		const char *sql = [str UTF8String];
 		
 		//将SQL语句放入sqlite3_stmt中
 		int success = sqlite3_prepare_v2(_database, sql, -1, &statement, NULL);
@@ -296,7 +300,8 @@
     if ([self openDB])
     {
         sqlite3_stmt *statement;
-        char *sql = "delete from appsInfoTable";
+        NSString *str = @"delete from appsInfoTable";
+        const char *sql = [str UTF8String];
         
         //将SQL语句放入sqlite3_stmt中
 		int success = sqlite3_prepare_v2(_database, sql, -1, &statement, NULL);

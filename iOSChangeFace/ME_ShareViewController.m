@@ -180,7 +180,29 @@ static NSString *kShareHotTags = @"(Made with @face2face_rc)#face2face";
 
 - (void)homeItem:(id)sender
 {
-    [self.navigationController popToRootViewControllerAnimated:YES];
+    if ([FTF_Global shareGlobal].isChange)
+    {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
+                                                        message:LocalizedString(@"saveOrBack", @"")
+                                                       delegate:self
+                                              cancelButtonTitle:LocalizedString(@"cancel", @"")
+                                              otherButtonTitles:LocalizedString(@"dialog_sure", @""),nil];
+        alert.tag = 11;
+        [alert show];
+    }
+    else
+    {
+        [self.navigationController popToRootViewControllerAnimated:YES];
+    }
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (alertView.tag == 11 && buttonIndex == 1)
+    {
+        [FTF_Global shareGlobal].isChange = NO;
+        [self.navigationController popToRootViewControllerAnimated:YES];
+    }
 }
 
 - (void)btnClick:(UIButton *)button

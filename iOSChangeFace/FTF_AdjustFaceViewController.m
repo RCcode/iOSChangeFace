@@ -82,10 +82,15 @@
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithCustomView:nextBtn];
     self.navigationItem.rightBarButtonItem = rightItem;
     
+    UIView *backView = [[UIView alloc] initWithFrame:CGRectMake(0, 320, 320, 154)];
+    backView.backgroundColor = colorWithHexString(@"#202225", 1.f);
+    [self.view addSubview:backView];
+    
     FTF_DirectionView *toolBarView = [[FTF_DirectionView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height - 198, 320, ToolBarHeight)];
+    toolBarView.center = CGPointMake(160, backView.frame.size.height/2);
     [toolBarView loadDirectionItools];
     toolBarView.delegate = self;
-    [self.view addSubview:toolBarView];
+    [backView addSubview:toolBarView];
     
     eventArray = @[@"adjust_normal",@"adjust_left",@"adjust_up",@"adjust_right",@"adjust_down",@"adjust_big",@"adjust_small",@"adjust_ronateleft",@"adjust_ronateright"];
     
@@ -201,7 +206,6 @@
 #pragma mark 旋转
 - (void)rotateView:(UIRotationGestureRecognizer *)recognizer changeRotate:(float)tinyScale
 {
-
     UIView *imageView = recognizer.view;
     CGFloat rotation;
 

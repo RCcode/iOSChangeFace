@@ -10,7 +10,7 @@
 #import "FTF_Delegates.h"
 #import "NCVideoCamera.h"
 
-@interface FTF_EditFaceViewController : UIViewController <ChangeModelDelegate,DirectionDelegate,NCVideoCameraDelegate>
+@interface FTF_EditFaceViewController : UIViewController <ChangeModelDelegate,DirectionDelegate,NCVideoCameraDelegate,UIAlertViewDelegate>
 {
     UIImage *_libaryImage;
     CGRect _imageRect;

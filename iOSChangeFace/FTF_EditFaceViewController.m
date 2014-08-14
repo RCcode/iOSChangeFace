@@ -106,8 +106,6 @@ enum DirectionType
     UIView *guideView = [window viewWithTag:1001];
     [guideView removeFromSuperview];
     guideView = nil;
-    
-    [detailView loadCropItools];
 }
 
 #pragma mark -
@@ -127,8 +125,9 @@ enum DirectionType
     
     UIButton *homeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     homeBtn.tag = 0;
-    homeBtn.frame = CGRectMake(0, 0, 44, 44);
+    homeBtn.frame = CGRectMake(44, 0, 44, 44);
     [homeBtn setImage:pngImagePath(@"btn_home_normal") forState:UIControlStateNormal];
+    [homeBtn setImageEdgeInsets:UIEdgeInsetsMake(0, 0,0, -16)];
     [homeBtn setImage:pngImagePath(@"btn_home_pressed") forState:UIControlStateHighlighted];
     [homeBtn addTarget:self action:@selector(homeItemClick:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *btnItem = [[UIBarButtonItem alloc] initWithCustomView:homeBtn];
@@ -138,14 +137,13 @@ enum DirectionType
     
     UIButton *shareBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     shareBtn.tag = 1;
-    shareBtn.frame = CGRectMake(44, 0, 44, 44);
-    [shareBtn setImageEdgeInsets:UIEdgeInsetsMake(0, 0,0, -16)];
+    shareBtn.frame = CGRectMake(0, 0, 44, 44);
     [shareBtn setImage:pngImagePath(@"btn_share_normal") forState:UIControlStateNormal];
     [shareBtn setImage:pngImagePath(@"btn_share_pressed") forState:UIControlStateHighlighted];
     [shareBtn addTarget:self action:@selector(shareItemClick:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *shareItem = [[UIBarButtonItem alloc] initWithCustomView:shareBtn];
 
-    [self.navigationItem setRightBarButtonItems:@[negativeSeperator,btnItem,shareItem]];
+    [self.navigationItem setRightBarButtonItems:@[negativeSeperator,shareItem,btnItem]];
     
 }
 
@@ -233,13 +231,54 @@ enum DirectionType
 
 - (void)backItemClick:(UIBarButtonItem *)item
 {
-    [self.navigationController popViewControllerAnimated:YES];
+    if ([FTF_Global shareGlobal].isChange)
+    {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
+                                                        message:LocalizedString(@"saveOrBack", @"")
+                                                       delegate:self
+                                              cancelButtonTitle:LocalizedString(@"cancel", @"")
+                                              otherButtonTitles:LocalizedString(@"dialog_sure", @""),nil];
+        alert.tag = 11;
+        [alert show];
+    }
+    else
+    {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
 
 - (void)homeItemClick:(UIBarButtonItem *)item
 {
     [FTF_Global event:@"Edit" label:@"edit_home"];
-    [self.navigationController popToRootViewControllerAnimated:YES];
+    
+    if ([FTF_Global shareGlobal].isChange)
+    {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
+                                                        message:LocalizedString(@"saveOrBack", @"")
+                                                       delegate:self
+                                              cancelButtonTitle:LocalizedString(@"cancel", @"")
+                                              otherButtonTitles:LocalizedString(@"dialog_sure", @""),nil];
+        alert.tag = 11;
+        [alert show];
+    }
+    else
+    {
+        [self.navigationController popToRootViewControllerAnimated:YES];
+    }
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (alertView.tag == 11 && buttonIndex == 1)
+    {
+        [FTF_Global shareGlobal].isChange = NO;
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+    else if (alertView.tag == 12 && buttonIndex == 1)
+    {
+        [FTF_Global shareGlobal].isChange = NO;
+        [self.navigationController popToRootViewControllerAnimated:YES];
+    }
 }
 
 - (void)shareItemClick:(UIBarButtonItem *)item
@@ -272,6 +311,7 @@ enum DirectionType
             materialController.delegate = self;
             [self.navigationController pushViewController:materialController animated:YES];
             [btn performSelector:@selector(btnHaveClicked) withObject:nil afterDelay:.15f];
+            
         }
             break;
         case 1:
@@ -302,9 +342,11 @@ enum DirectionType
             
             libaryImageView.userInteractionEnabled = NO;
             detailView.frame = CGRectMake(0, self.view.bounds.size.height - 204, 320, 104);
+            [detailView loadCropItools];
             
             [backView setMZViewUserInteractionEnabled];
-            [backView setMZImageView];
+            [backView setMZImageView:YES];
+            
             
             break;
         case 4:
@@ -416,10 +458,9 @@ enum DirectionType
 {
     if (tag == 0)
     {
+        [FTF_Global shareGlobal].isCrop = NO;
         [backView setMZViewUserInteractionEnabled];
-        [backView setMZImageView];
-        [fuzzyImage removeFromSuperview];
-        fuzzyImage = nil;
+        [backView setMZImageView:NO];
     }
     else
     {
@@ -473,6 +514,7 @@ enum DirectionType
     
     //保存
     [FTF_Global shareGlobal].bigImage = viewImage;
+    [FTF_Global shareGlobal].isChange = NO;
     
 }
 
@@ -487,8 +529,11 @@ enum DirectionType
     mb.userInteractionEnabled = YES;
     
     [filterImageArray removeAllObjects];
+    
     dispatch_async(myQueue, ^{
-        [_videoCamera setImages:@[[FTF_Global shareGlobal].compressionImage,[FTF_Global shareGlobal].modelImage] WithFilterType:(NCFilterType)tag];
+        @autoreleasepool {
+            [_videoCamera setImages:@[[FTF_Global shareGlobal].compressionImage,[FTF_Global shareGlobal].modelImage] WithFilterType:(NCFilterType)tag];
+        }
     });
 }
 
@@ -496,15 +541,14 @@ enum DirectionType
 #pragma mark 剪切
 - (void)endCropImage
 {
-    detailView.hidden = NO;
-    [backView endCropImage];
+    [FTF_Global shareGlobal].isCrop = YES;
+    [backView endCropImage:NO];
 }
 
 #pragma mark -
 #pragma mark 开始划线
 - (void)beginCropImage
 {
-    detailView.hidden = YES;
     [backView beginCropImage];
 }
 
@@ -565,6 +609,7 @@ enum DirectionType
 #pragma mark DirectionDelegate
 - (void)directionBtnClick:(NSUInteger)tag
 {
+    [FTF_Global shareGlobal].isChange = YES;
     if (tag < 9)
     {
         [FTF_Global event:directionArray[tag] label:@"Edit"];
@@ -589,6 +634,7 @@ enum DirectionType
 
 - (void)directionSlider:(UISlider *)slider
 {
+    [FTF_Global shareGlobal].isChange = YES;
     if (slider.tag == 0)
     {
         self.modelSlider = slider;
@@ -612,6 +658,8 @@ enum DirectionType
         backView.image = nil;
         backView.image = customImage;
         libaryImageView.image = customImage;
+        
+        [backView endCropImage:YES];
         
         UIImage *modelImage = filterImageArray[1];
         backImageView.image = nil;

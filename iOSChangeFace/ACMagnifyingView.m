@@ -31,6 +31,7 @@ static CGFloat const kACMagnifyingViewDefaultShowDelay = 0.5;
 {
 	if (self = [super initWithFrame:frame]) {
 		self.magnifyingGlassShowDelay = kACMagnifyingViewDefaultShowDelay;
+        lastScale = 1.f;
     }
 	return self;
 }
@@ -45,7 +46,8 @@ static CGFloat const kACMagnifyingViewDefaultShowDelay = 0.5;
     //选取的图片
     self.imageView = imgView;
     [self addGestureRecognizerToView:self.imageView];
-    self.image = imgView.image;
+    self.image = [imgView.image copy];
+    cropImage = [imgView.image copy];
     [self addSubview:self.imageView];
 
     //抠图操作视图
@@ -87,12 +89,21 @@ static CGFloat const kACMagnifyingViewDefaultShowDelay = 0.5;
 {
     self.magnifyingGlass.hidden = YES;
     cropView.userInteractionEnabled = NO;
-    _imageView.image = _image;
+    _imageView.image = cropImage;
 }
 
-- (void)setMZImageView
+- (void)setMZImageView:(BOOL)isRestore
 {
-    _imageView.image = _image;
+    if (isRestore)
+    {
+        _imageView.image = cropImage;
+    }
+    else
+    {
+        _imageView.image = _image;
+        cropImage = nil;
+        cropImage = [_image copy];
+    }
 }
 
 - (void)addGestureRecognizerToView:(UIView *)view
@@ -299,9 +310,13 @@ static CGFloat const kACMagnifyingViewDefaultShowDelay = 0.5;
     _imageView.image = self.image;
 }
 
-- (void)endCropImage
+- (void)endCropImage:(BOOL)isLast
 {
-    UIImage *croppedImage = [cropView deleteBackgroundOfImage:_imageView];
+    UIImage *croppedImage = nil;
+    if ([FTF_Global shareGlobal].isCrop)
+    {
+        croppedImage = [cropView deleteBackgroundOfImage:_imageView isLastPath:isLast];
+    }
     
     if (croppedImage == nil)
     {
@@ -309,8 +324,11 @@ static CGFloat const kACMagnifyingViewDefaultShowDelay = 0.5;
     }
     else
     {
+        cropImage = nil;
+        cropImage = [croppedImage copy];
         _imageView.image = croppedImage;
     }
+    
     self.magnifyingGlass.hidden = YES;
     cropView.userInteractionEnabled = NO;
 }

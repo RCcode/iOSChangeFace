@@ -24,7 +24,7 @@
     NSError *error = nil;
     // Check status of "tracks", make sure they were loaded    
     AVKeyValueStatus tracksStatus = [inputAsset statusOfValueForKey:@"tracks" error:&error];
-    if (!tracksStatus == AVKeyValueStatusLoaded) {
+    if (!(tracksStatus == AVKeyValueStatusLoaded)) {
       // failed to load
       return;
     }

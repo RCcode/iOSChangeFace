@@ -17,6 +17,7 @@
     float lastScale;
     double recordedRotation;
     BOOL isTiny;
+    UIImage *cropImage;
 }
 @property (nonatomic, strong) ACMagnifyingGlass *magnifyingGlass;
 @property (nonatomic, assign) CGFloat magnifyingGlassShowDelay;
@@ -26,11 +27,11 @@
 - (void)loadCropImageView:(UIImageView *)imgView;
 
 - (void)beginCropImage;
-- (void)endCropImage;
+- (void)endCropImage:(BOOL)isLast;
 
 - (void)setMZViewUserInteractionEnabled;
 - (void)setMZViewNotUserInteractionEnabled;
-- (void)setMZImageView;
+- (void)setMZImageView:(BOOL)isRestore;
 - (void)moveBtnClick:(NSInteger)tag;
 - (void)changeMagnifyingGlassCenter:(CGPoint)center;
 
