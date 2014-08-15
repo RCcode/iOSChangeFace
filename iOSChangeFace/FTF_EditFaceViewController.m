@@ -6,14 +6,6 @@
 //  Copyright (c) 2014年 rcplatform. All rights reserved.
 //
 
-enum DirectionType
-{
-    leftToRight = 0,
-    rightToLeft,
-    topToBottom,
-    bottomToTop,
-};
-
 #define UIColorFromHexAlpha(hexValue, a) [UIColor colorWithRed:((float)((hexValue & 0xFF0000) >> 16))/255.0 green:((float)((hexValue & 0xFF00) >> 8))/255.0 blue:((float)(hexValue & 0xFF))/255.0 alpha:a]
 #define BtnWidth 64.f
 #define BtnHeight 50.f
@@ -408,6 +400,7 @@ enum DirectionType
 {
     
     directionStyle = (enum DirectionType)tag;
+    detailView.direction_Type = (enum DirectionType)tag;
     
     self.modelSlider.value = 0;
     self.modelSlider.value = 0.5f;
@@ -464,6 +457,7 @@ enum DirectionType
     }
     else
     {
+        detailView.model_Type = (enum ModelType)tag;
         if (fuzzyImage == nil)
         {
             fuzzyImage = [[UIImageView alloc] initWithFrame:bottomView.bounds];
@@ -522,6 +516,8 @@ enum DirectionType
 #pragma mark 滤镜
 - (void)filterImage:(NSInteger)tag
 {
+    detailView.filter_Type = (NCFilterType)tag;
+    
     dispatch_queue_t myQueue = dispatch_queue_create("my_filter_queue", nil);
     [NSThread sleepForTimeInterval:0.3];
     
@@ -657,6 +653,7 @@ enum DirectionType
         self.libaryImage = customImage;
         backView.image = nil;
         backView.image = customImage;
+        backView.cropImage = customImage;
         libaryImageView.image = customImage;
         
         [backView endCropImage:YES];

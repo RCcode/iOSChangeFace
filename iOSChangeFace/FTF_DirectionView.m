@@ -144,7 +144,7 @@
         [btn addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
         [blur addSubview:btn];
         
-        if (i == 0)
+        if (i == _direction_Type)
         {
             [btn changeBtnImage];
         }
@@ -188,6 +188,11 @@
         btn.tag = i + 20;
         [btn addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
         [blur addSubview:btn];
+        
+        if (i != 0 && i == _model_Type)
+        {
+            [btn changeBtnImage];
+        }
         
         i++;
     }
@@ -235,6 +240,12 @@
         btn.tag = i + 100;
         [btn addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
         [filterScroller addSubview:btn];
+        
+        if (i == _filter_Type)
+        {
+            [btn changeBtnImage];
+            btn.contentLabel.textColor = colorWithHexString(@"#D9AF20", 1.0);
+        }
     }
     
     [self addSubview:blur];

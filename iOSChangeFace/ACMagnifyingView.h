@@ -17,12 +17,12 @@
     float lastScale;
     double recordedRotation;
     BOOL isTiny;
-    UIImage *cropImage;
 }
 @property (nonatomic, strong) ACMagnifyingGlass *magnifyingGlass;
 @property (nonatomic, assign) CGFloat magnifyingGlassShowDelay;
 @property (nonatomic, strong) UIImageView *imageView;
 @property (nonatomic, strong) UIImage *image;
+@property (nonatomic, strong) UIImage *cropImage;
 
 - (void)loadCropImageView:(UIImageView *)imgView;
 

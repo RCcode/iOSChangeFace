@@ -47,7 +47,7 @@ static CGFloat const kACMagnifyingViewDefaultShowDelay = 0.5;
     self.imageView = imgView;
     [self addGestureRecognizerToView:self.imageView];
     self.image = [imgView.image copy];
-    cropImage = [imgView.image copy];
+    _cropImage = [imgView.image copy];
     [self addSubview:self.imageView];
 
     //抠图操作视图
@@ -89,20 +89,20 @@ static CGFloat const kACMagnifyingViewDefaultShowDelay = 0.5;
 {
     self.magnifyingGlass.hidden = YES;
     cropView.userInteractionEnabled = NO;
-    _imageView.image = cropImage;
+    _imageView.image = _cropImage;
 }
 
 - (void)setMZImageView:(BOOL)isRestore
 {
     if (isRestore)
     {
-        _imageView.image = cropImage;
+        _imageView.image = _cropImage;
     }
     else
     {
         _imageView.image = _image;
-        cropImage = nil;
-        cropImage = [_image copy];
+        _cropImage = nil;
+        _cropImage = [_image copy];
     }
 }
 
@@ -324,8 +324,8 @@ static CGFloat const kACMagnifyingViewDefaultShowDelay = 0.5;
     }
     else
     {
-        cropImage = nil;
-        cropImage = [croppedImage copy];
+        _cropImage = nil;
+        _cropImage = [croppedImage copy];
         _imageView.image = croppedImage;
     }
     

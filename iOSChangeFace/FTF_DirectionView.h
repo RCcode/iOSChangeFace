@@ -16,6 +16,9 @@
     UISlider *lindeSlider;
 }
 @property (nonatomic ,assign) id <DirectionDelegate> delegate;
+@property (nonatomic ,assign) enum DirectionType direction_Type;
+@property (nonatomic ,assign) enum ModelType model_Type;
+@property (nonatomic ,assign) NCFilterType filter_Type;
 
 - (void)loadDirectionItools;
 - (void)loadModelStyleItools;
