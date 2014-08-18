@@ -208,13 +208,13 @@
     //放大镜
     acBackView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 320)];
     acBackView.layer.masksToBounds = YES;
-    backView = [[ACMagnifyingView alloc] initWithFrame:CGRectMake(0, 0, 320, 320)];
+    backView = [[ACMagnifyingView alloc] initWithFrame:_imageRect];
     backView.transform = CGAffineTransformMakeRotation([FTF_Global shareGlobal].rorationDegree);
     [acBackView addSubview:backView];
     [bottomView addSubview:acBackView];
     
     //从相册中选取的图片
-    libaryImageView = [[UIImageView alloc]initWithFrame:_imageRect];
+    libaryImageView = [[UIImageView alloc]initWithFrame:backView.bounds];
     libaryImageView.userInteractionEnabled = YES;
     
     [self adjustViews:_libaryImage];
@@ -397,8 +397,8 @@
     directionStyle = (enum DirectionType)tag;
     detailView.direction_Type = (enum DirectionType)tag;
     
-    self.modelSlider.value = 0;
     self.modelSlider.value = 0.5f;
+    [detailView setVolumeSlideValue:0.f];
     
     [colorArray removeAllObjects];
     for (int i = 0; i < 240; i++)

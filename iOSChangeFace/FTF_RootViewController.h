@@ -16,4 +16,8 @@
 {
     
 }
+@property (weak, nonatomic) IBOutlet UIButton *menuBtn;
+@property (weak, nonatomic) IBOutlet UIButton *libaryBtn;
+@property (weak, nonatomic) IBOutlet UIButton *camenaBtn;
+@property (weak, nonatomic) IBOutlet UIButton *moreBtn;
 @end

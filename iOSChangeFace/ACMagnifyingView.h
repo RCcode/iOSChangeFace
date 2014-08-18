@@ -18,6 +18,7 @@
     double recordedRotation;
     BOOL isTiny;
     CGRect imageViewRect;
+    CGRect acmRect;
 }
 @property (nonatomic, strong) ACMagnifyingGlass *magnifyingGlass;
 @property (nonatomic, assign) CGFloat magnifyingGlassShowDelay;

@@ -40,13 +40,37 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    if (iPhone4())
+    {
+        CGRect logoRect = self.bg_ImageView.frame;
+        logoRect.size.height -= 88;
+        self.bg_ImageView.frame = logoRect;
+        self.bg_ImageView.image = pngImagePath(@"bg_960");
+        
+        CGRect camanaRect = self.camenaBtn.frame;
+        camanaRect.origin.y -= 44;
+        self.camenaBtn.frame = camanaRect;
+        
+        CGRect libaryRect = self.libaryBtn.frame;
+        libaryRect.origin.y -= 44;
+        self.libaryBtn.frame = libaryRect;
+        
+        CGRect appStoreRect = self.moreBtn.frame;
+        appStoreRect.origin.y -= 44;
+        self.moreBtn.frame = appStoreRect;
+        
+        CGRect menuRect = self.menuBtn.frame;
+        menuRect.origin.y -= 20;
+        self.menuBtn.frame = menuRect;
+    }
+    
 }
 
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (IBAction)openLibaryClick:(id)sender

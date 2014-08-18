@@ -29,14 +29,14 @@ static CGFloat const kACMagnifyingViewDefaultShowDelay = 0.5;
 
 - (id)initWithFrame:(CGRect)frame
 {
-	if (self = [super initWithFrame:frame]) {
+	if (self = [super initWithFrame:frame])
+    {
 		self.magnifyingGlassShowDelay = kACMagnifyingViewDefaultShowDelay;
         lastScale = 1.f;
-        self.backgroundColor = [UIColor grayColor];
+        acmRect = frame;
     }
 	return self;
 }
-
 
 - (void)loadCropImageView:(UIImageView *)imgView
 {
@@ -133,7 +133,8 @@ static CGFloat const kACMagnifyingViewDefaultShowDelay = 0.5;
 
 #pragma mark -
 #pragma mark - UIGestureRecognizerDelegate
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
+{
     return YES;
 }
 
@@ -144,7 +145,7 @@ static CGFloat const kACMagnifyingViewDefaultShowDelay = 0.5;
     if (tag == 0)
     {
         self.transform = CGAffineTransformMakeRotation(0);
-        [self setFrame:CGRectMake(0, 0, 320, 320)];
+        [self setFrame:acmRect];
         [self setTransform:CGAffineTransformMakeRotation([FTF_Global shareGlobal].rorationDegree)];
         [self.imageView setFrame:imageViewRect];
         self.imageView.image = _image;
@@ -207,8 +208,6 @@ static CGFloat const kACMagnifyingViewDefaultShowDelay = 0.5;
 #pragma mark 移动
 - (void)panView:(UIPanGestureRecognizer *)recognizer changePoint:(CGPoint)point
 {
-    UIView *panView = recognizer.view;
-    
     CGPoint translation;
     if (isTiny)
     {
@@ -219,8 +218,7 @@ static CGFloat const kACMagnifyingViewDefaultShowDelay = 0.5;
     {
         translation = [recognizer translationInView:self];
     }
-    panView.center = CGPointMake(panView.center.x + translation.x, panView.center.y + translation.y);
-    cropView.center = CGPointMake(cropView.center.x + translation.x, cropView.center.y + translation.y);
+    self.center = CGPointMake(self.center.x + translation.x, self.center.y + translation.y);
     
     [recognizer setTranslation:CGPointMake(0, 0) inView:self];
 }
@@ -275,7 +273,8 @@ static CGFloat const kACMagnifyingViewDefaultShowDelay = 0.5;
     [self setTransform:newCropTransform];
     
     recordedRotation = [recognizer rotation];
-    if([recognizer state] == UIGestureRecognizerStateEnded) {
+    if([recognizer state] == UIGestureRecognizerStateEnded)
+    {
         recordedRotation = recordedRotation - [recognizer rotation];
     }
 }

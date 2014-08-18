@@ -25,4 +25,6 @@
 - (void)loadCropItools;
 - (void)loadFilerItools;
 
+- (void)setVolumeSlideValue:(float)value;
+
 @end

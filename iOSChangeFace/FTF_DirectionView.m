@@ -25,7 +25,7 @@
         //ZVolumeSlide 自定义Slide控件
         volumeSlide = [[FTF_VolumeSlide alloc]initWithFrame:CGRectMake(17.5, 64, 285, 30)];
         volumeSlide.delegate = self;
-        [volumeSlide setSlideValue:0];
+        [self setVolumeSlideValue:0.f];
         
         lindeSlider = [[UISlider alloc]initWithFrame:CGRectMake(17.5f, 64, 285, 30)];
         [lindeSlider setMaximumTrackTintColor:colorWithHexString(@"#999999", 1.0f)];
@@ -43,6 +43,11 @@
 {
     lindeSlider = nil;
     volumeSlide = nil;
+}
+
+- (void)setVolumeSlideValue:(float)value
+{
+    [volumeSlide setSlideValue:value];
 }
 
 - (void)loadDirectionItools

@@ -89,7 +89,7 @@
     librayBtn.frame = CGRectMake(0, 0, 44, 44);
     [librayBtn setImage:pngImagePath(@"icon_pic_normal") forState:UIControlStateNormal];
     [librayBtn setImage:pngImagePath(@"icon_pic_pressed") forState:UIControlStateHighlighted];
-    librayBtn.tag = 0;
+    librayBtn.tag = 1;
     [librayBtn addTarget:self action:@selector(navItemClick:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *librayItem = [[UIBarButtonItem alloc] initWithCustomView:librayBtn];
     
@@ -101,7 +101,7 @@
     [cameraBtn setImageEdgeInsets:UIEdgeInsetsMake(0, 0,0, -16)];
     [cameraBtn setImage:pngImagePath(@"btn_ig_normal") forState:UIControlStateNormal];
     [cameraBtn setImage:pngImagePath(@"btn_ig_pressed") forState:UIControlStateHighlighted];
-    cameraBtn.tag = 1;
+    cameraBtn.tag = 2;
     [cameraBtn addTarget:self action:@selector(navItemClick:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *cameraItem = [[UIBarButtonItem alloc] initWithCustomView:cameraBtn];
     

@@ -82,11 +82,11 @@
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithCustomView:nextBtn];
     self.navigationItem.rightBarButtonItem = rightItem;
     
-    UIView *backView = [[UIView alloc] initWithFrame:CGRectMake(0, 320, 320, 154)];
+    UIView *backView = [[UIView alloc] initWithFrame:CGRectMake(0, 320, 320, iPhone5()?154:116)];
     backView.backgroundColor = colorWithHexString(@"#202225", 1.f);
     [self.view addSubview:backView];
     
-    FTF_DirectionView *toolBarView = [[FTF_DirectionView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height - 198, 320, ToolBarHeight)];
+    FTF_DirectionView *toolBarView = [[FTF_DirectionView alloc] initWithFrame:CGRectMake(0, 0, 320, backView.frame.size.height)];
     toolBarView.center = CGPointMake(160, backView.frame.size.height/2);
     [toolBarView loadDirectionItools];
     toolBarView.delegate = self;
