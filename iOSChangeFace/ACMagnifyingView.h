@@ -17,6 +17,7 @@
     float lastScale;
     double recordedRotation;
     BOOL isTiny;
+    CGRect imageViewRect;
 }
 @property (nonatomic, strong) ACMagnifyingGlass *magnifyingGlass;
 @property (nonatomic, assign) CGFloat magnifyingGlassShowDelay;

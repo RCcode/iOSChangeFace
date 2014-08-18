@@ -32,6 +32,7 @@ static CGFloat const kACMagnifyingViewDefaultShowDelay = 0.5;
 	if (self = [super initWithFrame:frame]) {
 		self.magnifyingGlassShowDelay = kACMagnifyingViewDefaultShowDelay;
         lastScale = 1.f;
+        self.backgroundColor = [UIColor grayColor];
     }
 	return self;
 }
@@ -45,8 +46,15 @@ static CGFloat const kACMagnifyingViewDefaultShowDelay = 0.5;
     }
     //选取的图片
     self.imageView = imgView;
+    imageViewRect = imgView.frame;
+    for (UIGestureRecognizer *gesture in self.imageView.gestureRecognizers)
+    {
+        [self.imageView removeGestureRecognizer:gesture];
+    }
     [self addGestureRecognizerToView:self.imageView];
+    _image = nil;
     self.image = [imgView.image copy];
+    _cropImage = nil;
     _cropImage = [imgView.image copy];
     [self addSubview:self.imageView];
 
@@ -123,26 +131,27 @@ static CGFloat const kACMagnifyingViewDefaultShowDelay = 0.5;
     [view addGestureRecognizer:rotationGesture];
 }
 
+#pragma mark -
 #pragma mark - UIGestureRecognizerDelegate
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
     return YES;
 }
 
+#pragma mark -
+#pragma 移动缩放旋转
 - (void)moveBtnClick:(NSInteger)tag
 {
     if (tag == 0)
     {
-        self.imageView.transform = CGAffineTransformMakeRotation(0);
-        if ([FTF_Global shareGlobal].compressionImage.size.width > [FTF_Global shareGlobal].compressionImage.size.height)
-        {
-            self.imageView.frame = CGRectMake(0, 0, 320, [FTF_Global shareGlobal].compressionImage.size.height * (320.f/1080.f));
-        }
-        else
-        {
-            self.imageView.frame = CGRectMake(0, 0, [FTF_Global shareGlobal].compressionImage.size.width * (320.f/1080.f), 320);
-        }
-        self.imageView.center = CGPointMake(160, 160);
-        self.imageView.image = [FTF_Global shareGlobal].compressionImage;
+        self.transform = CGAffineTransformMakeRotation(0);
+        [self setFrame:CGRectMake(0, 0, 320, 320)];
+        [self setTransform:CGAffineTransformMakeRotation([FTF_Global shareGlobal].rorationDegree)];
+        [self.imageView setFrame:imageViewRect];
+        self.imageView.image = _image;
+        _cropImage = nil;
+        _cropImage = [_image copy];
+        [cropView setFrame:imageViewRect];
+        [FTF_Global shareGlobal].isCrop = NO;
     }
     else if (tag == 5 || tag == 6)
     {
@@ -210,7 +219,6 @@ static CGFloat const kACMagnifyingViewDefaultShowDelay = 0.5;
     {
         translation = [recognizer translationInView:self];
     }
-    
     panView.center = CGPointMake(panView.center.x + translation.x, panView.center.y + translation.y);
     cropView.center = CGPointMake(cropView.center.x + translation.x, cropView.center.y + translation.y);
     

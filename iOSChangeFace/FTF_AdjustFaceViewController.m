@@ -118,13 +118,13 @@
     libaryImageView.center = CGPointMake(160, 160);
     libaryImageView.userInteractionEnabled = YES;
     libaryImageView.image = image;
-    libaryImageView.layer.shouldRasterize = YES;
+//    libaryImageView.layer.shouldRasterize = YES;
     [self addGestureRecognizerToView:libaryImageView];
     [backView addSubview:libaryImageView];
     
     //脸图
     UIImageView *faceModelImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 10, 320, 320)];
-    faceModelImageView.image = [UIImage zoomImageWithImage:pngImagePath(@"focus")];
+    faceModelImageView.image = [UIImage zoomImageWithImage:pngImagePath(@"iosFocus")];
     [backView addSubview:faceModelImageView];
 }
 

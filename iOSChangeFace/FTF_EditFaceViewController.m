@@ -42,6 +42,7 @@
     NSArray *fuzzyArray;
     NSArray *modelArray;
     NSMutableArray *filterImageArray;
+    CGPoint last_Position;
 }
 @property (nonatomic ,strong) UISlider *modelSlider;
 @property (nonatomic ,strong) UISlider *cropSlider;
@@ -59,6 +60,7 @@
         fuzzyArray = @[@"beauty_normal",@"beauty_small",@"beauty_middle",@"beauty_big"];
         modelArray = @[@"switch_left",@"switch_right",@"switch_up",@"switch_down"];
         filterImageArray = [NSMutableArray arrayWithCapacity:0];
+        last_Position = CGPointMake(160, 160);
     }
     return self;
 }
@@ -100,8 +102,6 @@
     guideView = nil;
 }
 
-#pragma mark -
-#pragma mark 初始化导航按钮
 - (void)addNavItem
 {
     //返回按钮
@@ -179,9 +179,9 @@
 - (void)layoutSubViews
 {
     colorArray = [NSMutableArray arrayWithCapacity:0];
-    for (int i = 0; i < 24; i++)
+    for (int i = 0; i < 240; i++)
     {
-        if (i < 11)
+        if (i < 120)
         {
             [colorArray addObject:(id)[UIColorFromHexAlpha(0xffffff, 1) CGColor]];
         }
@@ -215,7 +215,6 @@
     
     //从相册中选取的图片
     libaryImageView = [[UIImageView alloc]initWithFrame:_imageRect];
-    libaryImageView.layer.shouldRasterize = YES;
     libaryImageView.userInteractionEnabled = YES;
     
     [self adjustViews:_libaryImage];
@@ -303,7 +302,6 @@
             materialController.delegate = self;
             [self.navigationController pushViewController:materialController animated:YES];
             [btn performSelector:@selector(btnHaveClicked) withObject:nil afterDelay:.15f];
-            
         }
             break;
         case 1:
@@ -360,33 +358,30 @@
     
     //模糊图层
     maskLayer.frame = CGRectMake(0, 0, 640, 640);
+    maskLayer.position = CGPointMake(160, 160);
     
     if (directionStyle == leftToRight)
     {
         maskLayer.startPoint = CGPointMake(0, 0.5);
         maskLayer.endPoint = CGPointMake(1, 0.5);
-        maskLayer.position = CGPointMake(180, 160);
         [backView changeMagnifyingGlassCenter:CGPointMake(275, 45)];
     }
     else if (directionStyle == rightToLeft)
     {
         maskLayer.startPoint = CGPointMake(1, 0.5);
         maskLayer.endPoint = CGPointMake(0, 0.5);
-        maskLayer.position = CGPointMake(140, 160);
         [backView changeMagnifyingGlassCenter:CGPointMake(45, 45)];
     }
     else if (directionStyle ==  topToBottom)
     {
         maskLayer.startPoint = CGPointMake(0.5, 0);
         maskLayer.endPoint = CGPointMake(0.5, 1);
-        maskLayer.position = CGPointMake(160, 180);
         [backView changeMagnifyingGlassCenter:CGPointMake(45, 275)];
     }
     else if (directionStyle == bottomToTop)
     {
         maskLayer.startPoint = CGPointMake(0.5, 1);
         maskLayer.endPoint = CGPointMake(0.5, 0);
-        maskLayer.position = CGPointMake(160, 140);
         [backView changeMagnifyingGlassCenter:CGPointMake(275, 45)];
     }
     
@@ -405,21 +400,12 @@
     self.modelSlider.value = 0;
     self.modelSlider.value = 0.5f;
     
-    if (directionStyle == leftToRight || directionStyle == rightToLeft)
-    {
-        maskLayer.position = CGPointMake(directionStyle == leftToRight ? 180.f : 140.f, 160);
-    }
-    else
-    {
-        maskLayer.position = CGPointMake(160, directionStyle == topToBottom ? 180.f : 140.f);
-    }
-    
     [colorArray removeAllObjects];
-    for (int i = 0; i < 24; i++)
+    for (int i = 0; i < 240; i++)
     {
         if (directionStyle == leftToRight || directionStyle == topToBottom)
         {
-            if (i < 11)
+            if (i < 120)
             {
                 [colorArray addObject:(id)[UIColorFromHexAlpha(0xffffff, 1) CGColor]];
             }
@@ -430,7 +416,7 @@
         }
         else if (directionStyle == rightToLeft || directionStyle == bottomToTop)
         {
-            if (i < 11) {
+            if (i < 120) {
                 [colorArray addObject:(id)[UIColorFromHexAlpha(0xffffff, 1) CGColor]];
             }
             else
@@ -441,6 +427,10 @@
         
     }
     
+    if ([FTF_Global shareGlobal].isCrop)
+    {
+        [backView moveBtnClick:0];
+    }
     [self adjustViews:_libaryImage];
 
 }
@@ -533,8 +523,6 @@
     });
 }
 
-#pragma mark -
-#pragma mark 剪切
 - (void)endCropImage
 {
     [FTF_Global shareGlobal].isCrop = YES;
@@ -553,37 +541,30 @@
     [super didReceiveMemoryWarning];
 }
 
+#pragma mark -
+#pragma mark 调整模糊位置和模糊度
 - (void)sliderValueChanged:(UISlider *)slider
 {
 
     switch (slider.tag) {
         case 0:
         {
-            if (directionStyle == leftToRight)
+            if (directionStyle == leftToRight || directionStyle == rightToLeft)
             {
-                maskLayer.position = CGPointMake(180 + 280 * (slider.value - 0.5), 160);
+                maskLayer.position = CGPointMake(160 + 320 * (slider.value - 0.5f), 160);
             }
-            else if (directionStyle == rightToLeft)
+            else if (directionStyle == topToBottom || directionStyle == bottomToTop)
             {
-                maskLayer.position = CGPointMake(140 + 280 * (slider.value - 0.5), 160);
+                maskLayer.position = CGPointMake(160, 160 + 320 * (slider.value - 0.5f));
             }
-            else if (directionStyle == topToBottom)
-            {
-                maskLayer.position = CGPointMake(160, 180 + 280 * (slider.value - 0.5));
-            }
-            else if (directionStyle == bottomToTop)
-            {
-                maskLayer.position = CGPointMake(160, 140 + 280 * (slider.value - 0.5));
-            }
-            
+            last_Position = maskLayer.position;
         }
             break;
         case 1:
         {
-            float endSize = 640 + 2560 * slider.value;
+            float endSize = 640 + 25600 * slider.value;
             maskLayer.frame = CGRectMake(0, 0, endSize, endSize);
-            
-            maskLayer.position = CGPointMake((directionStyle == leftToRight ? 180 : 140) + (directionStyle == leftToRight ? (endSize - 640)/24 : -(endSize - 640)/24) , (directionStyle == topToBottom ? 180 : 140) + (directionStyle == topToBottom ? (endSize - 640)/24 : -(endSize - 640)/24));
+            maskLayer.position = last_Position;
         }
             break;
             
