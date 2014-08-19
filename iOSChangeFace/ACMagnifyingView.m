@@ -68,6 +68,7 @@ static CGFloat const kACMagnifyingViewDefaultShowDelay = 0.5;
 
 #pragma mark - touch events
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    [FTF_Global shareGlobal].isChange = YES;
 	UITouch *touch = [touches anyObject];
 	self.touchTimer = [NSTimer scheduledTimerWithTimeInterval:magnifyingGlassShowDelay
 													   target:self
@@ -208,6 +209,7 @@ static CGFloat const kACMagnifyingViewDefaultShowDelay = 0.5;
 #pragma mark 移动
 - (void)panView:(UIPanGestureRecognizer *)recognizer changePoint:(CGPoint)point
 {
+    [FTF_Global shareGlobal].isChange = YES;
     CGPoint translation;
     if (isTiny)
     {
@@ -227,7 +229,7 @@ static CGFloat const kACMagnifyingViewDefaultShowDelay = 0.5;
 #pragma mark 缩放
 - (void)pinView:(UIPinchGestureRecognizer *)recognizer changeScale:(float)tinyScale
 {
-    
+    [FTF_Global shareGlobal].isChange = YES;
     CGFloat scale;
     if (isTiny)
     {
@@ -255,7 +257,7 @@ static CGFloat const kACMagnifyingViewDefaultShowDelay = 0.5;
 #pragma mark 旋转
 - (void)rotateView:(UIRotationGestureRecognizer *)recognizer changeRotate:(float)tinyScale
 {
-    
+    [FTF_Global shareGlobal].isChange = YES;
     CGFloat rotation;
     
     if (isTiny)

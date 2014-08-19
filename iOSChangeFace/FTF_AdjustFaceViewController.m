@@ -86,7 +86,7 @@
     backView.backgroundColor = colorWithHexString(@"#202225", 1.f);
     [self.view addSubview:backView];
     
-    FTF_DirectionView *toolBarView = [[FTF_DirectionView alloc] initWithFrame:CGRectMake(0, 0, 320, backView.frame.size.height)];
+    FTF_DirectionView *toolBarView = [[FTF_DirectionView alloc] initWithFrame:CGRectMake(0, 0, 320, 104)];
     toolBarView.center = CGPointMake(160, backView.frame.size.height/2);
     [toolBarView loadDirectionItools];
     toolBarView.delegate = self;

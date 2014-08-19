@@ -143,7 +143,8 @@
 #pragma mark 初始化工具栏
 - (void)addDetailItools
 {
-    UIView *toolBarView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height - 144, 320, BtnHeight)];
+
+    UIView *toolBarView = [[UIView alloc] initWithFrame:CGRectMake(0, windowHeight() - (iPhone5()?144:94), 320, BtnHeight)];
     toolBarView.backgroundColor = colorWithHexString(@"#202225", 1.0);
     [self.view addSubview:toolBarView];
     
@@ -167,8 +168,8 @@
         [toolBarView addSubview:btn];
         i++;
     }
-    
-    detailView = [[FTF_DirectionView alloc]initWithFrame:CGRectMake(0, self.view.bounds.size.height - 248, 320, 104)];
+
+    detailView = [[FTF_DirectionView alloc]initWithFrame:CGRectMake(0, windowHeight() - (iPhone5()?248:198), 320, 104)];
     detailView.delegate = self;
     [detailView loadModelStyleItools];
     [self.view addSubview:detailView];
@@ -306,12 +307,12 @@
             break;
         case 1:
         {
-            detailView.frame = CGRectMake(0, self.view.bounds.size.height - 204, 320, 104);
+            detailView.frame = CGRectMake(0, windowHeight() - (iPhone5()?248:198), 320, 104);
             [detailView loadModelStyleItools];
         }
             break;
         case 2:
-            detailView.frame = CGRectMake(0, self.view.bounds.size.height - 204, 320, 104);
+            detailView.frame = CGRectMake(0, windowHeight() - (iPhone5()?248:198), 320, 104);
             [detailView loadDirectionItools];
             break;
         case 3:
@@ -331,16 +332,15 @@
             }
             
             libaryImageView.userInteractionEnabled = NO;
-            detailView.frame = CGRectMake(0, self.view.bounds.size.height - 204, 320, 104);
+            detailView.frame = CGRectMake(0, windowHeight() - (iPhone5()?248:198), 320, 104);
             [detailView loadCropItools];
             
             [backView setMZViewUserInteractionEnabled];
             [backView setMZImageView:YES];
             
-            
             break;
         case 4:
-            detailView.frame = CGRectMake(0, self.view.bounds.size.height - 204, 320, 104);
+            detailView.frame = CGRectMake(0, windowHeight() - (iPhone5()?248:198), 320, 104);
             [detailView loadFilerItools];
             break;
         default:
@@ -517,14 +517,18 @@
     [filterImageArray removeAllObjects];
     
     dispatch_async(myQueue, ^{
-        @autoreleasepool {
+        //@autoreleasepool {
             [_videoCamera setImages:@[[FTF_Global shareGlobal].compressionImage,[FTF_Global shareGlobal].modelImage] WithFilterType:(NCFilterType)tag];
-        }
+        //}
     });
 }
 
 - (void)endCropImage
 {
+    if (iPhone4())
+    {
+        detailView.hidden = NO;
+    }
     [FTF_Global shareGlobal].isCrop = YES;
     [backView endCropImage:NO];
 }
@@ -533,6 +537,10 @@
 #pragma mark 开始划线
 - (void)beginCropImage
 {
+    if (iPhone4())
+    {
+        detailView.hidden = YES;
+    }
     [backView beginCropImage];
 }
 

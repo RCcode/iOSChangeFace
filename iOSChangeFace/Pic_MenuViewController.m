@@ -14,7 +14,7 @@
 #import "FTF_Global.h"
 
 #define FEEDBACK_EMAIL @"rcplatform.help@gmail.com"
-#define FOLLOW_US_URL @"http://instagram.com/mirrorgrid"
+#define FOLLOW_US_URL @"http://instagram.com/face2face_rc"
 
 @interface Pic_MenuViewController ()
 {

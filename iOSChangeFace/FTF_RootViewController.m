@@ -37,9 +37,17 @@
     return self;
 }
 
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addMoreImageView) name:@"addMoreImage" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removeMoreImageView) name:@"removeMoreImage" object:nil];
     
     if (iPhone4())
     {
@@ -65,8 +73,26 @@
         self.menuBtn.frame = menuRect;
     }
     
+    if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"MoreAPP"] isEqualToString:@"1"])
+    {
+        [self addMoreImageView];
+    }
+    
 }
 
+- (void)addMoreImageView
+{
+    UIImageView *redImageView = [[UIImageView alloc]initWithFrame:CGRectMake(40, 0, 12, 12)];
+    redImageView.image = pngImagePath(@"spot");
+    redImageView.tag = 11;
+    [self.moreBtn addSubview:redImageView];
+}
+
+- (void)removeMoreImageView
+{
+    UIView *imageView = [self.moreBtn viewWithTag:11];
+    [imageView removeFromSuperview];
+}
 
 - (void)didReceiveMemoryWarning
 {

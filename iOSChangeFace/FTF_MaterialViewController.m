@@ -108,6 +108,12 @@
     [self.navigationItem setRightBarButtonItems:@[negativeSeperator,librayItem,cameraItem]];
     
     //配置ScrollerView
+    if (iPhone4())
+    {
+        CGRect rect = self.modelScrollerView.frame;
+        rect.size.height -= 38;
+        self.modelScrollerView.frame = rect;
+    }
     self.modelScrollerView.contentSize = CGSizeMake(320 * 5, 0);
     self.modelScrollerView.contentOffset = CGPointMake(0, 0);
     [self.modelScrollerView setShowsHorizontalScrollIndicator:NO];
@@ -115,7 +121,7 @@
     self.modelScrollerView.pagingEnabled = YES;
     self.modelScrollerView.delegate = self;
     
-    amb = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height - 144, 320, 50)];
+    amb = [[UIView alloc] initWithFrame:CGRectMake(0, windowHeight() - (iPhone5()?144:94), 320, 50)];
     amb.backgroundColor = colorWithHexString(@"#202225", 1.f);
     [self.view addSubview:amb];
     
@@ -149,6 +155,12 @@
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeMaterialImage) name:@"changeMaterialImage" object:nil];
     
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationNone];
 }
 
 #pragma mark -
@@ -252,7 +264,7 @@
 #pragma mark UIImagePickerControllerDelegate
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
-    
+
     [FTF_Global shareGlobal].bannerView.hidden = NO;
     [FTF_Global shareGlobal].modelType = OtherModel;
     __block UIImage *headImage = [info objectForKey:UIImagePickerControllerEditedImage];

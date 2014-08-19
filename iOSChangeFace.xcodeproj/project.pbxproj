@@ -236,6 +236,7 @@
 		6F7644F819864C35009FEFE7 /* ACMagnifyingGlass.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F7644F519864C35009FEFE7 /* ACMagnifyingGlass.m */; };
 		6F7644F919864C35009FEFE7 /* ACLoupe.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F7644F719864C35009FEFE7 /* ACLoupe.m */; };
 		6F7644FC19865681009FEFE7 /* ACMagnifyingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F7644FB19865681009FEFE7 /* ACMagnifyingView.m */; };
+		6F83862319A3028400A76DC9 /* spot@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6F83862219A3028400A76DC9 /* spot@2x.png */; };
 		6F8B862A1995CD70000A696E /* animal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6F8B86251995CD70000A696E /* animal@2x.png */; };
 		6F8B862B1995CD70000A696E /* mask@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6F8B86261995CD70000A696E /* mask@2x.png */; };
 		6F8B862C1995CD70000A696E /* other@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6F8B86271995CD70000A696E /* other@2x.png */; };
@@ -775,6 +776,7 @@
 		6F7644F719864C35009FEFE7 /* ACLoupe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACLoupe.m; sourceTree = "<group>"; };
 		6F7644FA19865681009FEFE7 /* ACMagnifyingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACMagnifyingView.h; sourceTree = "<group>"; };
 		6F7644FB19865681009FEFE7 /* ACMagnifyingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACMagnifyingView.m; sourceTree = "<group>"; };
+		6F83862219A3028400A76DC9 /* spot@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "spot@2x.png"; sourceTree = "<group>"; };
 		6F8B86251995CD70000A696E /* animal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "animal@2x.png"; sourceTree = "<group>"; };
 		6F8B86261995CD70000A696E /* mask@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mask@2x.png"; sourceTree = "<group>"; };
 		6F8B86271995CD70000A696E /* other@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "other@2x.png"; sourceTree = "<group>"; };
@@ -2149,6 +2151,7 @@
 		6FB1762319838B5100F194A7 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				6F83862219A3028400A76DC9 /* spot@2x.png */,
 				6F9DF292199CA1D600E8835E /* iosFocus.png */,
 				6FB1763219838E5A00F194A7 /* 01.png */,
 				6F432D141993ADA100D44FA9 /* star@2x.png */,
@@ -2582,6 +2585,7 @@
 				6F252C98199B95A9005C8C63 /* NCFNEW22.png in Resources */,
 				6FAB8A3F199216960040937E /* icon_beautify_normal@2x.png in Resources */,
 				6F5377C51988CA36003A40C3 /* girl01.jpg in Resources */,
+				6F83862319A3028400A76DC9 /* spot@2x.png in Resources */,
 				6F5377C91988CA36003A40C3 /* girl05.jpg in Resources */,
 				6F5377DC1988CA9B003A40C3 /* mask06.jpg in Resources */,
 				6F252CAA199B95A9005C8C63 /* NCF11Map.png in Resources */,
@@ -2921,6 +2925,7 @@
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 				);
 				INFOPLIST_FILE = "iOSChangeFace/iOSChangeFace-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/iOSChangeFace",
@@ -2957,6 +2962,7 @@
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 				);
 				INFOPLIST_FILE = "iOSChangeFace/iOSChangeFace-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/iOSChangeFace",
