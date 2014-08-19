@@ -811,18 +811,11 @@ int imagesIndex ;
 }
 #pragma mark - NCImageFilterDelegate
 - (void)imageFilterdidFinishRender:(NCImageFilter *)imageFilter{
-    
-    
-    
+
     dispatch_async(dispatch_get_main_queue(), ^{
     
     //截图
         UIGraphicsBeginImageContext(rawImage.size);
-        
-//        NSLog(@"rawImage.size - %@", NSStringFromCGSize(rawImage.size));
-//        NSLog(@"gpuImageView_HD.frame - %@", NSStringFromCGRect(self.gpuImageView_HD.frame));
-//        NSLog(@"gpuImageView.frame - %@", NSStringFromCGRect(self.gpuImageView.frame));
-        
         UIView *tempView = [[UIView alloc] initWithFrame:self.gpuImageView_HD.frame];
         [tempView addSubview:self.gpuImageView_HD];
         [self.gpuImageView_HD drawViewHierarchyInRect:(CGRect){CGPointZero, rawImage.size} afterScreenUpdates:YES];
@@ -833,30 +826,18 @@ int imagesIndex ;
         CGFloat pix = 1;
         outputImage = [outputImage subImageWithRect:CGRectMake(0, 0, outputImage.size.width - pix, outputImage.size.height - pix)];
         
-        //
-        if([self.delegate respondsToSelector:@selector(videoCameraDidFinishFilter:Index:)]){
+        NSData *imageData = UIImageJPEGRepresentation(outputImage, 0.8);
+        [imageData writeToFile:[[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:@"NoCrop_Share_Image.jpg"] atomically:YES];
+        
+        if([self.delegate respondsToSelector:@selector(videoCameraDidFinishFilter:Index:)])
+        {
             [self.delegate videoCameraDidFinishFilter:outputImage Index:imagesIndex++];
         }
         
         [_theLock unlock];
         
     });
-    
-    
-    
-    //回调通知
-    //    if(_filterCompletionBlock){
-    //        _filterCompletionBlock(outputImage);
-    //        _filterCompletionBlock = nil;
-    //    }
-    
 
-    //测试
-//    NSData *imageData = UIImagePNGRepresentation(outputImage);
-//    [imageData writeToFile:[[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:@"FilterImage.jpg"] atomically:YES];
-    
-    //    UIImageWriteToSavedPhotosAlbum(outputImage, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
-    
 }
 
 @end

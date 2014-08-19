@@ -330,16 +330,17 @@ static CGFloat const kACMagnifyingViewDefaultShowDelay = 0.5;
     if (croppedImage == nil)
     {
         _imageView.image = _image;
+        [self setMZViewUserInteractionEnabled];
     }
     else
     {
         _cropImage = nil;
         _cropImage = [croppedImage copy];
         _imageView.image = croppedImage;
+        
+        self.magnifyingGlass.hidden = YES;
+        cropView.userInteractionEnabled = NO;
     }
-    
-    self.magnifyingGlass.hidden = YES;
-    cropView.userInteractionEnabled = NO;
 }
 
 - (void)changeMagnifyingGlassCenter:(CGPoint)center

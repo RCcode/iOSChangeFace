@@ -74,6 +74,8 @@
 {
     [super viewDidLoad];
     
+    //showLoadingView();
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(endCropImage) name:@"EndCropImage" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(beginCropImage) name:@"BeginCropImage" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(scaleEditImage) name:@"scaleImage" object:nil];
@@ -357,7 +359,7 @@
     [backView loadCropImageView:libaryImageView];
     
     //模糊图层
-    maskLayer.frame = CGRectMake(0, 0, 640, 640);
+    maskLayer.frame = CGRectMake(0, 0, 5760, 5760);
     maskLayer.position = CGPointMake(160, 160);
     
     if (directionStyle == leftToRight)
@@ -398,7 +400,7 @@
     detailView.direction_Type = (enum DirectionType)tag;
     
     self.modelSlider.value = 0.5f;
-    [detailView setVolumeSlideValue:0.f];
+    [detailView setVolumeSlideValue:0.2f];
     
     [colorArray removeAllObjects];
     for (int i = 0; i < 240; i++)
@@ -506,8 +508,8 @@
 #pragma mark 滤镜
 - (void)filterImage:(NSInteger)tag
 {
-    detailView.filter_Type = (NCFilterType)tag;
     
+    detailView.filter_Type = (NCFilterType)tag;
     dispatch_queue_t myQueue = dispatch_queue_create("my_filter_queue", nil);
     [NSThread sleepForTimeInterval:0.3];
     
@@ -517,9 +519,9 @@
     [filterImageArray removeAllObjects];
     
     dispatch_async(myQueue, ^{
-        //@autoreleasepool {
+        @autoreleasepool {
             [_videoCamera setImages:@[[FTF_Global shareGlobal].compressionImage,[FTF_Global shareGlobal].modelImage] WithFilterType:(NCFilterType)tag];
-        //}
+        }
     });
 }
 
@@ -652,6 +654,7 @@
         backImageView.image = modelImage;
     }
     hideMBProgressHUD();
+    //stopLoadingView();
 }
 
 @end

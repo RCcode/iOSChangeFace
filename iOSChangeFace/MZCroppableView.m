@@ -88,6 +88,11 @@
         self.points = [self.croppingPath points];
     }
     
+    if (self.points.count <= 1)
+    {
+        return nil;
+    }
+    
     CGRect rect = CGRectZero;
     rect.size = imageView.image.size;
     

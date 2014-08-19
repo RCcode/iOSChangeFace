@@ -12,9 +12,8 @@
 #import "MBProgressHUD.h"
 
 @interface CMethods : NSObject
-{
-    
-}
+
+UIWindow * currentWindow();
 
 //window 高度
 CGFloat windowHeight();
@@ -70,5 +69,9 @@ void cancleAllRequests();
 NSString *doDevicePlatform();
 
 CGSize sizeWithContentAndFont(NSString *content,CGSize size,float fontSize);
+
+void showLoadingView();
+
+void stopLoadingView();
 
 @end
