@@ -508,7 +508,6 @@
 #pragma mark 滤镜
 - (void)filterImage:(NSInteger)tag
 {
-    
     detailView.filter_Type = (NCFilterType)tag;
     dispatch_queue_t myQueue = dispatch_queue_create("my_filter_queue", nil);
     [NSThread sleepForTimeInterval:0.3];
@@ -633,6 +632,7 @@
     [self sliderValueChanged:slider];
 }
 
+#pragma mark -
 #pragma mark - NCVideoCameraDelegate
 - (void)videoCameraDidFinishFilter:(UIImage *)image Index:(NSUInteger)index
 {
@@ -654,7 +654,6 @@
         backImageView.image = modelImage;
     }
     hideMBProgressHUD();
-    //stopLoadingView();
 }
 
 @end

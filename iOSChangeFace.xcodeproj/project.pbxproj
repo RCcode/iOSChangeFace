@@ -18,7 +18,6 @@
 		6F252B4C199B4C62005C8C63 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 6F252B47199B4C62005C8C63 /* Icon.png */; };
 		6F252B4D199B4C62005C8C63 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6F252B48199B4C62005C8C63 /* Icon@2x.png */; };
 		6F252B4F199B6D1B005C8C63 /* jiantou.png in Resources */ = {isa = PBXBuildFile; fileRef = 6F252B4E199B6D1B005C8C63 /* jiantou.png */; };
-		6F252B59199B8BF2005C8C63 /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F252B58199B8BF2005C8C63 /* opencv2.framework */; };
 		6F252B5B199B8D33005C8C63 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F252B5A199B8D33005C8C63 /* Accelerate.framework */; };
 		6F252B5D199B8D42005C8C63 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F252B5C199B8D42005C8C63 /* AVFoundation.framework */; };
 		6F252B5F199B8D4D005C8C63 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F252B5E199B8D4D005C8C63 /* AssetsLibrary.framework */; };
@@ -243,6 +242,7 @@
 		6F8B862C1995CD70000A696E /* other@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6F8B86271995CD70000A696E /* other@2x.png */; };
 		6F8B862D1995CD70000A696E /* skull@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6F8B86281995CD70000A696E /* skull@2x.png */; };
 		6F8B862E1995CD70000A696E /* women@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6F8B86291995CD70000A696E /* women@2x.png */; };
+		6F90CEB919A446D300C8E50E /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F90CEB819A446D300C8E50E /* opencv2.framework */; };
 		6F96685C1998B2A100702AF6 /* PSPDFUIKitMainThreadGuard.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F96685B1998B2A100702AF6 /* PSPDFUIKitMainThreadGuard.m */; };
 		6F9DF255199C56D900E8835E /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F252B64199B8E53005C8C63 /* MapKit.framework */; };
 		6F9DF257199C573800E8835E /* libz.1.2.5.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F9DF256199C573800E8835E /* libz.1.2.5.dylib */; };
@@ -444,7 +444,6 @@
 		6F252B47199B4C62005C8C63 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		6F252B48199B4C62005C8C63 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		6F252B4E199B6D1B005C8C63 /* jiantou.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = jiantou.png; sourceTree = "<group>"; };
-		6F252B58199B8BF2005C8C63 /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = opencv2.framework; sourceTree = "<group>"; };
 		6F252B5A199B8D33005C8C63 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		6F252B5C199B8D42005C8C63 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		6F252B5E199B8D4D005C8C63 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
@@ -785,6 +784,7 @@
 		6F8B86271995CD70000A696E /* other@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "other@2x.png"; sourceTree = "<group>"; };
 		6F8B86281995CD70000A696E /* skull@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "skull@2x.png"; sourceTree = "<group>"; };
 		6F8B86291995CD70000A696E /* women@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "women@2x.png"; sourceTree = "<group>"; };
+		6F90CEB819A446D300C8E50E /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = opencv2.framework; sourceTree = "<group>"; };
 		6F96685B1998B2A100702AF6 /* PSPDFUIKitMainThreadGuard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSPDFUIKitMainThreadGuard.m; sourceTree = "<group>"; };
 		6F9DF256199C573800E8835E /* libz.1.2.5.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.2.5.dylib; path = usr/lib/libz.1.2.5.dylib; sourceTree = SDKROOT; };
 		6F9DF25C199C5ADA00E8835E /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -1036,6 +1036,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6F90CEB919A446D300C8E50E /* opencv2.framework in Frameworks */,
 				6F252B67199B8E68005C8C63 /* AdSupport.framework in Frameworks */,
 				6F53781E19890733003A40C3 /* MobileCoreServices.framework in Frameworks */,
 				6F9DF25F199C5EE200E8835E /* CoreLocation.framework in Frameworks */,
@@ -1060,7 +1061,6 @@
 				6F252B69199B8E92005C8C63 /* AudioToolbox.framework in Frameworks */,
 				6F252B5F199B8D4D005C8C63 /* AssetsLibrary.framework in Frameworks */,
 				6F252B5D199B8D42005C8C63 /* AVFoundation.framework in Frameworks */,
-				6F252B59199B8BF2005C8C63 /* opencv2.framework in Frameworks */,
 				6F432CDB1993A97A00D44FA9 /* libsqlite3.0.dylib in Frameworks */,
 				6F53781A19890716003A40C3 /* MediaPlayer.framework in Frameworks */,
 				6F53781819890706003A40C3 /* SystemConfiguration.framework in Frameworks */,
@@ -2028,6 +2028,7 @@
 		6FB175EB19838AF400F194A7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				6F90CEB819A446D300C8E50E /* opencv2.framework */,
 				6F9DF25E199C5EE200E8835E /* CoreLocation.framework */,
 				6F9DF25C199C5ADA00E8835E /* OpenGLES.framework */,
 				6F9DF256199C573800E8835E /* libz.1.2.5.dylib */,
@@ -2051,7 +2052,6 @@
 				6F252B5E199B8D4D005C8C63 /* AssetsLibrary.framework */,
 				6F252B5C199B8D42005C8C63 /* AVFoundation.framework */,
 				6F252B5A199B8D33005C8C63 /* Accelerate.framework */,
-				6F252B58199B8BF2005C8C63 /* opencv2.framework */,
 				6F432CDA1993A97A00D44FA9 /* libsqlite3.0.dylib */,
 				6F53781F1989074E003A40C3 /* Security.framework */,
 				6F53781D19890733003A40C3 /* MobileCoreServices.framework */,

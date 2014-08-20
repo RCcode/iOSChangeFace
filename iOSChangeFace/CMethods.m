@@ -315,12 +315,13 @@ void showLoadingView()
         doubleBounce = [[ZFCDoubleBounceActivityIndicatorView alloc] init];
         doubleBounce.center = CGPointMake(160, windowHeight()/2);
         [currentWindow() addSubview:doubleBounce];
+        
+        NSTimer *stopTimer = [NSTimer scheduledTimerWithTimeInterval:2 target:doubleBounce selector:@selector(stopAnimating) userInfo:nil repeats:YES];
+        [[NSRunLoop currentRunLoop] addTimer:stopTimer forMode:NSRunLoopCommonModes];
+        NSTimer *starTimer = [NSTimer scheduledTimerWithTimeInterval:2 target:doubleBounce selector:@selector(startAnimating) userInfo:nil repeats:YES];
+        [[NSRunLoop currentRunLoop] addTimer:starTimer forMode:NSRunLoopCommonModes];
     }
     [doubleBounce startAnimating];
-    NSTimer *stopTimer = [NSTimer scheduledTimerWithTimeInterval:7 target:doubleBounce selector:@selector(stopAnimating) userInfo:nil repeats:NO];
-    [[NSRunLoop currentRunLoop] addTimer:stopTimer forMode:NSRunLoopCommonModes];
-    NSTimer *starTimer = [NSTimer scheduledTimerWithTimeInterval:9 target:doubleBounce selector:@selector(startAnimating) userInfo:nil repeats:NO];
-    [[NSRunLoop currentRunLoop] addTimer:starTimer forMode:NSRunLoopCommonModes];
 }
 
 void stopLoadingView()
