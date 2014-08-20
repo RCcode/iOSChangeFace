@@ -10,6 +10,10 @@
 #warning "This project uses features only available in iOS SDK 3.0 and later."
 #endif
 
+#ifdef __cplusplus
+#include <opencv2/opencv.hpp>
+#endif
+
 #define HTTP_BASEURL @"http://moreapp.rcplatformhk.net/pbweb/app/"
 #define kPushURL @"http://iospush.rcplatformhk.net/IOSPushWeb/userinfo/regiUserInfo.do"
 #define kAppStoreURL [NSString stringWithFormat:@"%@%@", @"itms-apps://itunes.apple.com/app/id",appleID]
@@ -17,10 +21,6 @@
 #ifdef __OBJC__
     #import <UIKit/UIKit.h>
     #import <Foundation/Foundation.h>
-#endif
-
-#ifdef __cplusplus
-#include <opencv2/opencv.hpp>
 #endif
 
 #define appleID @"904923023"
