@@ -158,6 +158,7 @@
 		6F335EB21999EFCD00ECB951 /* xuxian.png in Resources */ = {isa = PBXBuildFile; fileRef = 6F335EAF1999EFCD00ECB951 /* xuxian.png */; };
 		6F335EB31999EFCD00ECB951 /* dot.png in Resources */ = {isa = PBXBuildFile; fileRef = 6F335EB01999EFCD00ECB951 /* dot.png */; };
 		6F335EB41999EFCD00ECB951 /* hand.png in Resources */ = {isa = PBXBuildFile; fileRef = 6F335EB11999EFCD00ECB951 /* hand.png */; };
+		6F3F0E9719A4515A00A0C935 /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F3F0E9619A4515A00A0C935 /* opencv2.framework */; };
 		6F432C8919938DCF00D44FA9 /* UIImage+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F432C8619938DCF00D44FA9 /* UIImage+Helper.m */; };
 		6F432C8A19938DCF00D44FA9 /* UIImage+SubImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F432C8819938DCF00D44FA9 /* UIImage+SubImage.m */; };
 		6F432C8D19939ECA00D44FA9 /* UIDevice+DeviceInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F432C8C19939ECA00D44FA9 /* UIDevice+DeviceInfo.m */; };
@@ -674,6 +675,7 @@
 		6F335EB01999EFCD00ECB951 /* dot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dot.png; sourceTree = "<group>"; };
 		6F335EB11999EFCD00ECB951 /* hand.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hand.png; sourceTree = "<group>"; };
 		6F38022D198748FB00193528 /* FTF_Delegates.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FTF_Delegates.h; sourceTree = "<group>"; };
+		6F3F0E9619A4515A00A0C935 /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = opencv2.framework; path = iOSChangeFace/opencv2.framework; sourceTree = "<group>"; };
 		6F432C8519938DCF00D44FA9 /* UIImage+Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Helper.h"; sourceTree = "<group>"; };
 		6F432C8619938DCF00D44FA9 /* UIImage+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Helper.m"; sourceTree = "<group>"; };
 		6F432C8719938DCF00D44FA9 /* UIImage+SubImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+SubImage.h"; sourceTree = "<group>"; };
@@ -1034,6 +1036,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6F3F0E9719A4515A00A0C935 /* opencv2.framework in Frameworks */,
 				6F252B67199B8E68005C8C63 /* AdSupport.framework in Frameworks */,
 				6F53781E19890733003A40C3 /* MobileCoreServices.framework in Frameworks */,
 				6F9DF25F199C5EE200E8835E /* CoreLocation.framework in Frameworks */,
@@ -2025,6 +2028,7 @@
 		6FB175EB19838AF400F194A7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				6F3F0E9619A4515A00A0C935 /* opencv2.framework */,
 				6F9DF25E199C5EE200E8835E /* CoreLocation.framework */,
 				6F9DF25C199C5ADA00E8835E /* OpenGLES.framework */,
 				6F9DF256199C573800E8835E /* libz.1.2.5.dylib */,
@@ -2926,6 +2930,7 @@
 					"$(PROJECT_DIR)",
 					/Users/rcplatform/Desktop/opencv,
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(PROJECT_DIR)/iOSChangeFace",
 				);
 				GCC_INPUT_FILETYPE = sourcecode.cpp.objcpp;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -2962,6 +2967,7 @@
 					"$(PROJECT_DIR)",
 					/Users/rcplatform/Desktop/opencv,
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(PROJECT_DIR)/iOSChangeFace",
 				);
 				GCC_INPUT_FILETYPE = sourcecode.cpp.objcpp;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
