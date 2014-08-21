@@ -93,7 +93,14 @@
         [userDefault synchronize];
     }
     
+    NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(memoryInfo) userInfo:nil repeats:YES];
+    [timer fire];
+    
     return YES;
+}
+
+- (void)memoryInfo{
+    logMemoryInfo();
 }
 
 #pragma mark -

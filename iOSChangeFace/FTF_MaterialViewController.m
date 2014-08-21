@@ -40,6 +40,9 @@
 {
     [super viewDidLoad];
     
+    _videoCamera = [NCVideoCamera videoCamera];
+    _videoCamera.delegate = self;
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeMaterialImage) name:@"changeMaterialImage" object:nil];
 
     if ([[NSUserDefaults standardUserDefaults] objectForKey:@"guideIsFirst"] == nil)
@@ -298,7 +301,7 @@
     [FTF_Global shareGlobal].modelImage = [UIImage zoomImageWithImage:headImage];
     
     [picker dismissViewControllerAnimated:YES completion:^{
-        [self.delegate changeModelImage];
+        [self.delegate changeModelImage:[FTF_Global shareGlobal].modelImage];
         [self.navigationController popViewControllerAnimated:NO];
     }];
     
@@ -342,8 +345,25 @@
 
 - (void)changeMaterialImage
 {
-    [self.delegate changeModelImage];
-    [self.navigationController popViewControllerAnimated:YES];
+    if ([FTF_Global shareGlobal].filterType == NC_NORMAL_FILTER)
+    {
+        [self.delegate changeModelImage:[FTF_Global shareGlobal].modelImage];
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+    else
+    {
+        dispatch_queue_t myQueue = dispatch_queue_create("my_filter_queue", nil);
+        [NSThread sleepForTimeInterval:0.3];
+        
+        MBProgressHUD *mb = showMBProgressHUD(nil, YES);
+        mb.userInteractionEnabled = YES;
+        
+        dispatch_async(myQueue, ^{
+            @autoreleasepool {
+                [_videoCamera setImages:@[[FTF_Global shareGlobal].modelImage] WithFilterType:[FTF_Global shareGlobal].filterType];
+            }
+        });
+    }
 }
 
 #pragma mark -
@@ -373,6 +393,16 @@
     FTF_MaterialView *materialView = (FTF_MaterialView *)[self.modelScrollerView viewWithTag:10 + page];
     [materialView loadMaterialModels:page];
     
+}
+
+#pragma mark -
+#pragma mark - NCVideoCameraDelegate
+- (void)videoCameraDidFinishFilter:(UIImage *)image Index:(NSUInteger)index
+{
+    [self.delegate changeModelImage:image];
+    [self.navigationController popViewControllerAnimated:YES];
+    
+    hideMBProgressHUD();
 }
 
 @end

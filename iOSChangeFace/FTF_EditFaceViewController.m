@@ -33,7 +33,6 @@
     UIImageView *libaryImageView;
     UIView *acBackView;//放大镜背景图
     ACMagnifyingView *backView;//放大镜操作图
-    UIImageView *backImageView;
     NSArray *dataArray;
     FTF_DirectionView *detailView;//辅工具栏
     UIImageView *fuzzyImage;//模糊图片
@@ -43,6 +42,7 @@
     NSArray *modelArray;
     NSMutableArray *filterImageArray;
     CGPoint last_Position;
+
 }
 @property (nonatomic ,strong) UISlider *modelSlider;
 @property (nonatomic ,strong) UISlider *cropSlider;
@@ -61,6 +61,7 @@
         modelArray = @[@"switch_left",@"switch_right",@"switch_up",@"switch_down"];
         filterImageArray = [NSMutableArray arrayWithCapacity:0];
         last_Position = CGPointMake(160, 160);
+        
     }
     return self;
 }
@@ -73,8 +74,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    //showLoadingView();
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(endCropImage) name:@"EndCropImage" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(beginCropImage) name:@"BeginCropImage" object:nil];
@@ -288,6 +287,7 @@
 #pragma mark 工具栏点击事件
 - (void)toolBtnClick:(FTF_Button *)btn
 {
+    //进入素材页保留工具栏选中状态
     if (btn.tag != 0)
     {
         for (UIView *subView in [btn.superview subviews])
@@ -300,7 +300,7 @@
         }
         [btn changeBtnImage];
     }
-    
+    backView.isCrop = NO;
     libaryImageView.userInteractionEnabled = YES;
     [backView setMZViewNotUserInteractionEnabled];
     switch (btn.tag) {
@@ -323,7 +323,7 @@
             [detailView loadDirectionItools];
             break;
         case 3:
-
+            backView.isCrop = YES;
             if ([[NSUserDefaults standardUserDefaults] objectForKey:@"isFirst"] == nil)
             {
                 
@@ -404,9 +404,6 @@
     directionStyle = (enum DirectionType)tag;
     detailView.direction_Type = (enum DirectionType)tag;
     
-    [self.modelSlider setValue:0.5f];
-    [detailView setVolumeSlideValue:0.2f];
-    
     [colorArray removeAllObjects];
     for (int i = 0; i < 240; i++)
     {
@@ -438,8 +435,18 @@
     {
         [backView moveBtnClick:0];
     }
+    
     [self adjustViews:_libaryImage];
 
+    if (self.modelSlider != nil)
+    {
+        [self sliderValueChanged:self.modelSlider];
+    }
+    
+    if (self.cropSlider != nil)
+    {
+        [self sliderValueChanged:self.cropSlider];
+    }
 }
 
 #pragma mark -
@@ -491,11 +498,8 @@
     size = CGSizeApplyAffineTransform(size, CGAffineTransformMakeScale(scale, scale));
 
     UIGraphicsBeginImageContext(size);
-    
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    CGContextScaleCTM(context, scale, scale);
-    
-    [bottomView.layer renderInContext:context];
+
+    [bottomView drawViewHierarchyInRect:(CGRect){CGPointZero, size} afterScreenUpdates:YES];
 
     UIImage *viewImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
@@ -516,7 +520,7 @@
     
     [FTF_Global shareGlobal].isFiltering = YES;
 
-    detailView.filter_Type = (NCFilterType)tag;
+    [FTF_Global shareGlobal].filterType = (NCFilterType)tag;
     dispatch_queue_t myQueue = dispatch_queue_create("my_filter_queue", nil);
     [NSThread sleepForTimeInterval:0.3];
     
@@ -593,10 +597,12 @@
 
 #pragma mark -
 #pragma mark ChangeModelDelegate
-- (void)changeModelImage
+- (void)changeModelImage:(UIImage *)image
 {
-    backImageView.image = [FTF_Global shareGlobal].modelImage;
+    
+    backImageView.image = image;
     backImageView.center = CGPointMake(160, 160);
+
 }
 
 #pragma mark -

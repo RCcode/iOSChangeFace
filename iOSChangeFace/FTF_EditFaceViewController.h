@@ -14,6 +14,7 @@
 {
     UIImage *_libaryImage;
     CGRect _imageRect;
+    UIImageView *backImageView;
 }
 @property (strong, nonatomic) UIImage *libaryImage;
 @property (assign, nonatomic) CGRect imageRect;

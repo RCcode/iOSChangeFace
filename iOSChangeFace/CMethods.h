@@ -70,4 +70,6 @@ NSString *doDevicePlatform();
 
 CGSize sizeWithContentAndFont(NSString *content,CGSize size,float fontSize);
 
+void logMemoryInfo();
+
 @end

@@ -25,6 +25,7 @@
 @property (nonatomic, strong) UIImageView *imageView;
 @property (nonatomic, strong) UIImage *image;
 @property (nonatomic, strong) UIImage *cropImage;
+@property (nonatomic, assign) BOOL isCrop;
 
 - (void)loadCropImageView:(UIImageView *)imgView;
 

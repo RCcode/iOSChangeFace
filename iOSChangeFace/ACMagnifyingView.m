@@ -54,9 +54,9 @@ static CGFloat const kACMagnifyingViewDefaultShowDelay = 0.5;
     }
     [self addGestureRecognizerToView:self.imageView];
     _image = nil;
-    self.image = [imgView.image copy];
+    self.image = imgView.image;
     _cropImage = nil;
-    _cropImage = [imgView.image copy];
+    _cropImage = imgView.image;
     [self addSubview:self.imageView];
 
     //抠图操作视图
@@ -92,13 +92,11 @@ static CGFloat const kACMagnifyingViewDefaultShowDelay = 0.5;
 
 - (void)setMZViewUserInteractionEnabled
 {
-    self.magnifyingGlass.hidden = NO;
     cropView.userInteractionEnabled = YES;
 }
 
 - (void)setMZViewNotUserInteractionEnabled
 {
-    self.magnifyingGlass.hidden = YES;
     cropView.userInteractionEnabled = NO;
     _imageView.image = _cropImage;
 }
@@ -113,7 +111,7 @@ static CGFloat const kACMagnifyingViewDefaultShowDelay = 0.5;
     {
         _imageView.image = _image;
         _cropImage = nil;
-        _cropImage = [_image copy];
+        _cropImage = _image;
     }
 }
 
@@ -153,7 +151,7 @@ static CGFloat const kACMagnifyingViewDefaultShowDelay = 0.5;
         [self.imageView setFrame:imageViewRect];
         self.imageView.image = _image;
         _cropImage = nil;
-        _cropImage = [_image copy];
+        _cropImage = _image;
         [cropView setFrame:imageViewRect];
         [FTF_Global shareGlobal].isCrop = NO;
     }
@@ -318,11 +316,13 @@ static CGFloat const kACMagnifyingViewDefaultShowDelay = 0.5;
 
 - (void)beginCropImage
 {
+    _isCrop == YES ? self.magnifyingGlass.hidden = NO : self.magnifyingGlass.hidden = YES;
     _imageView.image = self.image;
 }
 
 - (void)endCropImage:(BOOL)isLast
 {
+    self.magnifyingGlass.hidden = YES;
     UIImage *croppedImage = nil;
     if ([FTF_Global shareGlobal].isCrop)
     {
@@ -332,15 +332,16 @@ static CGFloat const kACMagnifyingViewDefaultShowDelay = 0.5;
     if (croppedImage == nil)
     {
         _imageView.image = _image;
+        _cropImage = nil;
+        _cropImage = _image;
         [self setMZViewUserInteractionEnabled];
     }
     else
     {
         _cropImage = nil;
-        _cropImage = [croppedImage copy];
+        _cropImage = croppedImage;
         _imageView.image = croppedImage;
         
-        self.magnifyingGlass.hidden = YES;
         cropView.userInteractionEnabled = NO;
     }
 }

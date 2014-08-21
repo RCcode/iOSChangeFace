@@ -352,285 +352,281 @@
 
     currentFilterType = type;
 
-//    dispatch_async(dispatch_get_main_queue(), ^{
-        switch (type) {
-
-            case NC_NORMAL_FILTER: {
-                self.internalFilter = [[NCNormalFilter alloc] init];
-                break;
-            }
-                
-            case NC_F18_FILTER: {
-                self.internalFilter = [[NCF1Filter alloc] init];
-                self.internalSourcePicture1 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCFNEW21"]];
-                self.internalSourcePicture2 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCOverlayMap"]];
-                self.internalSourcePicture3 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCF1Map"]];
-                
-                
-                break;
-            }
-            case NC_F19_FILTER: {
-                self.internalFilter = [[NCF1Filter alloc] init];
-                self.internalSourcePicture1 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCFNEW22"]];
-                self.internalSourcePicture2 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCOverlayMap"]];
-                self.internalSourcePicture3 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCF1Map"]];
-                
-                
-                break;
-            }
-            case NC_F20_FILTER: {
-                self.internalFilter = [[NCF1Filter alloc] init];
-                self.internalSourcePicture1 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCFNEW23"]];
-                self.internalSourcePicture2 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCOverlayMap"]];
-                self.internalSourcePicture3 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCF1Map"]];
-                
-                
-                break;
-            }
-            case NC_F21_FILTER: {
-                self.internalFilter = [[NCF1Filter alloc] init];
-                self.internalSourcePicture1 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCFNEW24"]];
-                self.internalSourcePicture2 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCOverlayMap"]];
-                self.internalSourcePicture3 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCF1Map"]];
-                
-                
-                break;
-            }
-            case NC_F22_FILTER: {
-                self.internalFilter = [[NCF1Filter alloc] init];
-                self.internalSourcePicture1 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCFNEW25"]];
-                self.internalSourcePicture2 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCOverlayMap"]];
-                self.internalSourcePicture3 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCF1Map"]];
-                
-                
-                break;
-            }
-            case NC_F23_FILTER: {
-                self.internalFilter = [[NCF1Filter alloc] init];
-                self.internalSourcePicture1 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCFNEW26"]];
-                self.internalSourcePicture2 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCOverlayMap"]];
-                self.internalSourcePicture3 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCF1Map"]];
-                
-                
-                break;
-            }
-            case NC_F24_FILTER: {
-                self.internalFilter = [[NCF1Filter alloc] init];
-                self.internalSourcePicture1 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCFNEW27"]];
-                self.internalSourcePicture2 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCOverlayMap"]];
-                self.internalSourcePicture3 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCF1Map"]];
-                
-                
-                break;
-            }
-            case NC_F25_FILTER: {
-                self.internalFilter = [[NCF1Filter alloc] init];
-                self.internalSourcePicture1 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCFNEW28"]];
-                self.internalSourcePicture2 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCOverlayMap"]];
-                self.internalSourcePicture3 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCF1Map"]];
-                
-                
-                break;
-            }
-            case NC_F26_FILTER: {
-                self.internalFilter = [[NCF1Filter alloc] init];
-                self.internalSourcePicture1 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCFNEW29"]];
-                self.internalSourcePicture2 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCOverlayMap"]];
-                self.internalSourcePicture3 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCF1Map"]];
-                
-                
-                break;
-            }
-            case NC_F27_FILTER: {
-                self.internalFilter = [[NCF1Filter alloc] init];
-                self.internalSourcePicture1 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCFNEW30"]];
-                self.internalSourcePicture2 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCOverlayMap"]];
-                self.internalSourcePicture3 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCF1Map"]];
-                
-                
-                break;
-            }
-                
-            case NC_F28_FILTER: {
-                self.internalFilter = [[NCF1Filter alloc] init];
-                self.internalSourcePicture1 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCFNEW31"]];
-                self.internalSourcePicture2 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCOverlayMap"]];
-                self.internalSourcePicture3 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCF1Map"]];
-                
-                
-                break;
-            }
-            case NC_F29_FILTER: {
-                self.internalFilter = [[NCF1Filter alloc] init];
-                self.internalSourcePicture1 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCFNEW32"]];
-                self.internalSourcePicture2 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCOverlayMap"]];
-                self.internalSourcePicture3 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCF1Map"]];
-                
-                
-                break;
-            }
-
-                
-            case NC_F1_FILTER: {
-                self.internalFilter = [[NCF1Filter alloc] init];
-                self.internalSourcePicture1 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCBlackboard1024"]];
-                self.internalSourcePicture2 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCOverlayMap"]];
-                self.internalSourcePicture3 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCF1Map"]];
-                
-                break;
-            }
-                
-            case NC_F2_FILTER: {
-                self.internalFilter = [[NCF2Filter alloc] init];
-                self.internalSourcePicture1 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCBlackboard1024"]];
-                self.internalSourcePicture2 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCOverlayMap"]];
-                self.internalSourcePicture3 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCF2Map"]];
-                
-                break;
-            }
-                
-            case NC_F3_FILTER: {
-                self.internalFilter = [[NCF3Filter alloc] init];
-                self.internalSourcePicture1 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCF3Background" ]];
-                self.internalSourcePicture2 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCOverlayMap" ]];
-                self.internalSourcePicture3 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCF3Map" ]];
-                
-                break;
-            }
-                
-            case NC_F4_FILTER: {
-                self.internalFilter = [[NCF4Filter alloc] init];
-                self.internalSourcePicture1 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCF4Map" ]];
-                self.internalSourcePicture2 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCVignetteMap" ]];
-                
-                break;
-            }
-                
-            case NC_F5_FILTER: {
-                self.internalFilter = [[NCF5Filter alloc] init];
-                self.internalSourcePicture1 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCF5Vignette" ]];
-                self.internalSourcePicture2 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCOverlayMap" ]];
-                self.internalSourcePicture3 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCF5Map" ]];
-                
-                break;
-            }
-                
-            case NC_F6_FILTER: {
-                self.internalFilter = [[NCF6Filter alloc] init];
-                self.internalSourcePicture1 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCF6Map"]];
-                self.internalSourcePicture2 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCVignetteMap"]];
-                
-                break;
-            }
-                
-            case NC_F7_FILTER: {
-                self.internalFilter = [[NCF7Filter alloc] init];
-                self.internalSourcePicture1 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCF7Curves" ]];
-                self.internalSourcePicture2 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCF7OverlayMap" ]];
-                self.internalSourcePicture3 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCVignetteMap" ]];
-                self.internalSourcePicture4 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCF7Blowout" ]];
-                self.internalSourcePicture5 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCF7Map" ]];
-                
-                break;
-            }
-                
-            case NC_F8_FILTER: {
-                self.internalFilter = [[NCF8Filter alloc] init];
-                self.internalSourcePicture1 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCVignetteMap" ]];
-                self.internalSourcePicture2 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCF8Metal" ]];
-                self.internalSourcePicture3 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCSoftLight" ]];
-                self.internalSourcePicture4 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCF8EdgeBurn" ]];
-                self.internalSourcePicture5 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCF8Curves" ]];
-                
-                break;
-            }
-                
-            case NC_F9_FILTER: {
-                self.internalFilter = [[NCF9Filter alloc] init];
-                self.internalSourcePicture1 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCF9Metal" ]];
-                self.internalSourcePicture2 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCF9SoftLight" ]];
-                self.internalSourcePicture3 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCF9Curves" ]];
-                self.internalSourcePicture4 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCF9OverlayMapWarm" ]];
-                self.internalSourcePicture5 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCF9ColorShift" ]];
-                
-                break;
-            }
-                
-            case NC_F10_FILTER: {
-                self.internalFilter = [[NCF10Filter alloc] init];
-                self.internalSourcePicture1 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCF10Process" ]];
-                self.internalSourcePicture2 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCF10Blowout" ]];
-                self.internalSourcePicture3 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCF10Contrast" ]];
-                self.internalSourcePicture4 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCF10Luma" ]];
-                self.internalSourcePicture5 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCF10Screen" ]];
-                
-                break;
-            }
-                
-            case NC_F11_FILTER: {
-                self.internalFilter = [[NCF11Filter alloc] init];
-                self.internalSourcePicture1 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCF11Map" ]];
-                
-                break;
-            }
-                
-            case NC_F12_FILTER: {
-                self.internalFilter = [[NCF12Filter alloc] init];
-                self.internalSourcePicture1 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCF12Map" ]];
-                self.internalSourcePicture2 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCVignetteMap" ]];
-                
-                break;
-            }
-                
-            case NC_F13_FILTER: {
-                self.internalFilter = [[NCF13Filter alloc] init];
-                self.internalSourcePicture1 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCEdgeBurn" ]];
-                self.internalSourcePicture2 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCF13Map" ]];
-                self.internalSourcePicture3 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCF13GradientMap" ]];
-                self.internalSourcePicture4 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCF13SoftLight" ]];
-                self.internalSourcePicture5 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCF13Metal" ]];
-                
-                break;
-            }
-                
-            case NC_F14_FILTER: {
-                self.internalFilter = [[NCF14Filter alloc] init];
-                self.internalSourcePicture1 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCF14Map" ]];
-                self.internalSourcePicture2 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCF14GradientMap" ]];
-                
-                break;
-            }
-                
-            case NC_F15_FILTER: {
-                self.internalFilter = [[NCF15Filter alloc] init];
-                self.internalSourcePicture1 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCF15Map" ]];
-                
-                break;
-            }
-                
-            case NC_F16_FILTER: {
-                self.internalFilter = [[NCF16Filter alloc] init];
-                self.internalSourcePicture1 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCF16map" ]];
-                self.internalSourcePicture2 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCF16blowout" ]];
-                
-                break;
-            }
-                
-            case NC_F17_FILTER: {
-                self.internalFilter = [[NCF17Filter alloc] init];
-                self.internalSourcePicture1 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCKelvinMap" ]];
-                
-                break;
-            }
-                
-            default:
-                break;
+    switch (type) {
+            
+        case NC_NORMAL_FILTER: {
+            self.internalFilter = [[NCNormalFilter alloc] init];
+            break;
         }
-        
-//        [self performSelectorOnMainThread:@selector(switchToNewFilter) withObject:nil waitUntilDone:NO];
+            
+        case NC_F18_FILTER: {
+            self.internalFilter = [[NCF1Filter alloc] init];
+            self.internalSourcePicture1 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCFNEW21"]];
+            self.internalSourcePicture2 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCOverlayMap"]];
+            self.internalSourcePicture3 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCF1Map"]];
+            
+            
+            break;
+        }
+        case NC_F19_FILTER: {
+            self.internalFilter = [[NCF1Filter alloc] init];
+            self.internalSourcePicture1 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCFNEW22"]];
+            self.internalSourcePicture2 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCOverlayMap"]];
+            self.internalSourcePicture3 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCF1Map"]];
+            
+            
+            break;
+        }
+        case NC_F20_FILTER: {
+            self.internalFilter = [[NCF1Filter alloc] init];
+            self.internalSourcePicture1 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCFNEW23"]];
+            self.internalSourcePicture2 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCOverlayMap"]];
+            self.internalSourcePicture3 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCF1Map"]];
+            
+            
+            break;
+        }
+        case NC_F21_FILTER: {
+            self.internalFilter = [[NCF1Filter alloc] init];
+            self.internalSourcePicture1 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCFNEW24"]];
+            self.internalSourcePicture2 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCOverlayMap"]];
+            self.internalSourcePicture3 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCF1Map"]];
+            
+            
+            break;
+        }
+        case NC_F22_FILTER: {
+            self.internalFilter = [[NCF1Filter alloc] init];
+            self.internalSourcePicture1 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCFNEW25"]];
+            self.internalSourcePicture2 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCOverlayMap"]];
+            self.internalSourcePicture3 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCF1Map"]];
+            
+            
+            break;
+        }
+        case NC_F23_FILTER: {
+            self.internalFilter = [[NCF1Filter alloc] init];
+            self.internalSourcePicture1 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCFNEW26"]];
+            self.internalSourcePicture2 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCOverlayMap"]];
+            self.internalSourcePicture3 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCF1Map"]];
+            
+            
+            break;
+        }
+        case NC_F24_FILTER: {
+            self.internalFilter = [[NCF1Filter alloc] init];
+            self.internalSourcePicture1 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCFNEW27"]];
+            self.internalSourcePicture2 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCOverlayMap"]];
+            self.internalSourcePicture3 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCF1Map"]];
+            
+            
+            break;
+        }
+        case NC_F25_FILTER: {
+            self.internalFilter = [[NCF1Filter alloc] init];
+            self.internalSourcePicture1 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCFNEW28"]];
+            self.internalSourcePicture2 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCOverlayMap"]];
+            self.internalSourcePicture3 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCF1Map"]];
+            
+            
+            break;
+        }
+        case NC_F26_FILTER: {
+            self.internalFilter = [[NCF1Filter alloc] init];
+            self.internalSourcePicture1 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCFNEW29"]];
+            self.internalSourcePicture2 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCOverlayMap"]];
+            self.internalSourcePicture3 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCF1Map"]];
+            
+            
+            break;
+        }
+        case NC_F27_FILTER: {
+            self.internalFilter = [[NCF1Filter alloc] init];
+            self.internalSourcePicture1 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCFNEW30"]];
+            self.internalSourcePicture2 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCOverlayMap"]];
+            self.internalSourcePicture3 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCF1Map"]];
+            
+            
+            break;
+        }
+            
+        case NC_F28_FILTER: {
+            self.internalFilter = [[NCF1Filter alloc] init];
+            self.internalSourcePicture1 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCFNEW31"]];
+            self.internalSourcePicture2 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCOverlayMap"]];
+            self.internalSourcePicture3 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCF1Map"]];
+            
+            
+            break;
+        }
+        case NC_F29_FILTER: {
+            self.internalFilter = [[NCF1Filter alloc] init];
+            self.internalSourcePicture1 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCFNEW32"]];
+            self.internalSourcePicture2 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCOverlayMap"]];
+            self.internalSourcePicture3 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCF1Map"]];
+            
+            
+            break;
+        }
+            
+            
+        case NC_F1_FILTER: {
+            self.internalFilter = [[NCF1Filter alloc] init];
+            self.internalSourcePicture1 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCBlackboard1024"]];
+            self.internalSourcePicture2 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCOverlayMap"]];
+            self.internalSourcePicture3 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCF1Map"]];
+            
+            break;
+        }
+            
+        case NC_F2_FILTER: {
+            self.internalFilter = [[NCF2Filter alloc] init];
+            self.internalSourcePicture1 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCBlackboard1024"]];
+            self.internalSourcePicture2 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCOverlayMap"]];
+            self.internalSourcePicture3 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCF2Map"]];
+            
+            break;
+        }
+            
+        case NC_F3_FILTER: {
+            self.internalFilter = [[NCF3Filter alloc] init];
+            self.internalSourcePicture1 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCF3Background" ]];
+            self.internalSourcePicture2 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCOverlayMap" ]];
+            self.internalSourcePicture3 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCF3Map" ]];
+            
+            break;
+        }
+            
+        case NC_F4_FILTER: {
+            self.internalFilter = [[NCF4Filter alloc] init];
+            self.internalSourcePicture1 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCF4Map" ]];
+            self.internalSourcePicture2 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCVignetteMap" ]];
+            
+            break;
+        }
+            
+        case NC_F5_FILTER: {
+            self.internalFilter = [[NCF5Filter alloc] init];
+            self.internalSourcePicture1 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCF5Vignette" ]];
+            self.internalSourcePicture2 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCOverlayMap" ]];
+            self.internalSourcePicture3 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCF5Map" ]];
+            
+            break;
+        }
+            
+        case NC_F6_FILTER: {
+            self.internalFilter = [[NCF6Filter alloc] init];
+            self.internalSourcePicture1 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCF6Map"]];
+            self.internalSourcePicture2 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCVignetteMap"]];
+            
+            break;
+        }
+            
+        case NC_F7_FILTER: {
+            self.internalFilter = [[NCF7Filter alloc] init];
+            self.internalSourcePicture1 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCF7Curves" ]];
+            self.internalSourcePicture2 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCF7OverlayMap" ]];
+            self.internalSourcePicture3 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCVignetteMap" ]];
+            self.internalSourcePicture4 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCF7Blowout" ]];
+            self.internalSourcePicture5 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCF7Map" ]];
+            
+            break;
+        }
+            
+        case NC_F8_FILTER: {
+            self.internalFilter = [[NCF8Filter alloc] init];
+            self.internalSourcePicture1 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCVignetteMap" ]];
+            self.internalSourcePicture2 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCF8Metal" ]];
+            self.internalSourcePicture3 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCSoftLight" ]];
+            self.internalSourcePicture4 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCF8EdgeBurn" ]];
+            self.internalSourcePicture5 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCF8Curves" ]];
+            
+            break;
+        }
+            
+        case NC_F9_FILTER: {
+            self.internalFilter = [[NCF9Filter alloc] init];
+            self.internalSourcePicture1 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCF9Metal" ]];
+            self.internalSourcePicture2 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCF9SoftLight" ]];
+            self.internalSourcePicture3 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCF9Curves" ]];
+            self.internalSourcePicture4 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCF9OverlayMapWarm" ]];
+            self.internalSourcePicture5 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCF9ColorShift" ]];
+            
+            break;
+        }
+            
+        case NC_F10_FILTER: {
+            self.internalFilter = [[NCF10Filter alloc] init];
+            self.internalSourcePicture1 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCF10Process" ]];
+            self.internalSourcePicture2 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCF10Blowout" ]];
+            self.internalSourcePicture3 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCF10Contrast" ]];
+            self.internalSourcePicture4 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCF10Luma" ]];
+            self.internalSourcePicture5 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCF10Screen" ]];
+            
+            break;
+        }
+            
+        case NC_F11_FILTER: {
+            self.internalFilter = [[NCF11Filter alloc] init];
+            self.internalSourcePicture1 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCF11Map" ]];
+            
+            break;
+        }
+            
+        case NC_F12_FILTER: {
+            self.internalFilter = [[NCF12Filter alloc] init];
+            self.internalSourcePicture1 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCF12Map" ]];
+            self.internalSourcePicture2 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCVignetteMap" ]];
+            
+            break;
+        }
+            
+        case NC_F13_FILTER: {
+            self.internalFilter = [[NCF13Filter alloc] init];
+            self.internalSourcePicture1 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCEdgeBurn" ]];
+            self.internalSourcePicture2 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCF13Map" ]];
+            self.internalSourcePicture3 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCF13GradientMap" ]];
+            self.internalSourcePicture4 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCF13SoftLight" ]];
+            self.internalSourcePicture5 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCF13Metal" ]];
+            
+            break;
+        }
+            
+        case NC_F14_FILTER: {
+            self.internalFilter = [[NCF14Filter alloc] init];
+            self.internalSourcePicture1 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCF14Map" ]];
+            self.internalSourcePicture2 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCF14GradientMap" ]];
+            
+            break;
+        }
+            
+        case NC_F15_FILTER: {
+            self.internalFilter = [[NCF15Filter alloc] init];
+            self.internalSourcePicture1 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCF15Map" ]];
+            
+            break;
+        }
+            
+        case NC_F16_FILTER: {
+            self.internalFilter = [[NCF16Filter alloc] init];
+            self.internalSourcePicture1 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCF16map" ]];
+            self.internalSourcePicture2 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCF16blowout" ]];
+            
+            break;
+        }
+            
+        case NC_F17_FILTER: {
+            self.internalFilter = [[NCF17Filter alloc] init];
+            self.internalSourcePicture1 = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"NCKelvinMap" ]];
+            
+            break;
+        }
+            
+        default:
+            break;
+    }
+    
     [self switchToNewFilter];
-//    [self performSelectorInBackground:@selector(switchToNewFilter) withObject:nil];
-//    });
 }
 
 
@@ -719,60 +715,27 @@ CGFloat outputWH = 320 * 1.5;
     return instance;
 }
 
-//- (void)setImage:(UIImage *)image WithFilterType:(NCFilterType)filterType CompletionBlock:(FilterCompletionBlock)completion{
-//
-//    //锁
-//    [_theLock lock];
-//
-//    [stillImageSource removeAllTargets];
-//    stillImageSource = nil;
-//    self.rawImage = image;
-//    
-//    self.gpuImageView.frame = (CGRect){CGPointZero, self.rawImage.size};
-//    self.gpuImageView_HD.frame = self.gpuImageView.bounds;
-//    
-//    [self switchFilter:filterType WithCompletionBlock:^(UIImage *filterImage) {
-//        
-//        completion(filterImage);
-//        
-//        //解锁
-//        [_theLock unlock];
-//    }];
-//
-//}
+- (void)setImage:(UIImage *)image WithFilterType:(NCFilterType)filterType CompletionBlock:(FilterCompletionBlock)completion{
 
-//#pragma mark - NCImageFilterDelegate
-//- (void)imageFilterdidFinishRender:(NCImageFilter *)imageFilter{
-//    
-//    if(_filterCompletionBlock){
-//    
-//        //截图
-//        UIGraphicsBeginImageContext(gpuImageView.frame.size);
-//        UIView *tempView = [[UIView alloc] initWithFrame:self.gpuImageView.frame];
-//        [tempView addSubview:self.gpuImageView];
-//        
-////        NSLog(@"gpuImageView_HD.frame - %@", NSStringFromCGRect(self.gpuImageView_HD.frame));
-////        [tempView.layer renderInContext:UIGraphicsGetCurrentContext()];
-//        
-//        [self.gpuImageView drawViewHierarchyInRect:gpuImageView.frame afterScreenUpdates:YES];
-//        UIImage *outputImage = UIGraphicsGetImageFromCurrentImageContext();
-//        UIGraphicsEndImageContext();
-//        
-//        CGFloat pix = 1;
-//        outputImage = [outputImage subImageWithRect:CGRectMake(0, 0, outputImage.size.width - pix, outputImage.size.height - pix)];
-//        
-//        //回调
-//        _filterCompletionBlock(outputImage);
-//        _filterCompletionBlock = nil;
-//        
-//        //写沙盒测试
-////        NSData *imageData = UIImageJPEGRepresentation(outputImage, 0.8);
-////        [imageData writeToFile:[[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:@"NoCrop_Share_Image.jpg"] atomically:YES];
-//    }
-//    
-//}
+    //锁
+    [_theLock lock];
 
+    [stillImageSource removeAllTargets];
+    stillImageSource = nil;
+    self.rawImage = image;
+    
+    self.gpuImageView.frame = (CGRect){CGPointZero, self.rawImage.size};
+    self.gpuImageView_HD.frame = self.gpuImageView.bounds;
+    
+    [self switchFilter:filterType WithCompletionBlock:^(UIImage *filterImage) {
+        
+        completion(filterImage);
+        
+        //解锁
+        [_theLock unlock];
+    }];
 
+}
 
 int imagesIndex ;
 
@@ -797,7 +760,6 @@ int imagesIndex ;
             continue;
         }
 
-        
         [stillImageSource removeAllTargets];
         stillImageSource = nil;
         self.rawImage = image;
@@ -808,6 +770,7 @@ int imagesIndex ;
         [self switchFilter:filterType];
     }
     
+    images = nil;
 }
 #pragma mark - NCImageFilterDelegate
 - (void)imageFilterdidFinishRender:(NCImageFilter *)imageFilter{

@@ -16,7 +16,7 @@
 
 @protocol ChangeModelDelegate <NSObject>
 
-- (void)changeModelImage;
+- (void)changeModelImage:(UIImage *)image;
 
 @end
 

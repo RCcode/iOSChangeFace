@@ -306,4 +306,25 @@ CGSize sizeWithContentAndFont(NSString *content,CGSize size,float fontSize)
     return labelsize;
 }
 
+void logMemoryInfo() {
+    
+    vm_statistics_data_t vmStats;
+    
+    if (memoryInfo(&vmStats)) {
+        
+        NSLog(@"剩余内存:%ldM \t不活跃%ldM \t已使用:%ldM \t系统占用:%ldM",
+              (long)(vmStats.free_count * vm_page_size / 1024 / 1024),
+              (long)(vmStats.inactive_count * vm_page_size / 1024 / 1024),
+              (long)(vmStats.active_count * vm_page_size / 1024 / 1024),
+              (long)(vmStats.wire_count * vm_page_size / 1024 / 1024));
+        
+    }
+}
+
+BOOL memoryInfo(vm_statistics_data_t *vmStats) {
+    mach_msg_type_number_t infoCount = HOST_VM_INFO_COUNT;
+    kern_return_t kernReturn = host_statistics(mach_host_self(), HOST_VM_INFO, (host_info_t)vmStats, &infoCount);
+    return kernReturn == KERN_SUCCESS;
+}
+
 @end

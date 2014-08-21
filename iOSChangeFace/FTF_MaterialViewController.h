@@ -11,9 +11,12 @@
 #import <AssetsLibrary/AssetsLibrary.h>
 #import <AVFoundation/AVFoundation.h>
 #import <MobileCoreServices/MobileCoreServices.h>
+#import "NCVideoCamera.h"
 
-@interface FTF_MaterialViewController : UIViewController <UIScrollViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
-
+@interface FTF_MaterialViewController : UIViewController <UIScrollViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,NCVideoCameraDelegate>
+{
+    NCVideoCamera *_videoCamera;
+}
 @property (weak, nonatomic) IBOutlet UIScrollView *modelScrollerView;
 @property (assign ,nonatomic) id <ChangeModelDelegate> delegate;
 

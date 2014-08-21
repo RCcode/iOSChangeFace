@@ -35,6 +35,8 @@
         UIImage *newImage = [pngImagePath(@"bg") resizableImageWithCapInsets:ed resizingMode:UIImageResizingModeTile];
         blur.image = newImage;
         [self addSubview:blur];
+        
+        
     }
     return self;
 }

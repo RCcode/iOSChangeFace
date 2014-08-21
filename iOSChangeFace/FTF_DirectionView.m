@@ -247,7 +247,7 @@
         [btn addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
         [filterScroller addSubview:btn];
         
-        if (i == _filter_Type)
+        if (i == [FTF_Global shareGlobal].filterType)
         {
             [btn changeBtnImage];
             btn.contentLabel.textColor = colorWithHexString(@"#D9AF20", 1.0);
