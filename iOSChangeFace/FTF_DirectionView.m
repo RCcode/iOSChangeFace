@@ -9,6 +9,7 @@
 #import "FTF_DirectionView.h"
 #import "FTF_Button.h"
 #import "CMethods.h"
+#import "FTF_Global.h"
 
 #define Btn_Width 30.f
 #define Btn_Height 30.f
@@ -258,6 +259,11 @@
 
 - (void)btnClick:(FTF_Button *)btn
 {
+    if ([FTF_Global shareGlobal].isFiltering)
+    {
+        return;
+    }
+    
     for (UIView *subView in [btn.superview subviews])
     {
         if ([subView isKindOfClass:[FTF_Button class]])

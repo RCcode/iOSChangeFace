@@ -88,7 +88,6 @@
     if (!isLast)
     {
         self.points = [self.croppingPath points];
-        NSLog(@"self.point.......%d",_points.count);
         maskedImage = nil;
     }
     
@@ -102,7 +101,6 @@
     
     UIBezierPath *aPath;
     
-    NSLog(@"截图1..");
     if (maskedImage == nil)
     {
         UIGraphicsBeginImageContextWithOptions(rect.size, YES, 0.0);
@@ -126,12 +124,9 @@
         }
         
         maskedImage = UIGraphicsGetImageFromCurrentImageContext();
-        NSLog(@"模糊1..");
         maskedImage = [self fuzzyImage:maskedImage];
-        NSLog(@"模糊2...");
     }
     
-    NSLog(@"画点1..");
     UIGraphicsEndImageContext();
     
     UIGraphicsBeginImageContextWithOptions(rect.size, NO, 0.0);
@@ -142,20 +137,9 @@
     }
     
     UIImage *masImage = UIGraphicsGetImageFromCurrentImageContext();
-    NSLog(@"画点2..");
     UIGraphicsEndImageContext();
     
-    NSLog(@"截图2..");
-
     return masImage;
-}
-
-- (void)haveEndCropImage:(UIImage *)maskImage
-{
-    if ([_acView respondsToSelector:@selector(haveCropedImage:)])
-    {
-        [_acView performSelector:@selector(haveCropedImage:) withObject:maskImage afterDelay:0];
-    }
 }
 
 #pragma mark - Touch Methods -

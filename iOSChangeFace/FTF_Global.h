@@ -24,6 +24,7 @@
 @property (nonatomic ,assign) BOOL isChange;
 @property (nonatomic ,assign) enum MaterialModelType modelType;
 @property (nonatomic ,assign) BOOL isCrop;
+@property (nonatomic ,assign) BOOL isFiltering;
 
 //广告条
 @property (nonatomic, strong) UIView *bannerView;

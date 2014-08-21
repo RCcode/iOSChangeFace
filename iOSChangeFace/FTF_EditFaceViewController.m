@@ -232,7 +232,7 @@
                                                        delegate:self
                                               cancelButtonTitle:LocalizedString(@"cancel", @"")
                                               otherButtonTitles:LocalizedString(@"dialog_sure", @""),nil];
-        alert.tag = 11;
+        alert.tag = 12;
         [alert show];
     }
     else
@@ -261,17 +261,19 @@
     }
 }
 
+#pragma mark -
+#pragma mark UIAlertViewDelegate
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (alertView.tag == 11 && buttonIndex == 1)
     {
         [FTF_Global shareGlobal].isChange = NO;
-        [self.navigationController popViewControllerAnimated:YES];
+        [self.navigationController popToRootViewControllerAnimated:YES];
     }
     else if (alertView.tag == 12 && buttonIndex == 1)
     {
         [FTF_Global shareGlobal].isChange = NO;
-        [self.navigationController popToRootViewControllerAnimated:YES];
+        [self.navigationController popViewControllerAnimated:YES];
     }
 }
 
@@ -286,16 +288,19 @@
 #pragma mark 工具栏点击事件
 - (void)toolBtnClick:(FTF_Button *)btn
 {
-    for (UIView *subView in [btn.superview subviews])
+    if (btn.tag != 0)
     {
-        if ([subView isKindOfClass:[FTF_Button class]])
+        for (UIView *subView in [btn.superview subviews])
         {
-            FTF_Button *button = (FTF_Button *)subView;
-            [button btnHaveClicked];
+            if ([subView isKindOfClass:[FTF_Button class]])
+            {
+                FTF_Button *button = (FTF_Button *)subView;
+                [button btnHaveClicked];
+            }
         }
+        [btn changeBtnImage];
     }
     
-    [btn changeBtnImage];
     libaryImageView.userInteractionEnabled = YES;
     [backView setMZViewNotUserInteractionEnabled];
     switch (btn.tag) {
@@ -399,7 +404,7 @@
     directionStyle = (enum DirectionType)tag;
     detailView.direction_Type = (enum DirectionType)tag;
     
-    self.modelSlider.value = 0.5f;
+    [self.modelSlider setValue:0.5f];
     [detailView setVolumeSlideValue:0.2f];
     
     [colorArray removeAllObjects];
@@ -508,7 +513,8 @@
 #pragma mark 滤镜
 - (void)filterImage:(NSInteger)tag
 {
-    NSLog(@"滤镜开始..");
+    
+    [FTF_Global shareGlobal].isFiltering = YES;
 
     detailView.filter_Type = (NCFilterType)tag;
     dispatch_queue_t myQueue = dispatch_queue_create("my_filter_queue", nil);
@@ -615,6 +621,10 @@
     }
     else if (tag >= 100)
     {
+        if ([FTF_Global shareGlobal].isFiltering)
+        {
+            return;
+        }
         [FTF_Global event:[NSString stringWithFormat:@"filter_%d",(int)tag - 100] label:@"Edit"];
         [self filterImage:tag - 100];
     }
@@ -649,13 +659,13 @@
         backView.cropImage = customImage;
         libaryImageView.image = customImage;
         
-        NSLog(@"滤镜结束..");
         [backView endCropImage:YES];
         
         UIImage *modelImage = filterImageArray[1];
         backImageView.image = nil;
         backImageView.image = modelImage;
         
+        [FTF_Global shareGlobal].isFiltering = NO;
         hideMBProgressHUD();
     }
 }

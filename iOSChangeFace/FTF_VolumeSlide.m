@@ -48,7 +48,7 @@
 
 - (void)setSlideValue:(CGFloat) value
 {
-    _slideView.value = value;
+    [_slideView setValue:value];
     [self slideValueChanged];
 }
 

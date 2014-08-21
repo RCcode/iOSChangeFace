@@ -30,7 +30,6 @@
 
 - (void)beginCropImage;
 - (void)endCropImage:(BOOL)isLast;
-- (void)haveCropedImage:(UIImage *)croppedImage;
 
 - (void)setMZViewUserInteractionEnabled;
 - (void)setMZViewNotUserInteractionEnabled;
