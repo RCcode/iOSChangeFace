@@ -7,13 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
+@class ACMagnifyingView;
 
 @interface MZCroppableView : UIView
-
+{
+    UIImage *maskedImage;
+}
 @property(nonatomic, strong) UIBezierPath *croppingPath;
 @property(nonatomic, strong) UIColor *lineColor;
 @property(nonatomic, assign) float lineWidth;
 @property(nonatomic, strong) NSMutableArray *points;
+@property(nonatomic, weak) ACMagnifyingView *acView;
 
 - (id)initWithImageView:(UIImageView *)imageView;
 

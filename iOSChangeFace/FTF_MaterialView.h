@@ -20,6 +20,7 @@
 {
     UICollectionView *photo_ColletionView;
     enum MaterialModelType modelType;
+    NSArray *dataArray;
 }
 @property (strong ,nonatomic) NSDictionary *dataDic;
 

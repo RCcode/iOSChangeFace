@@ -10,6 +10,7 @@
 #import "ACMagnifyingGlass.h"
 #import "MZCroppableView.h"
 #import "FTF_Global.h"
+#import "CMethods.h"
 
 static CGFloat const kACMagnifyingViewDefaultShowDelay = 0.5;
 
@@ -60,6 +61,7 @@ static CGFloat const kACMagnifyingViewDefaultShowDelay = 0.5;
 
     //抠图操作视图
     cropView = [[MZCroppableView alloc]initWithImageView:self.imageView];
+    cropView.acView = self;
     cropView.userInteractionEnabled = NO;
     self.magnifyingGlass = [[ACMagnifyingGlass alloc] init];
     self.magnifyingGlass.hidden = YES;

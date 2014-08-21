@@ -12,7 +12,6 @@
 #import "AppDelegate.h"
 #import "sys/sysctl.h"
 #include <mach/mach.h>
-#import "ZFCDoubleBounceActivityIndicatorView.h"
 
 //用户当前的语言环境
 #define CURR_LANG   ([[NSLocale preferredLanguages] objectAtIndex:0])
@@ -305,28 +304,6 @@ CGSize sizeWithContentAndFont(NSString *content,CGSize size,float fontSize)
     CGSize labelsize = [content boundingRectWithSize:size options:(NSStringDrawingOptions)(NSStringDrawingUsesLineFragmentOrigin |NSStringDrawingUsesFontLeading) attributes:tdic context:nil].size;
     
     return labelsize;
-}
-
-static ZFCDoubleBounceActivityIndicatorView *doubleBounce = nil;
-void showLoadingView()
-{
-    if (doubleBounce == nil)
-    {
-        doubleBounce = [[ZFCDoubleBounceActivityIndicatorView alloc] init];
-        doubleBounce.center = CGPointMake(160, windowHeight()/2);
-        [currentWindow() addSubview:doubleBounce];
-        
-        NSTimer *stopTimer = [NSTimer scheduledTimerWithTimeInterval:2 target:doubleBounce selector:@selector(stopAnimating) userInfo:nil repeats:YES];
-        [[NSRunLoop currentRunLoop] addTimer:stopTimer forMode:NSRunLoopCommonModes];
-        NSTimer *starTimer = [NSTimer scheduledTimerWithTimeInterval:2 target:doubleBounce selector:@selector(startAnimating) userInfo:nil repeats:YES];
-        [[NSRunLoop currentRunLoop] addTimer:starTimer forMode:NSRunLoopCommonModes];
-    }
-    [doubleBounce startAnimating];
-}
-
-void stopLoadingView()
-{
-    [doubleBounce stopAnimating];
 }
 
 @end

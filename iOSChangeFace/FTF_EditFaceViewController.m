@@ -508,6 +508,8 @@
 #pragma mark 滤镜
 - (void)filterImage:(NSInteger)tag
 {
+    NSLog(@"滤镜开始..");
+
     detailView.filter_Type = (NCFilterType)tag;
     dispatch_queue_t myQueue = dispatch_queue_create("my_filter_queue", nil);
     [NSThread sleepForTimeInterval:0.3];
@@ -647,13 +649,15 @@
         backView.cropImage = customImage;
         libaryImageView.image = customImage;
         
+        NSLog(@"滤镜结束..");
         [backView endCropImage:YES];
         
         UIImage *modelImage = filterImageArray[1];
         backImageView.image = nil;
         backImageView.image = modelImage;
+        
+        hideMBProgressHUD();
     }
-    hideMBProgressHUD();
 }
 
 @end

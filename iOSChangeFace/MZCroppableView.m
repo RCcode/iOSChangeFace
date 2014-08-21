@@ -8,13 +8,15 @@
 
 #import "MZCroppableView.h"
 #import "UIBezierPath-Points.h"
+#import "ACMagnifyingView.h"
 
 @implementation MZCroppableView
 
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
-    if (self) {
+    if (self)
+    {
         
     }
     return self;
@@ -30,7 +32,7 @@
         [self setClipsToBounds:YES];
         [self setUserInteractionEnabled:YES];
         self.croppingPath = [[UIBezierPath alloc] init];
-        CGFloat lineDash[] = {8,2};
+        CGFloat lineDash[] = {4,2};
         [self.croppingPath setLineDash:lineDash count:2 phase:1];
         [self.croppingPath setLineWidth:self.lineWidth];
         self.lineColor = [UIColor redColor];
@@ -86,6 +88,8 @@
     if (!isLast)
     {
         self.points = [self.croppingPath points];
+        NSLog(@"self.point.......%d",_points.count);
+        maskedImage = nil;
     }
     
     if (self.points.count <= 1)
@@ -97,43 +101,61 @@
     rect.size = imageView.image.size;
     
     UIBezierPath *aPath;
-
-    UIGraphicsBeginImageContextWithOptions(rect.size, YES, 0.0);
+    
+    NSLog(@"截图1..");
+    if (maskedImage == nil)
     {
-        [[UIColor blackColor] setFill];
-        UIRectFill(rect);
-        [[UIColor whiteColor] setFill];
-        
-        aPath = [UIBezierPath bezierPath];
-        
-        CGPoint p1 = [MZCroppableView convertCGPoint:[[_points objectAtIndex:0] CGPointValue] fromRect1:imageView.frame.size toRect2:imageView.image.size];
-        [aPath moveToPoint:CGPointMake(p1.x, p1.y)];
-        
-        for (uint i=1; i<_points.count; i++)
+        UIGraphicsBeginImageContextWithOptions(rect.size, YES, 0.0);
         {
-            CGPoint p = [MZCroppableView convertCGPoint:[[_points objectAtIndex:i] CGPointValue] fromRect1:imageView.frame.size toRect2:imageView.image.size];
-            [aPath addLineToPoint:CGPointMake(p.x, p.y)];
+            [[UIColor blackColor] setFill];
+            UIRectFill(rect);
+            [[UIColor whiteColor] setFill];
+            
+            aPath = [UIBezierPath bezierPath];
+            
+            CGPoint p1 = [MZCroppableView convertCGPoint:[[_points objectAtIndex:0] CGPointValue] fromRect1:imageView.frame.size toRect2:imageView.image.size];
+            [aPath moveToPoint:CGPointMake(p1.x, p1.y)];
+            
+            for (uint i=1; i<_points.count; i++)
+            {
+                CGPoint p = [MZCroppableView convertCGPoint:[[_points objectAtIndex:i] CGPointValue] fromRect1:imageView.frame.size toRect2:imageView.image.size];
+                [aPath addLineToPoint:CGPointMake(p.x, p.y)];
+            }
+            [aPath closePath];
+            [aPath fill];
         }
-        [aPath closePath];
-        [aPath fill];
+        
+        maskedImage = UIGraphicsGetImageFromCurrentImageContext();
+        NSLog(@"模糊1..");
+        maskedImage = [self fuzzyImage:maskedImage];
+        NSLog(@"模糊2...");
     }
     
-    UIImage *mask = UIGraphicsGetImageFromCurrentImageContext();
-    mask = [self fuzzyImage:mask];
-    
+    NSLog(@"画点1..");
     UIGraphicsEndImageContext();
     
     UIGraphicsBeginImageContextWithOptions(rect.size, NO, 0.0);
     
     {
-        CGContextClipToMask(UIGraphicsGetCurrentContext(), rect, mask.CGImage);
+        CGContextClipToMask(UIGraphicsGetCurrentContext(), rect, maskedImage.CGImage);
         [imageView.image drawAtPoint:CGPointZero];
     }
     
-    UIImage *maskedImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIImage *masImage = UIGraphicsGetImageFromCurrentImageContext();
+    NSLog(@"画点2..");
     UIGraphicsEndImageContext();
     
-    return maskedImage;
+    NSLog(@"截图2..");
+
+    return masImage;
+}
+
+- (void)haveEndCropImage:(UIImage *)maskImage
+{
+    if ([_acView respondsToSelector:@selector(haveCropedImage:)])
+    {
+        [_acView performSelector:@selector(haveCropedImage:) withObject:maskImage afterDelay:0];
+    }
 }
 
 #pragma mark - Touch Methods -

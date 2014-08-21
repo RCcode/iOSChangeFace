@@ -107,14 +107,13 @@
     //相册里选取的图片
     if (image.size.width > image.size.height)
     {
-        libaryImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, image.size.height * (320.f/1080.f))];
+        libaryImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, image.size.height * (320.f/720.f))];
     }
     else
     {
-        libaryImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, image.size.width * (320.f/1080.f), 320)];
+        libaryImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, image.size.width * (320.f/720.f), 320)];
     }
     
-    libaryImageView.backgroundColor =  [UIColor redColor];
     libaryImageView.center = CGPointMake(160, 160);
     libaryImageView.userInteractionEnabled = YES;
     libaryImageView.image = image;

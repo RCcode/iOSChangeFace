@@ -48,19 +48,28 @@
 - (void)loadMaterialModels:(NSInteger)tag
 {
     modelType = (enum MaterialModelType)tag;
+    dataArray = [self.dataDic objectForKey:[NSString stringWithFormat:@"%d",modelType]];
     [self layerCollectionView];
 }
 
 - (void)layerCollectionView
 {
-    UICollectionViewFlowLayout *layout= [[UICollectionViewFlowLayout alloc]init];
-    photo_ColletionView = [[UICollectionView alloc]initWithFrame:self.bounds collectionViewLayout:layout];
-    photo_ColletionView.backgroundColor = [UIColor clearColor];
-    [self addSubview:photo_ColletionView];
-    [photo_ColletionView registerClass:[FTF_MaterialCell class]
-            forCellWithReuseIdentifier:@"Cell"];
-    photo_ColletionView.delegate=self;
-    photo_ColletionView.dataSource=self;
+    if (photo_ColletionView == nil)
+    {
+        UICollectionViewFlowLayout *layout= [[UICollectionViewFlowLayout alloc]init];
+        photo_ColletionView = [[UICollectionView alloc]initWithFrame:self.bounds collectionViewLayout:layout];
+        photo_ColletionView.backgroundColor = [UIColor clearColor];
+        [self addSubview:photo_ColletionView];
+        [photo_ColletionView registerClass:[FTF_MaterialCell class]
+                forCellWithReuseIdentifier:@"Cell"];
+        photo_ColletionView.delegate=self;
+        photo_ColletionView.dataSource=self;
+    }
+    else
+    {
+        [photo_ColletionView reloadData];
+    }
+    
 }
 
 #pragma mark -
@@ -72,16 +81,14 @@
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    NSArray *dataArray = [self.dataDic objectForKey:[NSString stringWithFormat:@"%d",modelType]];
     return dataArray.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    NSArray *dataArray = [self.dataDic objectForKey:[NSString stringWithFormat:@"%d",modelType]];
     FTF_MaterialCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
-    cell.imageView.image = [UIImage zoomImage:jpgImagePath([dataArray objectAtIndex:indexPath.row]) toSize:CGSizeMake(140, 140)];
+    cell.imageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@.jpg",[dataArray objectAtIndex:indexPath.row]]];
     
     return cell;
 }
@@ -110,8 +117,8 @@
     {
         [FTF_Global event:[NSString stringWithFormat:@"fodder_more_%d",(int)indexPath.row + 1] label:@"Fodder"];
     }
-    NSArray *dataArray = [self.dataDic objectForKey:[NSString stringWithFormat:@"%d",modelType]];
-    NSString *imageName = [dataArray objectAtIndex:indexPath.row];
+    NSArray *dataImageArray = [self.dataDic objectForKey:[NSString stringWithFormat:@"%d",modelType]];
+    NSString *imageName = [dataImageArray objectAtIndex:indexPath.row];
 
     [FTF_Global shareGlobal].modelImage = nil;
     [FTF_Global shareGlobal].modelImage = [UIImage zoomImageWithImage:jpgImagePath(imageName)];

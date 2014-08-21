@@ -7,7 +7,7 @@
 //
 
 #import "UIImage+Zoom.h"
-#define BigValue 1080.f
+#define BigValue 720.f
 
 @implementation UIImage (Zoom)
 

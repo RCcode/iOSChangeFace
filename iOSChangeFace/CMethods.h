@@ -70,8 +70,4 @@ NSString *doDevicePlatform();
 
 CGSize sizeWithContentAndFont(NSString *content,CGSize size,float fontSize);
 
-void showLoadingView();
-
-void stopLoadingView();
-
 @end

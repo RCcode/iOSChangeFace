@@ -80,6 +80,12 @@
     
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationNone];
+}
+
 - (void)addMoreImageView
 {
     UIImageView *redImageView = [[UIImageView alloc]initWithFrame:CGRectMake(40, 0, 12, 12)];

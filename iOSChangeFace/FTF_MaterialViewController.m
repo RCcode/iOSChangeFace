@@ -39,6 +39,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeMaterialImage) name:@"changeMaterialImage" object:nil];
 
     if ([[NSUserDefaults standardUserDefaults] objectForKey:@"guideIsFirst"] == nil)
     {
@@ -131,7 +133,7 @@
     int i = 0;
     while (i < 5) {
         FTF_MaterialView *materialView = [[FTF_MaterialView alloc] initWithFrame:CGRectMake(i * 320, 0, 320, self.modelScrollerView.bounds.size.height)];
-        [materialView loadMaterialModels:i];
+        materialView.tag = 10 + i;
         [self.modelScrollerView addSubview:materialView];
         
         FTF_Button *btn = [[FTF_Button alloc]initWithFrame:CGRectMake(30 + 57 * i, 10, 30, 30)];
@@ -143,7 +145,7 @@
         [btn addTarget:self action:@selector(modelBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         [amb addSubview:btn];
         
-        if (i == [FTF_Global shareGlobal].modelType)
+        if (i == (int)[FTF_Global shareGlobal].modelType)
         {
             [btn changeBtnImage];
         }
@@ -151,9 +153,7 @@
         i++;
     }
     
-    [self.modelScrollerView setContentOffset:CGPointMake(320 * [FTF_Global shareGlobal].modelType, 0) animated:NO];
-
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeMaterialImage) name:@"changeMaterialImage" object:nil];
+    [self.modelScrollerView setContentOffset:CGPointMake(320 * (int)[FTF_Global shareGlobal].modelType, 0) animated:NO];
     
 }
 
@@ -161,6 +161,10 @@
 {
     [super viewWillAppear:animated];
     [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationNone];
+    
+    FTF_MaterialView *materialView = (FTF_MaterialView *)[self.modelScrollerView viewWithTag:10 + (int)[FTF_Global shareGlobal].modelType];
+    [materialView loadMaterialModels:(int)[FTF_Global shareGlobal].modelType];
+
 }
 
 #pragma mark -
@@ -215,6 +219,7 @@
 #pragma mark 切换图形类型
 - (void)modelBtnClick:(FTF_Button *)btn
 {
+    
     for (UIView *subView in [btn.superview subviews])
     {
         if ([subView isKindOfClass:[FTF_Button class]])
@@ -225,6 +230,10 @@
     }
     [btn changeBtnImage];
     [self.modelScrollerView setContentOffset:CGPointMake(320 * btn.tag, 0) animated:YES];
+    
+    FTF_MaterialView *materialView = (FTF_MaterialView *)[self.modelScrollerView viewWithTag:10 + btn.tag];
+    [materialView loadMaterialModels:btn.tag];
+    
 }
 
 - (void)handelTap
@@ -345,6 +354,7 @@
     CGFloat pageWidth = scrollView.frame.size.width;
     // 根据当前的x坐标和页宽度计算出当前页数
     int page = floor((scrollView.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
+    
     for (UIView *subView in [amb subviews])
     {
         if ([subView isKindOfClass:[FTF_Button class]]) {
@@ -359,6 +369,10 @@
             }
         }
     }
+    
+    FTF_MaterialView *materialView = (FTF_MaterialView *)[self.modelScrollerView viewWithTag:10 + page];
+    [materialView loadMaterialModels:page];
+    
 }
 
 @end
