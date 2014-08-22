@@ -352,17 +352,13 @@
     }
     else
     {
-        dispatch_queue_t myQueue = dispatch_queue_create("my_filter_queue", nil);
-        [NSThread sleepForTimeInterval:0.3];
         
         MBProgressHUD *mb = showMBProgressHUD(nil, YES);
         mb.userInteractionEnabled = YES;
         
-        dispatch_async(myQueue, ^{
-            @autoreleasepool {
-                [_videoCamera setImages:@[[FTF_Global shareGlobal].modelImage] WithFilterType:[FTF_Global shareGlobal].filterType];
-            }
-        });
+        @autoreleasepool {
+            [_videoCamera setImages:@[[FTF_Global shareGlobal].modelImage] WithFilterType:[FTF_Global shareGlobal].filterType];
+        }
     }
 }
 

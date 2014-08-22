@@ -718,7 +718,7 @@ CGFloat outputWH = 320 * 1.5;
 - (void)setImage:(UIImage *)image WithFilterType:(NCFilterType)filterType CompletionBlock:(FilterCompletionBlock)completion{
 
     //锁
-    [_theLock lock];
+    //[_theLock lock];
 
     [stillImageSource removeAllTargets];
     stillImageSource = nil;
@@ -732,7 +732,7 @@ CGFloat outputWH = 320 * 1.5;
         completion(filterImage);
         
         //解锁
-        [_theLock unlock];
+        //[_theLock unlock];
     }];
 
 }
@@ -745,17 +745,15 @@ int imagesIndex ;
     for (UIImage *image in images) {
         
         //锁
-        [_theLock lock];
+        //[_theLock lock];
 
         if(![image isKindOfClass:[UIImage class]]){
 
-            dispatch_async(dispatch_get_main_queue(), ^{
-                if([self.delegate respondsToSelector:@selector(videoCameraDidFinishFilter:Index:)]){
-                    [self.delegate videoCameraDidFinishFilter:image Index:imagesIndex++];
-                }
-            });
+            if([self.delegate respondsToSelector:@selector(videoCameraDidFinishFilter:Index:)]){
+                [self.delegate videoCameraDidFinishFilter:image Index:imagesIndex++];
+            }
             
-            [_theLock unlock];
+            //[_theLock unlock];
             
             continue;
         }
@@ -775,31 +773,27 @@ int imagesIndex ;
 #pragma mark - NCImageFilterDelegate
 - (void)imageFilterdidFinishRender:(NCImageFilter *)imageFilter{
 
-    dispatch_async(dispatch_get_main_queue(), ^{
-    
     //截图
-        UIGraphicsBeginImageContext(rawImage.size);
-        UIView *tempView = [[UIView alloc] initWithFrame:self.gpuImageView_HD.frame];
-        [tempView addSubview:self.gpuImageView_HD];
-        [self.gpuImageView_HD drawViewHierarchyInRect:(CGRect){CGPointZero, rawImage.size} afterScreenUpdates:YES];
-        UIImage *outputImage = UIGraphicsGetImageFromCurrentImageContext();
-        UIGraphicsEndImageContext();
-        
-        //去黑边
-        CGFloat pix = 1;
-        outputImage = [outputImage subImageWithRect:CGRectMake(0, 0, outputImage.size.width - pix, outputImage.size.height - pix)];
-        
-        NSData *imageData = UIImageJPEGRepresentation(outputImage, 0.8);
-        [imageData writeToFile:[[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:@"NoCrop_Share_Image.jpg"] atomically:YES];
-        
-        if([self.delegate respondsToSelector:@selector(videoCameraDidFinishFilter:Index:)])
-        {
-            [self.delegate videoCameraDidFinishFilter:outputImage Index:imagesIndex++];
-        }
-        
-        [_theLock unlock];
-        
-    });
+    UIGraphicsBeginImageContext(rawImage.size);
+    UIView *tempView = [[UIView alloc] initWithFrame:self.gpuImageView_HD.frame];
+    [tempView addSubview:self.gpuImageView_HD];
+    [self.gpuImageView_HD drawViewHierarchyInRect:(CGRect){CGPointZero, rawImage.size} afterScreenUpdates:YES];
+    UIImage *outputImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    //去黑边
+    CGFloat pix = 1;
+    outputImage = [outputImage subImageWithRect:CGRectMake(0, 0, outputImage.size.width - pix, outputImage.size.height - pix)];
+    
+    NSData *imageData = UIImageJPEGRepresentation(outputImage, 0.8);
+    [imageData writeToFile:[[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:@"NoCrop_Share_Image.jpg"] atomically:YES];
+    
+    if([self.delegate respondsToSelector:@selector(videoCameraDidFinishFilter:Index:)])
+    {
+        [self.delegate videoCameraDidFinishFilter:outputImage Index:imagesIndex++];
+    }
+    
+    //[_theLock unlock];
 
 }
 

@@ -217,6 +217,7 @@
     
     //从相册中选取的图片
     libaryImageView = [[UIImageView alloc]initWithFrame:backView.bounds];
+    libaryImageView.layer.shouldRasterize = NO;
     libaryImageView.userInteractionEnabled = YES;
     
     [self adjustViews:_libaryImage];
@@ -519,21 +520,21 @@
 {
     
     [FTF_Global shareGlobal].isFiltering = YES;
-
     [FTF_Global shareGlobal].filterType = (NCFilterType)tag;
-    dispatch_queue_t myQueue = dispatch_queue_create("my_filter_queue", nil);
-    [NSThread sleepForTimeInterval:0.3];
+//    dispatch_queue_t myQueue = dispatch_queue_create("my_filter_queue", nil);
+//    [NSThread sleepForTimeInterval:0.3];
     
     MBProgressHUD *mb = showMBProgressHUD(nil, YES);
     mb.userInteractionEnabled = YES;
     
     [filterImageArray removeAllObjects];
     
-    dispatch_async(myQueue, ^{
-        @autoreleasepool {
-            [_videoCamera setImages:@[[FTF_Global shareGlobal].compressionImage,[FTF_Global shareGlobal].modelImage] WithFilterType:(NCFilterType)tag];
-        }
-    });
+    @autoreleasepool {
+        [_videoCamera setImages:@[[FTF_Global shareGlobal].compressionImage,[FTF_Global shareGlobal].modelImage] WithFilterType:(NCFilterType)tag];
+    }
+//    dispatch_async(myQueue, ^{
+//        
+//    });
 }
 
 - (void)endCropImage

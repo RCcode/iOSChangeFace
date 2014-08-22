@@ -16,7 +16,6 @@
 - (void)dealloc
 {
     self.compressionImage = nil;
-    self.originalImage = nil;
     self.modelImage = nil;
     self.bannerView = nil;
     self.bigImage = nil;

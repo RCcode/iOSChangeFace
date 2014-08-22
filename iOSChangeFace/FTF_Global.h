@@ -13,7 +13,6 @@
 
 @interface FTF_Global : NSObject
 
-@property (nonatomic ,strong) UIImage *originalImage; //原始图片
 @property (nonatomic ,strong) UIImage *compressionImage; //压缩后的图片
 @property (nonatomic ,strong) UIImage *bigImage;
 @property (nonatomic ,strong) UIImage *modelImage;

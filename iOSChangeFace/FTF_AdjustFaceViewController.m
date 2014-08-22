@@ -118,7 +118,7 @@
     libaryImageView.center = CGPointMake(160, 160);
     libaryImageView.userInteractionEnabled = YES;
     libaryImageView.image = image;
-//    libaryImageView.layer.shouldRasterize = YES;
+    libaryImageView.layer.shouldRasterize = NO;
     [self addGestureRecognizerToView:libaryImageView];
     [backView addSubview:libaryImageView];
     
@@ -154,6 +154,7 @@
 #pragma mark 移动
 - (void)panView:(UIPanGestureRecognizer *)recognizer changePoint:(CGPoint)point
 {
+    
     UIView *panView = recognizer.view;
     
     CGPoint translation;
@@ -206,6 +207,8 @@
 #pragma mark 旋转
 - (void)rotateView:(UIRotationGestureRecognizer *)recognizer changeRotate:(float)tinyScale
 {
+    libaryImageView.layer.shouldRasterize = YES;
+    
     UIView *imageView = recognizer.view;
     CGFloat rotation;
 
@@ -259,17 +262,19 @@
     [FTF_Global event:eventArray[tag] label:@"Edit"];
     if (tag == 0)
     {
+        libaryImageView.layer.shouldRasterize = NO;
+        
         [FTF_Global shareGlobal].rorationDegree = 0;
         imageScale = 1.f;
 
         libaryImageView.transform = CGAffineTransformMakeRotation(0);
         if ([FTF_Global shareGlobal].compressionImage.size.width > [FTF_Global shareGlobal].compressionImage.size.height)
         {
-            libaryImageView.frame = CGRectMake(0, 0, 320, [FTF_Global shareGlobal].compressionImage.size.height * (320.f/1080.f));
+            libaryImageView.frame = CGRectMake(0, 0, [FTF_Global shareGlobal].compressionImage.size.width * (320.f/720.f), 320);
         }
         else
         {
-            libaryImageView.frame = CGRectMake(0, 0, [FTF_Global shareGlobal].compressionImage.size.width * (320.f/1080.f), 320);
+            libaryImageView.frame = CGRectMake(0, 0, 320, [FTF_Global shareGlobal].compressionImage.size.height * (320.f/720.f));
         }
         libaryImageView.center = CGPointMake(160, 160);
         libaryImageView.image = [FTF_Global shareGlobal].compressionImage;

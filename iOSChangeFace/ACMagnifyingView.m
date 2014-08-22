@@ -150,6 +150,7 @@ static CGFloat const kACMagnifyingViewDefaultShowDelay = 0.5;
         [self setTransform:CGAffineTransformMakeRotation([FTF_Global shareGlobal].rorationDegree)];
         [self.imageView setFrame:imageViewRect];
         self.imageView.image = _image;
+        self.imageView.layer.shouldRasterize = NO;
         _cropImage = nil;
         _cropImage = _image;
         [cropView setFrame:imageViewRect];
@@ -205,6 +206,7 @@ static CGFloat const kACMagnifyingViewDefaultShowDelay = 0.5;
     }
 }
 
+#warning 移动方向问题
 #pragma mark -
 #pragma mark 移动
 - (void)panView:(UIPanGestureRecognizer *)recognizer changePoint:(CGPoint)point
@@ -257,6 +259,8 @@ static CGFloat const kACMagnifyingViewDefaultShowDelay = 0.5;
 #pragma mark 旋转
 - (void)rotateView:(UIRotationGestureRecognizer *)recognizer changeRotate:(float)tinyScale
 {
+    _imageView.layer.shouldRasterize = YES;
+    
     [FTF_Global shareGlobal].isChange = YES;
     CGFloat rotation;
     

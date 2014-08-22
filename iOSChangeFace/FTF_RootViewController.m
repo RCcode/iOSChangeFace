@@ -198,8 +198,6 @@
         
     }
     
-    [FTF_Global shareGlobal].originalImage = headImage;
-
     [FTF_Global shareGlobal].compressionImage = [UIImage zoomImageWithImage:headImage];
     
     [picker dismissViewControllerAnimated:YES completion:^{
