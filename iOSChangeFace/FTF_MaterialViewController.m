@@ -338,8 +338,12 @@
         [picker dismissViewControllerAnimated:YES completion:^{
             //改界面
             picker.delegate = nil;
-            [self.delegate changeModelImage:[FTF_Global shareGlobal].modelImage];
-            [self.navigationController popViewControllerAnimated:NO];
+//            [self.delegate changeModelImage:[FTF_Global shareGlobal].modelImage];
+            if ([[NSRunLoop mainRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate date]])
+            {
+                [_videoCamera setImages:@[[FTF_Global shareGlobal].modelImage] WithFilterType:[FTF_Global shareGlobal].filterType];
+            }
+
         }];
     }];
     
@@ -394,9 +398,11 @@
         MBProgressHUD *mb = showMBProgressHUD(nil, YES);
         mb.userInteractionEnabled = YES;
         
-        @autoreleasepool {
+        if ([[NSRunLoop mainRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate date]])
+        {
             [_videoCamera setImages:@[[FTF_Global shareGlobal].modelImage] WithFilterType:[FTF_Global shareGlobal].filterType];
         }
+        
     }
 }
 

@@ -35,14 +35,7 @@
 - (void)changeBtnImage
 {
     self.toolImageView.image = pngImagePath(self.selectName);
-    if (self.btnType == 2)
-    {
-        self.backgroundColor = [UIColor grayColor];
-    }
-    else
-    {
-        self.backgroundColor = colorWithHexString(@"#363636", 1.0);
-    }
+    self.backgroundColor = [UIColor clearColor];
 }
 
 - (void)btnHaveClicked

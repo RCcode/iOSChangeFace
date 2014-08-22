@@ -14,6 +14,7 @@
 {
     FTF_VolumeSlide *volumeSlide;
     UISlider *lindeSlider;
+    
 }
 @property (nonatomic ,assign) id <DirectionDelegate> delegate;
 @property (nonatomic ,assign) enum DirectionType direction_Type;

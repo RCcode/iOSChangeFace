@@ -23,6 +23,7 @@
 @property (nonatomic, strong) ACMagnifyingGlass *magnifyingGlass;
 @property (nonatomic, assign) CGFloat magnifyingGlassShowDelay;
 @property (nonatomic, strong) UIImageView *imageView;
+@property (nonatomic, strong) UIImageView *cropImageView;
 @property (nonatomic, strong) UIImage *image;
 @property (nonatomic, strong) UIImage *cropImage;
 @property (nonatomic, assign) BOOL isCrop;

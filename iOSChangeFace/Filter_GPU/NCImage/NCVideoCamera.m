@@ -743,17 +743,12 @@ int imagesIndex ;
     imagesIndex = 0;
     
     for (UIImage *image in images) {
-        
-        //锁
-        //[_theLock lock];
 
         if(![image isKindOfClass:[UIImage class]]){
 
             if([self.delegate respondsToSelector:@selector(videoCameraDidFinishFilter:Index:)]){
                 [self.delegate videoCameraDidFinishFilter:image Index:imagesIndex++];
             }
-            
-            //[_theLock unlock];
             
             continue;
         }

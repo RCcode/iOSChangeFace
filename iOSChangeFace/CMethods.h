@@ -72,4 +72,8 @@ CGSize sizeWithContentAndFont(NSString *content,CGSize size,float fontSize);
 
 void logMemoryInfo();
 
+void showActivityIndicatorView();
+
+void hiddenActivityIndicatorView();
+
 @end

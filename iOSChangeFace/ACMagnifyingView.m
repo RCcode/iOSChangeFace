@@ -47,6 +47,11 @@ static CGFloat const kACMagnifyingViewDefaultShowDelay = 0.5;
     }
     //选取的图片
     self.imageView = imgView;
+//    self.cropImageView = [[UIImageView alloc] initWithImage:imgView.image];
+//    self.cropImageView.frame = imgView.frame;
+    
+    self.cropImageView = (UIImageView *)[self duplicate:imgView];
+    
     imageViewRect = imgView.frame;
     for (UIGestureRecognizer *gesture in self.imageView.gestureRecognizers)
     {
@@ -66,6 +71,12 @@ static CGFloat const kACMagnifyingViewDefaultShowDelay = 0.5;
     self.magnifyingGlass = [[ACMagnifyingGlass alloc] init];
     self.magnifyingGlass.hidden = YES;
     [self addSubview:cropView];
+}
+
+- (UIView*)duplicate:(UIView*)view
+{
+    NSData * tempArchive = [NSKeyedArchiver archivedDataWithRootObject:view];
+    return [NSKeyedUnarchiver unarchiveObjectWithData:tempArchive];
 }
 
 #pragma mark - touch events
@@ -99,6 +110,7 @@ static CGFloat const kACMagnifyingViewDefaultShowDelay = 0.5;
 {
     cropView.userInteractionEnabled = NO;
     _imageView.image = _cropImage;
+    _cropImageView.image = _cropImage;
 }
 
 - (void)setMZImageView:(BOOL)isRestore
@@ -106,10 +118,12 @@ static CGFloat const kACMagnifyingViewDefaultShowDelay = 0.5;
     if (isRestore)
     {
         _imageView.image = _cropImage;
+        _cropImageView.image = _cropImage;
     }
     else
     {
         _imageView.image = _image;
+        _cropImageView.image = _image;
         _cropImage = nil;
         _cropImage = _image;
     }
@@ -150,6 +164,7 @@ static CGFloat const kACMagnifyingViewDefaultShowDelay = 0.5;
         [self setTransform:CGAffineTransformMakeRotation([FTF_Global shareGlobal].rorationDegree)];
         [self.imageView setFrame:imageViewRect];
         self.imageView.image = _image;
+        _cropImageView.image = _image;
         self.imageView.layer.shouldRasterize = NO;
         _cropImage = nil;
         _cropImage = _image;
@@ -206,7 +221,6 @@ static CGFloat const kACMagnifyingViewDefaultShowDelay = 0.5;
     }
 }
 
-#warning 移动方向问题
 #pragma mark -
 #pragma mark 移动
 - (void)panView:(UIPanGestureRecognizer *)recognizer changePoint:(CGPoint)point
@@ -220,11 +234,11 @@ static CGFloat const kACMagnifyingViewDefaultShowDelay = 0.5;
     }
     else
     {
-        translation = [recognizer translationInView:self];
+        translation = [recognizer translationInView:self.superview];
     }
     self.center = CGPointMake(self.center.x + translation.x, self.center.y + translation.y);
     
-    [recognizer setTranslation:CGPointMake(0, 0) inView:self];
+    [recognizer setTranslation:CGPointMake(0, 0) inView:self.superview];
 }
 
 #pragma mark -
@@ -322,32 +336,41 @@ static CGFloat const kACMagnifyingViewDefaultShowDelay = 0.5;
 {
     _isCrop == YES ? self.magnifyingGlass.hidden = NO : self.magnifyingGlass.hidden = YES;
     _imageView.image = self.image;
+    _cropImageView.image = _image;
 }
 
 - (void)endCropImage:(BOOL)isLast
 {
+    showMBProgressHUD(nil, YES);
+
     self.magnifyingGlass.hidden = YES;
     UIImage *croppedImage = nil;
     if ([FTF_Global shareGlobal].isCrop)
     {
-        croppedImage = [cropView deleteBackgroundOfImage:_imageView isLastPath:isLast];
+        if ([[NSRunLoop mainRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate date]])
+        {
+            croppedImage = [cropView deleteBackgroundOfImage:_cropImageView isLastPath:isLast];
+        }
     }
     
     if (croppedImage == nil)
     {
         _imageView.image = _image;
+        _cropImageView.image = _image;
         _cropImage = nil;
         _cropImage = _image;
-        [self setMZViewUserInteractionEnabled];
+        
     }
     else
     {
         _cropImage = nil;
         _cropImage = croppedImage;
         _imageView.image = croppedImage;
-        
+        _cropImageView.image = croppedImage;
         cropView.userInteractionEnabled = NO;
     }
+    
+    hideMBProgressHUD();
 }
 
 - (void)changeMagnifyingGlassCenter:(CGPoint)center

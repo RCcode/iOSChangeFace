@@ -431,12 +431,7 @@
         }
         
     }
-    
-    if ([FTF_Global shareGlobal].isCrop)
-    {
-        [backView moveBtnClick:0];
-    }
-    
+
     [self adjustViews:_libaryImage];
 
     if (self.modelSlider != nil)
@@ -518,23 +513,24 @@
 #pragma mark 滤镜
 - (void)filterImage:(NSInteger)tag
 {
-    
-    [FTF_Global shareGlobal].isFiltering = YES;
-    [FTF_Global shareGlobal].filterType = (NCFilterType)tag;
-//    dispatch_queue_t myQueue = dispatch_queue_create("my_filter_queue", nil);
-//    [NSThread sleepForTimeInterval:0.3];
+    if ([FTF_Global shareGlobal].isFiltering)
+    {
+        return;
+    }
     
     MBProgressHUD *mb = showMBProgressHUD(nil, YES);
     mb.userInteractionEnabled = YES;
     
+    [FTF_Global shareGlobal].isFiltering = YES;
+    [FTF_Global shareGlobal].filterType = (NCFilterType)tag;
+    
     [filterImageArray removeAllObjects];
     
-    @autoreleasepool {
+    if ([[NSRunLoop mainRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate date]])
+    {
         [_videoCamera setImages:@[[FTF_Global shareGlobal].compressionImage,[FTF_Global shareGlobal].modelImage] WithFilterType:(NCFilterType)tag];
     }
-//    dispatch_async(myQueue, ^{
-//        
-//    });
+
 }
 
 - (void)endCropImage
@@ -542,6 +538,7 @@
     if (iPhone4())
     {
         detailView.hidden = NO;
+        
     }
     [FTF_Global shareGlobal].isCrop = YES;
     [backView endCropImage:NO];
@@ -600,10 +597,9 @@
 #pragma mark ChangeModelDelegate
 - (void)changeModelImage:(UIImage *)image
 {
-    
+    [FTF_Global shareGlobal].isChange = YES;
     backImageView.image = image;
     backImageView.center = CGPointMake(160, 160);
-
 }
 
 #pragma mark -
@@ -628,10 +624,6 @@
     }
     else if (tag >= 100)
     {
-        if ([FTF_Global shareGlobal].isFiltering)
-        {
-            return;
-        }
         [FTF_Global event:[NSString stringWithFormat:@"filter_%d",(int)tag - 100] label:@"Edit"];
         [self filterImage:tag - 100];
     }
@@ -658,21 +650,26 @@
     [filterImageArray addObject:image];
     if (index == 1)
     {
+        //人脸
         UIImage *customImage = filterImageArray[0];
         self.libaryImage = nil;
         self.libaryImage = customImage;
         backView.image = nil;
         backView.image = customImage;
         backView.cropImage = customImage;
-        libaryImageView.image = customImage;
+//        libaryImageView.image = customImage;
+        backView.cropImageView.image = customImage;
         
+        //剪切后的滤镜
         [backView endCropImage:YES];
         
+        //模板
         UIImage *modelImage = filterImageArray[1];
         backImageView.image = nil;
         backImageView.image = modelImage;
         
         [FTF_Global shareGlobal].isFiltering = NO;
+        
         hideMBProgressHUD();
     }
 }

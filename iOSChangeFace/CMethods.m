@@ -321,10 +321,36 @@ void logMemoryInfo() {
     }
 }
 
-BOOL memoryInfo(vm_statistics_data_t *vmStats) {
+BOOL memoryInfo(vm_statistics_data_t *vmStats)
+{
     mach_msg_type_number_t infoCount = HOST_VM_INFO_COUNT;
     kern_return_t kernReturn = host_statistics(mach_host_self(), HOST_VM_INFO, (host_info_t)vmStats, &infoCount);
     return kernReturn == KERN_SUCCESS;
+}
+
+static UIActivityIndicatorView *actView = nil;
+void showActivityIndicatorView()
+{
+    
+    if (actView == nil)
+    {
+        actView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+        actView.frame = CGRectMake(0, 0, 80, 80);
+        actView.center = CGPointMake(currentWindow().bounds.size.width/2, currentWindow().bounds.size.height/2);
+        [actView startAnimating];
+        [currentWindow() addSubview:actView];
+    }
+    else
+    {
+        actView.hidden = NO;
+        [actView startAnimating];
+    }
+}
+
+void hiddenActivityIndicatorView()
+{
+    actView.hidden = YES;
+    [actView stopAnimating];
 }
 
 @end
