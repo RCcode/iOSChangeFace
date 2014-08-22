@@ -181,30 +181,28 @@
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     [FTF_Global shareGlobal].bannerView.hidden = NO;
-    __block UIImage *headImage = [info objectForKey:UIImagePickerControllerOriginalImage];
     
-    if (headImage != nil)
-    {
-        headImage = [info objectForKey:UIImagePickerControllerOriginalImage];
-    }
-    else
-    {
-        NSURL *path = [info objectForKey:UIImagePickerControllerReferenceURL];
+    NSURL *path = [info objectForKey:UIImagePickerControllerReferenceURL];
+    
+    [self loadImageFromAssertByUrl:path completion:^(UIImage * img) {
         
-        [self loadImageFromAssertByUrl:path completion:^(UIImage * img)
-         {
-             headImage = img;
-         }];
+        if(img == nil)
+        {
+            img = info[UIImagePickerControllerOriginalImage];
+        }
         
-    }
-    
-    [FTF_Global shareGlobal].compressionImage = [UIImage zoomImageWithImage:headImage];
-    
-    [picker dismissViewControllerAnimated:YES completion:^{
-        FTF_AdjustFaceViewController *adjustFaceController = [[FTF_AdjustFaceViewController alloc]initWithNibName:@"FTF_AdjustFaceViewController" bundle:nil];
-        [adjustFaceController loadAdjustViews:[FTF_Global shareGlobal].compressionImage];
-        [FTF_Global shareGlobal].nav.navigationBarHidden = NO;
-        [[FTF_Global shareGlobal].nav pushViewControllerWithLRAnimated:adjustFaceController];
+        //压缩处理
+        img = [UIImage zoomImageWithImage:img];
+        [FTF_Global shareGlobal].compressionImage = img;
+        
+        [picker dismissViewControllerAnimated:YES completion:^{
+            //改界面
+            picker.delegate = nil;
+            FTF_AdjustFaceViewController *adjustFaceController = [[FTF_AdjustFaceViewController alloc]initWithNibName:@"FTF_AdjustFaceViewController" bundle:nil];
+            [adjustFaceController loadAdjustViews:[FTF_Global shareGlobal].compressionImage];
+            [FTF_Global shareGlobal].nav.navigationBarHidden = NO;
+            [[FTF_Global shareGlobal].nav pushViewControllerWithLRAnimated:adjustFaceController];
+        }];
     }];
     
 }

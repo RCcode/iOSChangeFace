@@ -263,10 +263,36 @@
     
     if (sourceType == UIImagePickerControllerSourceTypeCamera)
     {
+        imagePickerController.allowsEditing = NO;
         imagePickerController.cameraCaptureMode = UIImagePickerControllerCameraCaptureModePhoto;
         imagePickerController.cameraDevice = UIImagePickerControllerCameraDeviceFront;
         //设置相机支持的类型，拍照和录像
         imagePickerController.mediaTypes = @[(NSString *)kUTTypeImage];
+        
+        CGRect f = imagePickerController.view.bounds;
+        f.size.height -= imagePickerController.navigationBar.bounds.size.height;
+        UIGraphicsBeginImageContext(f.size);
+        if (iPhone5())
+        {
+            [[UIColor colorWithWhite:0 alpha:.7] set];
+            UIRectFillUsingBlendMode(CGRectMake(0, 0, f.size.width, 124.0), kCGBlendModeNormal);
+            UIRectFillUsingBlendMode(CGRectMake(0, 444, f.size.width, 52), kCGBlendModeNormal);
+        }
+        else
+        {
+            CGFloat barHeight = (f.size.height - f.size.width) / 2;
+            UIGraphicsBeginImageContext(f.size);
+            [[UIColor colorWithWhite:0 alpha:.7] set];
+            UIRectFillUsingBlendMode(CGRectMake(0, 0, f.size.width, barHeight), kCGBlendModeNormal);
+            UIRectFillUsingBlendMode(CGRectMake(0, f.size.height - barHeight, f.size.width, barHeight - 28), kCGBlendModeNormal);
+        }
+        UIImage *overlayImage = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        
+        UIImageView *overlayIV = [[UIImageView alloc] initWithFrame:f];
+        overlayIV.image = overlayImage;
+        overlayIV.alpha = 0.7f;
+        [imagePickerController setCameraOverlayView:overlayIV];
     }
     
     [self.view.window.rootViewController presentViewController:imagePickerController animated:YES completion:nil];
@@ -276,33 +302,45 @@
 #pragma mark UIImagePickerControllerDelegate
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
-
+    
     [FTF_Global shareGlobal].bannerView.hidden = NO;
     [FTF_Global shareGlobal].modelType = OtherModel;
-    __block UIImage *headImage = [info objectForKey:UIImagePickerControllerEditedImage];
     
-    if (headImage != nil)
-    {
-        headImage = [info objectForKey:UIImagePickerControllerEditedImage];
-    }
-    else
-    {
-#warning 测试iPad效果
-        NSURL *path = [info objectForKey:UIImagePickerControllerReferenceURL];
+    NSURL *path = [info objectForKey:UIImagePickerControllerReferenceURL];
+    
+    [self loadImageFromAssertByUrl:path completion:^(UIImage * img) {
         
-        [self loadImageFromAssertByUrl:path completion:^(UIImage * img)
-         {
-             headImage = img;
-         }];
+        if(img == nil)
+        {
+            img = info[UIImagePickerControllerOriginalImage];
+        }
         
-    }
-    
-    [FTF_Global shareGlobal].modelImage = nil;
-    [FTF_Global shareGlobal].modelImage = [UIImage zoomImageWithImage:headImage];
-    
-    [picker dismissViewControllerAnimated:YES completion:^{
-        [self.delegate changeModelImage:[FTF_Global shareGlobal].modelImage];
-        [self.navigationController popViewControllerAnimated:NO];
+        //压缩处理
+        img = [UIImage zoomImageWithImage:img];
+        
+        CGSize imageSize = img.size;
+        CGFloat width = imageSize.width;
+        CGFloat height = imageSize.height;
+        if (width != height) {
+            CGFloat newDimension = MIN(width, height);
+            CGFloat widthOffset = (width - newDimension) / 2;
+            CGFloat heightOffset = (height - newDimension) / 2;
+            UIGraphicsBeginImageContextWithOptions(CGSizeMake(newDimension, newDimension), NO, 0.);
+            [img drawAtPoint:CGPointMake(-widthOffset, -heightOffset)
+                         blendMode:kCGBlendModeCopy
+                             alpha:1.];
+            img = UIGraphicsGetImageFromCurrentImageContext();
+            UIGraphicsEndImageContext();
+        }
+        
+        [FTF_Global shareGlobal].modelImage = img;
+        
+        [picker dismissViewControllerAnimated:YES completion:^{
+            //改界面
+            picker.delegate = nil;
+            [self.delegate changeModelImage:[FTF_Global shareGlobal].modelImage];
+            [self.navigationController popViewControllerAnimated:NO];
+        }];
     }];
     
 }
