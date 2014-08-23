@@ -7,6 +7,8 @@
 
 #import "Me_MoreTableViewCell.h"
 #import "CMethods.h"
+#import "FTF_Global.h"
+#import "RC_AppInfo.h"
 
 @implementation Me_MoreTableViewCell
 
@@ -36,6 +38,9 @@
 
 - (IBAction)installBtnClick:(id)sender
 {
+    UIButton *btn = (UIButton *)sender;
+    RC_AppInfo *appInfo = [[FTF_Global shareGlobal].appsArray objectAtIndex:btn.tag];
+    [FTF_Global event:@"More" label:[NSString stringWithFormat:@"%d",appInfo.appId]];
     if (self.appInfo.isHave)
     {
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:self.appInfo.openUrl]];

@@ -471,6 +471,8 @@
 #pragma mark 合成图片
 - (void)scaleEditImage
 {
+    [detailView removeFromSuperview];
+    
     UIImageView *waterView = nil;
     
     if ([FTF_Global shareGlobal].isOn)
@@ -494,10 +496,11 @@
     size = CGSizeApplyAffineTransform(size, CGAffineTransformMakeScale(scale, scale));
 
     UIGraphicsBeginImageContext(size);
-
+    
     [bottomView drawViewHierarchyInRect:(CGRect){CGPointZero, size} afterScreenUpdates:YES];
 
     UIImage *viewImage = UIGraphicsGetImageFromCurrentImageContext();
+    
     UIGraphicsEndImageContext();
     
     [waterView removeFromSuperview];
@@ -507,6 +510,13 @@
     [FTF_Global shareGlobal].bigImage = viewImage;
     [FTF_Global shareGlobal].isChange = NO;
     
+    [self performSelector:@selector(addDetailView) withObject:nil afterDelay:0.3f];
+
+}
+
+- (void)addDetailView
+{
+    [self.view addSubview:detailView];
 }
 
 #pragma mark -
@@ -657,7 +667,6 @@
         backView.image = nil;
         backView.image = customImage;
         backView.cropImage = customImage;
-//        libaryImageView.image = customImage;
         backView.cropImageView.image = customImage;
         
         //剪切后的滤镜

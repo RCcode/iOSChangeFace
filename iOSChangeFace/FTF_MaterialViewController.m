@@ -338,7 +338,6 @@
         [picker dismissViewControllerAnimated:YES completion:^{
             //改界面
             picker.delegate = nil;
-//            [self.delegate changeModelImage:[FTF_Global shareGlobal].modelImage];
             if ([[NSRunLoop mainRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate date]])
             {
                 [_videoCamera setImages:@[[FTF_Global shareGlobal].modelImage] WithFilterType:[FTF_Global shareGlobal].filterType];
