@@ -14,10 +14,7 @@
 "Feedback" = "Feedback";
 "Share" = "Share";
 "Follow us" = "Follow us";
-"Thanks for using Face2Face, please take some time to rate us, thanks for your support!" = "Thanks for using Face2Face, please take some time to rate us, thanks for your support!";
-"Rate now" = "Rate now";
 "Remind later" = "Remind later";
-"No thanks" = "No thanks";
 "library_not_availabel" = "Unable to start the album";
 "camena_not_availabel" = "Unable to start the camera";
 "user_camera_step" = "Please open the camera for the Face2Face permissions: Phone Settings -> Privacy -> Camera -> Face2Face (open)";
@@ -35,7 +32,6 @@
 "saveOrBack" = "You haven't saved your changes, are you sure?";
 "cancel" = "Cancel";
 "comment_us" = "Thanks for using Face2Face, what do you think of this app?";
-"rate_now" = "Rate now";
 "comment_later" = "Remind later";
 "never_attention" = "No thanks";
 "shareContent" = "I'm using Face2Face, it makes amazing photos that blend faces together, I recommend you use it. The download address is:http://bit.ly/1osEVGU";

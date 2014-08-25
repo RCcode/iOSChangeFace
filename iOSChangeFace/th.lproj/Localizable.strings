@@ -14,10 +14,7 @@
 "Feedback" = "ข้อติชม";
 "Share" = "แบ่งปัน";
 "Follow us" = "ติดตามเรา";
-"Thanks for using Face2Face, please take some time to rate us, thanks for your support!" = "ขอบคุณที่ใช้ Face2Face ขอรบกวนท่านให้คะแนนแอพนี้ ขอบคุณที่ให้การสนับสนุน! ";
-"Rate now" = "ให้คะแนนเลย";
 "Remind later" = "เตือนทีหลัง";
-"No thanks" = "ไม่ให้คะแนน";
 "library_not_availabel" = "ไม่สามารถเปิดอัลบั้มภาพได้";
 "camena_not_availabel" = "ไม่สามารถที่จะเริ่มต้นกล้อง";
 "user_camera_step" = "โปรดอนุญาติ Face2Face ในกล้องถ่ายรูปของคุณ ไปที่ การตั้งค่าโทรศัพท์ -> ส่วนตัว -> กล้องถ่ายรูป -> (เปิด) Face2Face ";

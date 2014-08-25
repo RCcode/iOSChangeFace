@@ -14,10 +14,7 @@
 "Feedback" = "Feedback";
 "Share" = "Partager";
 "Follow us" = "Suivez-nous";
-"Thanks for using Face2Face, please take some time to rate us, thanks for your support!" = "Merci d'avoir utilisé Mirror Effect, s'il vous plaît prenez un moment pour nous évaluer, merci pour votre soutien!";
-"Rate now" = "Evaluer maintenant";
 "Remind later" = "Rappeler plus tard";
-"No thanks" = "Non merci";
 "library_not_availabel" = "Impossible de démarrer l'album";
 "camena_not_availabel" = "Impossible de démarrer l'appareil photo";
 "user_camera_step" = "S'il vous plaît ouvrir l'appareil photo pour les autorisations de Face2Face: Paramètres du téléphone -> Confidentialité -> Caméra -> Face2Face (ouverte)";

@@ -14,10 +14,7 @@
 "Feedback" = "Comentarios";
 "Share" = "Compartir";
 "Follow us" = "Síguenos";
-"Thanks for using Face2Face, please take some time to rate us, thanks for your support!" = "Gracias por usar Face2Face, por favor toma un tiempo para valorarnos,¡ gracias por tu apoyo!";
-"Rate now" = "Puntuar ahora";
 "Remind later" = "Más tarde";
-"No thanks" = "No volver a recordar";
 "library_not_availabel" = "No se puede iniciar el álbum";
 "camena_not_availabel" = "No se puede iniciar la cámara";
 "user_camera_step" = "Por favor, abra la cámara de los permisos Face2Face: Configuración del teléfono -> Privacidad -> Cámara -> Face2Face (abierto)";

@@ -14,10 +14,7 @@
 "Feedback" = "反馈";
 "Share" = "分享";
 "Follow us" = "关注我们";
-"Thanks for using Face2Face, please take some time to rate us, thanks for your support!" = "感谢使用，请花点时间给予五星评分，感谢你对我们的支持！";
-"Rate now" = "马上评价";
 "Remind later" = "稍后再说";
-"No thanks" = "不再提醒";
 "library_not_availabel" = "无法启动相册";
 "camena_not_availabel" = "无法启动相机";
 "user_camera_step" = "请为变脸开放相机权限：手机设置->隐私->相机->变脸（打开）";
