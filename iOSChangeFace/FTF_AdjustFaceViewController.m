@@ -115,6 +115,8 @@
         libaryImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, image.size.height * (320.f/[FTF_Global shareGlobal].smallValue))];
     }
     
+    NSLog(@".......%f.......",[FTF_Global shareGlobal].smallValue);
+    
     libaryImageView.center = CGPointMake(160, 160);
     libaryImageView.userInteractionEnabled = YES;
     libaryImageView.image = image;
@@ -124,7 +126,7 @@
     
     //脸图
     UIImageView *faceModelImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 10, 320, 320)];
-    faceModelImageView.image = [UIImage zoomImageWithImage:pngImagePath(@"iosFocus")];
+    faceModelImageView.image = [UIImage zoomImageWithImage:pngImagePath(@"iosFocus") isLibaryImage:NO];
     [backView addSubview:faceModelImageView];
 }
 
@@ -276,6 +278,9 @@
         {
             libaryImageView.frame = CGRectMake(0, 0, 320, [FTF_Global shareGlobal].compressionImage.size.height * (320.f/[FTF_Global shareGlobal].smallValue));
         }
+        
+        NSLog(@".......%f.......",[FTF_Global shareGlobal].smallValue);
+        
         libaryImageView.center = CGPointMake(160, 160);
         libaryImageView.image = [FTF_Global shareGlobal].compressionImage;
     }

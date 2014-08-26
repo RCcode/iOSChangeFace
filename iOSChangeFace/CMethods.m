@@ -170,12 +170,11 @@ MBProgressHUD * showMBProgressHUD(NSString *content,BOOL showView)
 {
     //显示LoadView
     if (mb==nil) {
-        UIWindow *window = [[[UIApplication sharedApplication] delegate] window];
-        mb = [[MBProgressHUD alloc] initWithView:window];
+        mb = [[MBProgressHUD alloc] initWithView:currentWindow()];
         mb.mode = showView?MBProgressHUDModeIndeterminate:MBProgressHUDModeText;
-        [window addSubview:mb];
+        [currentWindow() addSubview:mb];
         //如果设置此属性则当前的view置于后台
-        //mb.dimBackground = YES;
+//        mb.dimBackground = YES;
         mb.labelText = content;
     }else{
         mb.mode = showView?MBProgressHUDModeIndeterminate:MBProgressHUDModeText;
@@ -189,7 +188,6 @@ MBProgressHUD * showMBProgressHUD(NSString *content,BOOL showView)
 void hideMBProgressHUD()
 {
     [mb hide:YES];
-    mb.userInteractionEnabled = YES;
 }
 
 NSString *exchangeTime(NSString *time)

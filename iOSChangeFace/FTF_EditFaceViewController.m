@@ -97,8 +97,7 @@
 
 - (void)removeGuideView
 {
-    UIWindow *window = [[UIApplication sharedApplication].delegate window];
-    UIView *guideView = [window viewWithTag:1001];
+    UIView *guideView = [currentWindow() viewWithTag:1001];
     [guideView removeFromSuperview];
     guideView = nil;
 }
@@ -203,7 +202,7 @@
     
     //默认底图
     backImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 320)];
-    [FTF_Global shareGlobal].modelImage = [UIImage zoomImageWithImage:[UIImage imageNamed:@"crossBones01.jpg"]];
+    [FTF_Global shareGlobal].modelImage = [UIImage zoomImageWithImage:[UIImage imageNamed:@"crossBones01.jpg"] isLibaryImage:NO];
     backImageView.image = [FTF_Global shareGlobal].modelImage;
     [bottomView addSubview:backImageView];;
     
@@ -333,12 +332,11 @@
             {
                 
                 //引导动画
-                UIWindow *window = [[UIApplication sharedApplication].delegate window];
-                RC_View *guideView = [[RC_View alloc]initWithFrame:window.bounds];
+                RC_View *guideView = [[RC_View alloc]initWithFrame:currentWindow().bounds];
                 guideView.tag = 1001;
                 guideView.editFace = self;
                 guideView.backgroundColor = [UIColor clearColor];
-                [window addSubview:guideView];
+                [currentWindow() addSubview:guideView];
                 
                 [[NSUserDefaults standardUserDefaults] setObject:@1 forKey:@"isFirst"];
             }
@@ -531,24 +529,20 @@
 #pragma mark 滤镜
 - (void)filterImage:(NSInteger)tag
 {
-    if ([FTF_Global shareGlobal].isFiltering)
+    if (!isFiltering)
     {
-        return;
-    }
-    
-    MBProgressHUD *mb = showMBProgressHUD(nil, YES);
-    mb.userInteractionEnabled = YES;
-    
-    [FTF_Global shareGlobal].isFiltering = YES;
-    [FTF_Global shareGlobal].filterType = (NCFilterType)tag;
-    
-    [filterImageArray removeAllObjects];
-    
-    if ([[NSRunLoop mainRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate date]])
-    {
-        [_videoCamera setImages:@[[FTF_Global shareGlobal].compressionImage,[FTF_Global shareGlobal].modelImage] WithFilterType:(NCFilterType)tag];
-    }
+        isFiltering = YES;
 
+        [FTF_Global shareGlobal].filterType = (NCFilterType)tag;
+        [filterImageArray removeAllObjects];
+        
+        if ([[NSRunLoop mainRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate date]])
+        {
+            @autoreleasepool {
+                [_videoCamera setImages:@[[FTF_Global shareGlobal].compressionImage,[FTF_Global shareGlobal].modelImage] WithFilterType:(NCFilterType)tag];
+            }
+        }
+    }
 }
 
 - (void)endCropImage
@@ -642,6 +636,7 @@
     }
     else if (tag >= 100)
     {
+        showMBProgressHUD(nil, YES);
         [FTF_Global event:[NSString stringWithFormat:@"filter_%d",(int)tag - 100] label:@"Edit"];
         [self filterImage:tag - 100];
     }
@@ -685,7 +680,7 @@
         backImageView.image = nil;
         backImageView.image = modelImage;
         
-        [FTF_Global shareGlobal].isFiltering = NO;
+        isFiltering = NO;
         
         hideMBProgressHUD();
     }

@@ -123,7 +123,7 @@
     NSString *imageName = [dataImageArray objectAtIndex:indexPath.row];
 
     [FTF_Global shareGlobal].modelImage = nil;
-    [FTF_Global shareGlobal].modelImage = [UIImage zoomImageWithImage:jpgImagePath(imageName)];
+    [FTF_Global shareGlobal].modelImage = [UIImage zoomImageWithImage:jpgImagePath(imageName) isLibaryImage:NO];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"changeMaterialImage" object:nil];
 }
 

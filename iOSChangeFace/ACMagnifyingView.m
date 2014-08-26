@@ -374,7 +374,10 @@ static CGFloat const kACMagnifyingViewDefaultShowDelay = 0.5;
         cropView.userInteractionEnabled = NO;
     }
     
-    hideMBProgressHUD();
+    if (!isLast)
+    {
+        hideMBProgressHUD();
+    }
 }
 
 - (void)jumpInBackGroud

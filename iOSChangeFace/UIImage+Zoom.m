@@ -11,48 +11,58 @@
 
 @implementation UIImage (Zoom)
 
-+ (UIImage *)zoomImageWithImage:(UIImage *)image
++ (UIImage *)zoomImageWithImage:(UIImage *)image isLibaryImage:(BOOL)isLibary
 {
     static UIImage *newImage;
     
-    if (image.size.width/image.size.height > 2.0f)
+    float smallValue = 0.f;
+    if (isLibary)
     {
-        [FTF_Global shareGlobal].smallValue = 320.f;
+        if (image.size.width/image.size.height > 2.0f)
+        {
+            [FTF_Global shareGlobal].smallValue = 320.f;
+            smallValue = 320.f;
+        }
+        else
+        {
+            [FTF_Global shareGlobal].smallValue = 640.f;
+            smallValue = 640.f;
+        }
     }
     else
     {
-        [FTF_Global shareGlobal].smallValue = 800.f;
+        smallValue = 640.f;
     }
     
-    if (image.size.width > [FTF_Global shareGlobal].smallValue || image.size.height > [FTF_Global shareGlobal].smallValue)
+    if (image.size.width > smallValue || image.size.height > smallValue)
     {
         if (image.size.width >= image.size.height)
         {
-            float scale = image.size.height/[FTF_Global shareGlobal].smallValue;
+            float scale = image.size.height/smallValue;
             float width = image.size.width/scale;
-            newImage = [image imageByScalingToSize:CGSizeMake(width, [FTF_Global shareGlobal].smallValue)];
+            newImage = [image imageByScalingToSize:CGSizeMake(width, smallValue)];
             
         }
         else
         {
-            float scale = image.size.width/[FTF_Global shareGlobal].smallValue;
+            float scale = image.size.width/smallValue;
             float height = image.size.height/scale;
-            newImage = [image imageByScalingToSize:CGSizeMake([FTF_Global shareGlobal].smallValue, height)];
+            newImage = [image imageByScalingToSize:CGSizeMake(smallValue, height)];
         }
     }
     else
     {
         if (image.size.width >=  image.size.height)
         {
-            float scale = [FTF_Global shareGlobal].smallValue/image.size.height;
+            float scale = smallValue/image.size.height;
             float width = image.size.width*scale;
-            newImage = [image imageByScalingToSize:CGSizeMake(width, [FTF_Global shareGlobal].smallValue)];
+            newImage = [image imageByScalingToSize:CGSizeMake(width, smallValue)];
         }
         else
         {
-            float scale = [FTF_Global shareGlobal].smallValue/image.size.width;
+            float scale = smallValue/image.size.width;
             float height = image.size.height*scale;
-            newImage = [image imageByScalingToSize:CGSizeMake([FTF_Global shareGlobal].smallValue, height)];
+            newImage = [image imageByScalingToSize:CGSizeMake(smallValue, height)];
         }
     }
     

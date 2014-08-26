@@ -48,8 +48,7 @@
     if ([[NSUserDefaults standardUserDefaults] objectForKey:@"guideIsFirst"] == nil)
     {
         //引导动画
-        UIWindow *window = [[UIApplication sharedApplication].delegate window];
-        UIView *guideView = [[UIView alloc]initWithFrame:window.bounds];
+        UIView *guideView = [[UIView alloc]initWithFrame:currentWindow().bounds];
         guideView.tag = 1002;
         guideView.backgroundColor = colorWithHexString(@"#202225", 0.6);
         
@@ -61,7 +60,7 @@
         imageView.image = [UIImage imageNamed:@"jiantou"];
         [guideView addSubview:imageView];
         
-        [window addSubview:guideView];
+        [currentWindow() addSubview:guideView];
         
         UILabel *shotLabel = [[UILabel alloc]init];
         shotLabel.numberOfLines = 0;
@@ -73,7 +72,7 @@
         shotLabel.text = LocalizedString(@"UseYourself", @"");
         shotLabel.textColor = [UIColor whiteColor];
         shotLabel.font = [UIFont systemFontOfSize:14.f];
-        [window addSubview:shotLabel];
+        [currentWindow() addSubview:shotLabel];
         
         [[NSUserDefaults standardUserDefaults] setObject:@1 forKey:@"guideIsFirst"];
     }
@@ -241,11 +240,10 @@
 
 - (void)handelTap
 {
-    UIWindow *window = [[UIApplication sharedApplication].delegate window];
-    UIView *guideView = [window viewWithTag:1002];
+    UIView *guideView = [currentWindow() viewWithTag:1002];
     [guideView removeFromSuperview];
     guideView = nil;
-    UIView *label = [window viewWithTag:1003];
+    UIView *label = [currentWindow() viewWithTag:1003];
     [label removeFromSuperview];
     label = nil;
 }
@@ -316,7 +314,7 @@
         }
         
         //压缩处理
-        img = [UIImage zoomImageWithImage:img];
+        img = [UIImage zoomImageWithImage:img isLibaryImage:NO];
         
         CGSize imageSize = img.size;
         CGFloat width = imageSize.width;
@@ -394,8 +392,7 @@
     else
     {
         
-        MBProgressHUD *mb = showMBProgressHUD(nil, YES);
-        mb.userInteractionEnabled = YES;
+        showMBProgressHUD(nil, YES);
         
         if ([[NSRunLoop mainRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate date]])
         {

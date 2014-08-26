@@ -192,7 +192,7 @@
         }
         
         //压缩处理
-        img = [UIImage zoomImageWithImage:img];
+        img = [UIImage zoomImageWithImage:img isLibaryImage:YES];
         [FTF_Global shareGlobal].compressionImage = img;
         
         [picker dismissViewControllerAnimated:YES completion:^{

@@ -60,11 +60,11 @@
 - (void)initTableView
 {
     
-    UIImageView *logoImage = [[UIImageView alloc] initWithFrame:CGRectMake(40, 56, 109, 17)];
+    UIImageView *logoImage = [[UIImageView alloc] initWithFrame:CGRectMake(70, 56, 109, 17)];
     logoImage.image = pngImagePath(@"listlogo");
     [self.view addSubview:logoImage];
     
-    UIImageView *lineImage = [[UIImageView alloc] initWithFrame:CGRectMake(14, 103, 162, 6)];
+    UIImageView *lineImage = [[UIImageView alloc] initWithFrame:CGRectMake(40, 103, 162, 6)];
     lineImage.image = pngImagePath(@"listlogo_line");
     [self.view addSubview:lineImage];
     
@@ -221,7 +221,7 @@
     UIImageView *iconImageView = [[UIImageView alloc] initWithFrame:CGRectMake(31, 13, 25 , 25)];
     iconImageView.image = [UIImage imageNamed:model.imageName];
     iconImageView.highlightedImage = [UIImage imageNamed:model.imageHLName];
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(70, 0, 120, 52)];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(70, 0, 170, 52)];
     label.textAlignment = NSTextAlignmentLeft;
     label.backgroundColor = [UIColor clearColor];
     label.textColor = [UIColor whiteColor];
@@ -229,7 +229,7 @@
     label.text = model.title;
     label.highlightedTextColor = colorWithHexString(@"#f85e5e",1.f);
     
-    UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(26, 43, 140, 1)];
+    UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(26, 43, 190, 1)];
     lineView.backgroundColor = colorWithHexString(@"#666666", 1.0f);
     
     UIView *view = [[UIView alloc] initWithFrame:cell.frame];

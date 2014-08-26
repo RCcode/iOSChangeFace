@@ -25,15 +25,12 @@
 {
     static FTF_Global *_public_Global;
     static dispatch_once_t onceToken;
-    @synchronized(self)
-    {
-        dispatch_once(&onceToken, ^{
-            _public_Global = [[[self class] alloc] init];
-            _public_Global.appsArray = [[NSMutableArray alloc]init];
-            _public_Global.isOn = YES;
-            _public_Global.modelType = (MaterialModelType)0;
-        });
-    }
+    dispatch_once(&onceToken, ^{
+        _public_Global = [[[self class] alloc] init];
+        _public_Global.appsArray = [[NSMutableArray alloc]init];
+        _public_Global.isOn = YES;
+        _public_Global.modelType = (MaterialModelType)0;
+    });
     
     return _public_Global;
 }

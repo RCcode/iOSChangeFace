@@ -259,10 +259,6 @@
 
 - (void)btnClick:(FTF_Button *)btn
 {
-    if ([FTF_Global shareGlobal].isFiltering)
-    {
-        return;
-    }
     
     for (UIView *subView in [btn.superview subviews])
     {
