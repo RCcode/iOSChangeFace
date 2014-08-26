@@ -25,6 +25,7 @@
 @property (nonatomic ,assign) BOOL isCrop;
 @property (nonatomic ,assign) BOOL isFiltering;
 @property (nonatomic ,assign) NCFilterType filterType;
+@property (nonatomic ,assign) float smallValue;
 
 //广告条
 @property (nonatomic, strong) UIView *bannerView;

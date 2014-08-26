@@ -192,6 +192,7 @@ static NSString *kShareHotTags = @"(Made with @face2face_rc)#face2face";
     }
     else
     {
+        [FTF_Global shareGlobal].filterType = NC_NORMAL_FILTER;
         [self.navigationController popToRootViewControllerAnimated:YES];
     }
 }
@@ -201,6 +202,7 @@ static NSString *kShareHotTags = @"(Made with @face2face_rc)#face2face";
     if (alertView.tag == 11 && buttonIndex == 1)
     {
         [FTF_Global shareGlobal].isChange = NO;
+        [FTF_Global shareGlobal].filterType = NC_NORMAL_FILTER;
         [self.navigationController popToRootViewControllerAnimated:YES];
     }
 }
@@ -309,15 +311,15 @@ static NSString *kShareHotTags = @"(Made with @face2face_rc)#face2face";
 #pragma mark 保存至本地相册 结果反馈
 - (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo
 {
-    if (error != nil)
+    if (!error && [FTF_Global shareGlobal].bigImage != nil)
     {
-        MBProgressHUD *hud = showMBProgressHUD(LocalizedString(@"saved_in_album_Fail", nil), NO);
+        MBProgressHUD *hud = showMBProgressHUD(LocalizedString(@"saved_in_album", nil), NO);
         hud.color = [UIColor blackColor];
         [hud performSelector:@selector(hide:) withObject:nil afterDelay:1.5];
     }
     else
     {
-        MBProgressHUD *hud = showMBProgressHUD(LocalizedString(@"saved_in_album", nil), NO);
+        MBProgressHUD *hud = showMBProgressHUD(LocalizedString(@"saved_in_album_Fail", nil), NO);
         hud.color = [UIColor blackColor];
         [hud performSelector:@selector(hide:) withObject:nil afterDelay:1.5];
     }

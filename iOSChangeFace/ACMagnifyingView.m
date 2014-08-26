@@ -27,11 +27,17 @@ static CGFloat const kACMagnifyingViewDefaultShowDelay = 0.5;
 @synthesize magnifyingGlass, magnifyingGlassShowDelay;
 @synthesize touchTimer;
 
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 
 - (id)initWithFrame:(CGRect)frame
 {
 	if (self = [super initWithFrame:frame])
     {
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(jumpInBackGroud) name:UIApplicationWillEnterForegroundNotification object:nil];
+        
 		self.magnifyingGlassShowDelay = kACMagnifyingViewDefaultShowDelay;
         lastScale = 1.f;
         acmRect = frame;
@@ -47,8 +53,6 @@ static CGFloat const kACMagnifyingViewDefaultShowDelay = 0.5;
     }
     //选取的图片
     self.imageView = imgView;
-//    self.cropImageView = [[UIImageView alloc] initWithImage:imgView.image];
-//    self.cropImageView.frame = imgView.frame;
     
     self.cropImageView = (UIImageView *)[self duplicate:imgView];
     
@@ -371,6 +375,13 @@ static CGFloat const kACMagnifyingViewDefaultShowDelay = 0.5;
     }
     
     hideMBProgressHUD();
+}
+
+- (void)jumpInBackGroud
+{
+    [cropView.croppingPath removeAllPoints];
+    [cropView setNeedsDisplay];
+    self.magnifyingGlass.hidden = YES;
 }
 
 - (void)changeMagnifyingGlassCenter:(CGPoint)center

@@ -108,11 +108,11 @@
     //相册里选取的图片
     if (image.size.width > image.size.height)
     {
-        libaryImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, image.size.width * (320.f/720.f), 320)];
+        libaryImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, image.size.width * (320.f/[FTF_Global shareGlobal].smallValue), 320)];
     }
     else
     {
-        libaryImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, image.size.height * (320.f/720.f))];
+        libaryImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, image.size.height * (320.f/[FTF_Global shareGlobal].smallValue))];
     }
     
     libaryImageView.center = CGPointMake(160, 160);
@@ -270,11 +270,11 @@
         libaryImageView.transform = CGAffineTransformMakeRotation(0);
         if ([FTF_Global shareGlobal].compressionImage.size.width > [FTF_Global shareGlobal].compressionImage.size.height)
         {
-            libaryImageView.frame = CGRectMake(0, 0, [FTF_Global shareGlobal].compressionImage.size.width * (320.f/720.f), 320);
+            libaryImageView.frame = CGRectMake(0, 0, [FTF_Global shareGlobal].compressionImage.size.width * (320.f/[FTF_Global shareGlobal].smallValue), 320);
         }
         else
         {
-            libaryImageView.frame = CGRectMake(0, 0, 320, [FTF_Global shareGlobal].compressionImage.size.height * (320.f/720.f));
+            libaryImageView.frame = CGRectMake(0, 0, 320, [FTF_Global shareGlobal].compressionImage.size.height * (320.f/[FTF_Global shareGlobal].smallValue));
         }
         libaryImageView.center = CGPointMake(160, 160);
         libaryImageView.image = [FTF_Global shareGlobal].compressionImage;

@@ -93,6 +93,8 @@
         [userDefault synchronize];
     }
     
+    [self cancelNotification];
+    
 //    NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(memoryInfo) userInfo:nil repeats:YES];
 //    [timer fire];
     
@@ -454,6 +456,8 @@
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
     NSLog(@"即将进入前台");
+    
+    [self cancelNotification];
     
     //优先取全局变量中的数据，取不到 再取数据库中的
     NSMutableArray *appInfoArr = nil;

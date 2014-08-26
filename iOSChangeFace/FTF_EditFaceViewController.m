@@ -238,6 +238,7 @@
     else
     {
         [self.navigationController popViewControllerAnimated:YES];
+        [FTF_Global shareGlobal].filterType = NC_NORMAL_FILTER;
     }
 }
 
@@ -258,6 +259,7 @@
     else
     {
         [self.navigationController popToRootViewControllerAnimated:YES];
+        [FTF_Global shareGlobal].filterType = NC_NORMAL_FILTER;
     }
 }
 
@@ -268,11 +270,13 @@
     if (alertView.tag == 11 && buttonIndex == 1)
     {
         [FTF_Global shareGlobal].isChange = NO;
+        [FTF_Global shareGlobal].filterType = NC_NORMAL_FILTER;
         [self.navigationController popToRootViewControllerAnimated:YES];
     }
     else if (alertView.tag == 12 && buttonIndex == 1)
     {
         [FTF_Global shareGlobal].isChange = NO;
+        [FTF_Global shareGlobal].filterType = NC_NORMAL_FILTER;
         [self.navigationController popViewControllerAnimated:YES];
     }
 }
@@ -343,8 +347,12 @@
             detailView.frame = CGRectMake(0, windowHeight() - (iPhone5()?248:198), 320, 104);
             [detailView loadCropItools];
             
-            [backView setMZViewUserInteractionEnabled];
-            [backView setMZImageView:YES];
+            if (!isFirst)
+            {
+                [backView setMZViewUserInteractionEnabled];
+                [backView setMZImageView:YES];
+                isFirst = !isFirst;
+            }
             
             break;
         case 4:

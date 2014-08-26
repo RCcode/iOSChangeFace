@@ -22,7 +22,7 @@
         width = frame.size.width;
         height= frame.size.height;
         
-        UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 10, self.bounds.size.width, 10)];
+        UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 17, self.bounds.size.width, 10)];
         view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"dot01"]];
         [self addSubview:view];
         
@@ -55,7 +55,7 @@
 - (void)slideValueChanged
 {
     CGFloat value = _slideView.value;
-    _processView.frame = CGRectMake(0, 10, width * value, 10);
+    _processView.frame = CGRectMake(0, 17, width * value, 10);
     [_delegate slideChange:_slideView];
 }
 

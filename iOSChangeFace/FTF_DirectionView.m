@@ -24,11 +24,11 @@
         self.backgroundColor = [UIColor clearColor];
         
         //ZVolumeSlide 自定义Slide控件
-        volumeSlide = [[FTF_VolumeSlide alloc]initWithFrame:CGRectMake(17.5, 64, 285, 30)];
+        volumeSlide = [[FTF_VolumeSlide alloc]initWithFrame:CGRectMake(17.5, 57, 285, 44)];
         volumeSlide.delegate = self;
         [self setVolumeSlideValue:0.2f];
         
-        lindeSlider = [[UISlider alloc]initWithFrame:CGRectMake(17.5f, 64, 285, 30)];
+        lindeSlider = [[UISlider alloc]initWithFrame:CGRectMake(17.5f, 57, 285, 44)];
         [lindeSlider setMaximumTrackTintColor:colorWithHexString(@"#999999", 1.0f)];
         [lindeSlider setMinimumTrackTintColor:colorWithHexString(@"#D9AF20", 1.0f)];
         [lindeSlider setThumbImage:pngImagePath(@"switch_btn_line_normal") forState:UIControlStateNormal];

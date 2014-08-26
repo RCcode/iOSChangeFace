@@ -14,5 +14,7 @@
 + (UIImage *)zoomImageWithImage:(UIImage *)image;
 - (UIImage *)imageByScalingToSize:(CGSize)targetSize;
 + (UIImage *)zoomImage:(UIImage *)image toSize:(CGSize)size;
+- (UIImage *)rescaleImage:(UIImage *)img ToSize:(CGSize)size; //图片缩放裁剪
++ (CGImageRef)createGradientImage:(CGSize)size;
 
 @end
