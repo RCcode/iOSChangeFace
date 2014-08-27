@@ -539,10 +539,14 @@
 #pragma mark 滤镜
 - (void)filterImage:(NSInteger)tag
 {
-    if (!isFiltering)
+    if (isFiltering)
+    {
+        return;
+    }
+    else
     {
         isFiltering = YES;
-
+        
         [FTF_Global shareGlobal].filterType = (NCFilterType)tag;
         [filterImageArray removeAllObjects];
         
@@ -690,10 +694,16 @@
         backImageView.image = nil;
         backImageView.image = modelImage;
         
-        isFiltering = NO;
-        
-        hideMBProgressHUD();
+        [self performSelector:@selector(changeFilterValue) withObject:nil afterDelay:.3f];
+
     }
+}
+
+- (void)changeFilterValue
+{
+    isFiltering = NO;
+    hideMBProgressHUD();
+
 }
 
 @end
