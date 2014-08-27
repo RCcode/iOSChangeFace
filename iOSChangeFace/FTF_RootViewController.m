@@ -194,6 +194,7 @@
         //压缩处理
         img = [UIImage zoomImageWithImage:img isLibaryImage:YES];
         [FTF_Global shareGlobal].compressionImage = img;
+        [FTF_Global shareGlobal].modelType = CrossBonesModel;
         
         [picker dismissViewControllerAnimated:YES completion:^{
             //改界面

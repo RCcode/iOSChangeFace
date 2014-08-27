@@ -307,11 +307,11 @@
     NSURL *path = [info objectForKey:UIImagePickerControllerReferenceURL];
     
     [self loadImageFromAssertByUrl:path completion:^(UIImage * img) {
-        
-        if(img == nil)
-        {
+
+        if (picker.sourceType == UIImagePickerControllerSourceTypePhotoLibrary)
+            img = info[UIImagePickerControllerEditedImage];
+        else if (img == nil && picker.sourceType == UIImagePickerControllerSourceTypeCamera)
             img = info[UIImagePickerControllerOriginalImage];
-        }
         
         //压缩处理
         img = [UIImage zoomImageWithImage:img isLibaryImage:NO];
@@ -319,7 +319,8 @@
         CGSize imageSize = img.size;
         CGFloat width = imageSize.width;
         CGFloat height = imageSize.height;
-        if (width != height) {
+        if (width != height)
+        {
             CGFloat newDimension = MIN(width, height);
             CGFloat widthOffset = (width - newDimension) / 2;
             CGFloat heightOffset = (height - newDimension) / 2;
@@ -370,7 +371,6 @@
          img = [UIImage imageWithData:data];
          completion(img);
          
-         NSLog(@"img ::: %@", img);
      } failureBlock:^(NSError *err) {
          NSLog(@"Error: %@",[err localizedDescription]);
      }];

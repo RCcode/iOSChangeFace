@@ -61,11 +61,12 @@
 {
     
     UIImageView *logoImage = [[UIImageView alloc] initWithFrame:CGRectMake(70, 56, 109, 17)];
-    logoImage.image = pngImagePath(@"listlogo");
+    logoImage.image = [UIImage imageNamed:@"listlogo@2x"];
     [self.view addSubview:logoImage];
     
-    UIImageView *lineImage = [[UIImageView alloc] initWithFrame:CGRectMake(40, 103, 162, 6)];
-    lineImage.image = pngImagePath(@"listlogo_line");
+    UIImageView *lineImage = [[UIImageView alloc] initWithFrame:CGRectMake(28, 103, 190, 6)];
+    //UIImage *logo_lineImage = [pngImagePath(@"listlogo_line") stretchableImageWithLeftCapWidth:20 topCapHeight:3];
+    lineImage.image = [UIImage imageNamed:@"listlogo_line@2x"];
     [self.view addSubview:lineImage];
     
      _dataArray = [[NSMutableArray alloc] init];
@@ -221,7 +222,7 @@
     UIImageView *iconImageView = [[UIImageView alloc] initWithFrame:CGRectMake(31, 13, 25 , 25)];
     iconImageView.image = [UIImage imageNamed:model.imageName];
     iconImageView.highlightedImage = [UIImage imageNamed:model.imageHLName];
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(70, 0, 170, 52)];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(64, 0, 170, 52)];
     label.textAlignment = NSTextAlignmentLeft;
     label.backgroundColor = [UIColor clearColor];
     label.textColor = [UIColor whiteColor];

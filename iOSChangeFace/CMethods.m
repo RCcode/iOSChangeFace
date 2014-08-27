@@ -228,7 +228,8 @@ NSString *LocalizedString(NSString *translation_key, id none)
        [CURR_LANG isEqualToString:@"pt-PT"] ||
        [CURR_LANG isEqualToString:@"id"] ||
        [CURR_LANG isEqualToString:@"th"] ||
-       [CURR_LANG isEqualToString:@"ru"] ){
+       [CURR_LANG isEqualToString:@"ru"] ||
+       [CURR_LANG isEqualToString:@"ar"]){
         language = CURR_LANG;
     }
     NSString * path = [[NSBundle mainBundle] pathForResource:language ofType:@"lproj"];

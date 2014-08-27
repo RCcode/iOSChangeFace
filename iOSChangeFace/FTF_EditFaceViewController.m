@@ -345,12 +345,8 @@
             detailView.frame = CGRectMake(0, windowHeight() - (iPhone5()?248:198), 320, 104);
             [detailView loadCropItools];
             
-            if (!isFirst)
-            {
-                [backView setMZViewUserInteractionEnabled];
-                [backView setMZImageView:YES];
-                isFirst = !isFirst;
-            }
+            [backView setMZViewUserInteractionEnabled];
+            [backView setMZImageView:YES];
             
             break;
         case 4:
@@ -407,7 +403,7 @@
 #pragma mark 切换显示方式
 - (void)changeModelBtnClick:(NSInteger)tag
 {
-    
+    [FTF_Global shareGlobal].isCrop = NO;
     directionStyle = (enum DirectionType)tag;
     detailView.direction_Type = (enum DirectionType)tag;
     

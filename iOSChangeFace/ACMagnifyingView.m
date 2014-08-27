@@ -107,7 +107,14 @@ static CGFloat const kACMagnifyingViewDefaultShowDelay = 0.5;
 
 - (void)setMZViewUserInteractionEnabled
 {
-    cropView.userInteractionEnabled = YES;
+    if ([FTF_Global shareGlobal].isCrop)
+    {
+        cropView.userInteractionEnabled = NO;
+    }
+    else
+    {
+        cropView.userInteractionEnabled = YES;
+    }
 }
 
 - (void)setMZViewNotUserInteractionEnabled
@@ -341,6 +348,7 @@ static CGFloat const kACMagnifyingViewDefaultShowDelay = 0.5;
     _isCrop == YES ? self.magnifyingGlass.hidden = NO : self.magnifyingGlass.hidden = YES;
     _imageView.image = self.image;
     _cropImageView.image = _image;
+    
 }
 
 - (void)endCropImage:(BOOL)isLast
