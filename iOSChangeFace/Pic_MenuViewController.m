@@ -112,7 +112,7 @@
         {
             //评分
             [FTF_Global event:@"Home" label:@"more_rate"];
-            [self jumpToAppStore];
+            [self gotoAppStorePageRaisal];
         }
             break;
         case 2:
@@ -248,6 +248,12 @@
 - (void)jumpToAppStore{
     NSString *evaluateString = [NSString stringWithFormat:@"itms-apps://itunes.apple.com/app/id%@", appleID];
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:evaluateString]];
+}
+
+- (void)gotoAppStorePageRaisal
+{
+    NSString * nsStringToOpen = [NSString  stringWithFormat: @"itms-apps://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=%@",appleID];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:nsStringToOpen]];
 }
 
 - (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error
