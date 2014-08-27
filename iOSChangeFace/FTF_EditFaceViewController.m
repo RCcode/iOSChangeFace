@@ -252,6 +252,7 @@
     {
         [self.navigationController popViewControllerAnimated:YES];
         [FTF_Global shareGlobal].filterType = NC_NORMAL_FILTER;
+        [FTF_Global shareGlobal].isCrop = NO;
     }
 }
 
@@ -273,6 +274,7 @@
     {
         [self.navigationController popToRootViewControllerAnimated:YES];
         [FTF_Global shareGlobal].filterType = NC_NORMAL_FILTER;
+        [FTF_Global shareGlobal].isCrop = NO;
     }
 }
 
@@ -283,12 +285,14 @@
     if (alertView.tag == 11 && buttonIndex == 1)
     {
         [FTF_Global shareGlobal].isChange = NO;
+        [FTF_Global shareGlobal].isCrop = NO;
         [FTF_Global shareGlobal].filterType = NC_NORMAL_FILTER;
         [self.navigationController popToRootViewControllerAnimated:YES];
     }
     else if (alertView.tag == 12 && buttonIndex == 1)
     {
         [FTF_Global shareGlobal].isChange = NO;
+        [FTF_Global shareGlobal].isCrop = NO;
         [FTF_Global shareGlobal].filterType = NC_NORMAL_FILTER;
         [self.navigationController popViewControllerAnimated:YES];
     }
@@ -694,7 +698,7 @@
         backImageView.image = nil;
         backImageView.image = modelImage;
         
-        [self performSelector:@selector(changeFilterValue) withObject:nil afterDelay:.3f];
+        [self performSelector:@selector(changeFilterValue) withObject:nil afterDelay:.1f];
 
     }
 }

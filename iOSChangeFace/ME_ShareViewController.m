@@ -192,6 +192,7 @@ static NSString *kShareHotTags = @"(Made with @face2face_rc)#face2face";
     }
     else
     {
+        [FTF_Global shareGlobal].isCrop = NO;
         [FTF_Global shareGlobal].filterType = NC_NORMAL_FILTER;
         [self.navigationController popToRootViewControllerAnimated:YES];
     }
@@ -202,6 +203,7 @@ static NSString *kShareHotTags = @"(Made with @face2face_rc)#face2face";
     if (alertView.tag == 11 && buttonIndex == 1)
     {
         [FTF_Global shareGlobal].isChange = NO;
+        [FTF_Global shareGlobal].isCrop = NO;
         [FTF_Global shareGlobal].filterType = NC_NORMAL_FILTER;
         [self.navigationController popToRootViewControllerAnimated:YES];
     }
