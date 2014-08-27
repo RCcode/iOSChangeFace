@@ -69,6 +69,20 @@
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    _videoCamera = nil;
+    colorArray = nil;
+    maskLayer = nil;
+    libaryImageView = nil;
+    acBackView = nil;
+    backView = nil;
+    dataArray = nil;
+    detailView = nil;
+    fuzzyImage = nil;
+    _videoCamera = nil;
+    directionArray = nil;
+    fuzzyArray = nil;
+    modelArray = nil;
+    filterImageArray = nil;
 }
 
 - (void)viewDidLoad
