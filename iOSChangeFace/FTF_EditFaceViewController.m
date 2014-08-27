@@ -109,6 +109,18 @@
 
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    if ([FTF_Global shareGlobal].toolTag == 3)
+    {
+        [backView setMZViewUserInteractionEnabled];
+        [backView setMZImageView:YES];
+    }
+    
+}
+
 - (void)removeGuideView
 {
     UIView *guideView = [currentWindow() viewWithTag:1001];
@@ -312,6 +324,7 @@
     //进入素材页保留工具栏选中状态
     if (btn.tag != 0)
     {
+        [FTF_Global shareGlobal].toolTag = btn.tag;
         for (UIView *subView in [btn.superview subviews])
         {
             if ([subView isKindOfClass:[FTF_Button class]])

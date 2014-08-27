@@ -174,7 +174,7 @@ static NSString *kShareHotTags = @"(Made with @face2face_rc)#face2face";
 
 - (void)cancel:(id)sender
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadView" object:nil];
+    //[[NSNotificationCenter defaultCenter] postNotificationName:@"reloadView" object:nil];
     [self.navigationController popViewControllerAnimated:YES];
 }
 

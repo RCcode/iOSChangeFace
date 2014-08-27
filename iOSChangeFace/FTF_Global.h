@@ -26,6 +26,7 @@
 @property (nonatomic ,assign) BOOL isFiltering;
 @property (nonatomic ,assign) NCFilterType filterType;
 @property (nonatomic ,assign) float smallValue;
+@property (nonatomic ,assign) NSInteger toolTag;
 
 //广告条
 @property (nonatomic, strong) UIView *bannerView;

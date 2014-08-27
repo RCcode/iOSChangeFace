@@ -353,7 +353,7 @@ static CGFloat const kACMagnifyingViewDefaultShowDelay = 0.5;
 
 - (void)endCropImage:(BOOL)isLast
 {
-    //showMBProgressHUD(nil, YES);
+    showMBProgressHUD(nil, YES);
 
     self.magnifyingGlass.hidden = YES;
     UIImage *croppedImage = nil;
@@ -384,7 +384,7 @@ static CGFloat const kACMagnifyingViewDefaultShowDelay = 0.5;
     
     if (!isLast)
     {
-        //hideMBProgressHUD();
+        hideMBProgressHUD();
     }
 }
 
