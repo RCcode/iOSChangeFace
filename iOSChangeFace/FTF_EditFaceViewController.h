@@ -16,6 +16,7 @@
     CGRect _imageRect;
     UIImageView *backImageView;
     BOOL isFiltering;
+    NSInteger toolTag;
 }
 @property (strong, nonatomic) UIImage *libaryImage;
 @property (assign, nonatomic) CGRect imageRect;
